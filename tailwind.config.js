@@ -14,12 +14,8 @@ module.exports = {
         xl: '1280px',
       },
       fontSize: {
-        'xxs': '10px',
-        'xs': '12px',
-        'sm': '14px',
-        'base': '16px',
-        'lg': '18px',
-        'xl': '20px',
+        '3xs': '8px',
+        '2xs': '10px'
       },
       colors: { 
         background: { 
@@ -35,7 +31,15 @@ module.exports = {
           border: '#D8D8D8',
           active: '#F485B8',
           text:  '#5C5C5C',
+          room: '#4B8EC8',
+          AM:"#EBFCF2",
+          PM: "#EDEDFC",
         },
+        card: { 
+          line: '#F488BA',
+          line2: '#4C8FCB',
+          text: '#968C8C',
+        }
       },
    
     },

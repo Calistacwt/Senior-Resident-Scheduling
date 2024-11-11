@@ -12,7 +12,7 @@ const Sidebar: FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 1280) {
         setCollapsed(true);
       } else {
         setCollapsed(false);
@@ -35,7 +35,7 @@ const Sidebar: FC = () => {
                 : "/assets/images/KKHlogo.svg"
             }
             alt="KKH Logo"
-            className="rounded-md cursor-pointer w-11 lg:w-44"
+            className="rounded-md cursor-pointer w-11 lg:w-36"
           />
         </a>
       </div>

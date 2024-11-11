@@ -1,9 +1,13 @@
 {
-  "users": [
+  "srSchedule": [
     {
       "id": "1",
-      "name": "John Doe",
-      "email": "john@example.com"
+      "date": "2024-11-08",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Observe DP4",
+      "room": "Rm 25",
+      "srRoom": "Rm 17",
+      "session": "AM"
     }
   ]
 }
