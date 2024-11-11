@@ -40,7 +40,7 @@ module.exports = {
           text:  '#5C5C5C',
           placeholder: '#797979',
         },
-        card: { 
+        card: {
           line: '#F488BA',
           line2: '#4C8FCB',
           text: '#968C8C',
@@ -49,7 +49,7 @@ module.exports = {
           background: '#D5D5D5',
           modalText: '#888888'
         },
-        badge: { 
+        badge: {
           background: '#BEDAFE',
           text: '#006FFF',
         }
