@@ -38,6 +38,7 @@ const sidebarMenu: SidebarMenu[] = [
     path: "/scheduleSR",
     icon: ClockIcon,
     label: "Schedule SR",
+    active: ["/scheduleSR"],
   },
   {
     id: "srList",

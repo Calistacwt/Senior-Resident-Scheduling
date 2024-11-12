@@ -1,273 +1,189 @@
 const UpdateSchedule = () => {
   return (
-    <form action="">
-      <div className="border bg-white p-2 lg:p-10  border-red-600 w-full">
-        <h3 className="border font-bold text-md mb-3 2 border-red-600">
-          Senior Resident Scheduling
-        </h3>
-        <hr className="border border-updateSR-hr" />
+    <div className="bg-white w-full p-8 rounded-lg mt-5">
+      <form className="space-y-4">
+        <div>
+          <h3 className=" font-bold text-md mb-3 ">
+            Senior Resident Scheduling
+          </h3>
+          <hr className="border-1 border-background-hr" />
+        </div>
 
-        <div className="mt-3 border border-red-600">
-          {/* Posting Period */}
-          <div className="space-y-2 mb-4">
-            <label
-              htmlFor="Posting Period"
-              className="text-sm font-medium text-updateSR-label"
-            >
-              Posting Period
-            </label>
+        {/* Posting Period */}
+        <div className="space-y-2 mt-4">
+          <label className="text-xs font-medium text-form-label">
+            Posting Period
+          </label>
 
-            <select
-              id="Posting Period"
-              name="Posting Period"
-              className="border rounded-md w-full  shadow-md  focus:border-indigo-500 p-1 "
+          <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+            <option
+              disabled
+              selected
+              value=""
+              hidden
+              className="text-form-placeholder"
             >
-              --
-              <option
-                className="border border-black text-updateSR-label "
-                disabled
-                selected
-                value=""
-                hidden
-              >
-                Select Date
-              </option>
-              --
-              <option
-                value="01 July 2024 - 31 July 2024"
-                className="text-black"
-              >
-                01 July 2024 - 31 July 2024
-              </option>
-            </select>
+              Select Date
+            </option>
+            <option className="text-black">01 July 2024 - 31 July 2024</option>
+          </select>
+        </div>
+
+        {/* Senior Resident */}
+        <div className="mt-4 flex items-center space-x-4">
+          <div>
+            <img
+              src="./assets/images/avatar.png"
+              alt="Senior Resident Icon"
+              className="w-11 rounded-full"
+            />
           </div>
 
-          {/* Senior Resident */}
-          <div className="space-y-2 mb-4">
-            <label
-              htmlFor="Senior Resident"
-              className=" text-sm font-medium text-updateSR-label "
-            >
+          <div className="flex flex-col space-y-2 w-full">
+            <label className="text-xs font-medium text-form-label">
               Senior Resident
             </label>
-            <div className="flex items-center">
-              <img
-                src="images/SR_Icon.png"
-                alt="Senior Resident Icon"
-                className="w-10 h-10 rounded-full mr-5"
-              />
-              <select
-                id="Senior Resident"
-                name="Senior Resident"
-                className="border rounded-md w-full  shadow-md  focus:border-indigo-500 p-1"
-              >
-                --
-                <option
-                  disabled
-                  selected
-                  value=""
-                  hidden
-                  className="text-updateSR-placeholder"
-                >
-                  Select Senior Resident
-                </option>
-                --
-                <option className="text-black">Senior 1</option>
-                <option className="text-black">Senior 2</option>
-                <option className="text-black">Senior 3</option>
-              </select>
-            </div>
-          </div>
 
-          {/* Senior Doctor */}
-          <div className="flex mb-8 border border-black">
-            <div className="space-y-2">
-              <label
-                htmlFor="Senior Doctor"
-                className="text-sm font-medium text-updateSR-label"
-              >
-                Senior Doctor
-              </label>
-              <select
-                id="Senior Doctor"
-                name="Senior Doctor"
-                className="border  rounded-md w-full  shadow-md  focus:border-indigo-500 p-1"
-              >
-                --
-                <option
-                  disabled
-                  selected
-                  value=""
-                  hidden
-                  className="text-updateSR-placeholder"
-                >
-                  Select Senior Doctor
-                </option>
-                --
-                <option className="text-black">Dr Rashimi</option>
-                <option className="text-black">Dr Padimi</option>
-                <option className="text-black">DR Sandra</option>
-                <option className="text-black">DR Ellen Tay</option>
-              </select>
-            </div>
-
-            {/* Session */}
-            <div className=" space-y-2 ">
-              <label
-                htmlFor="Session"
-                className="text-sm font-medium text-updateSR-label"
-              >
-                Session
-              </label>
-              <select
-                id="Session"
-                name="Session"
-                className="border  rounded-md w-full  shadow-md  focus:border-indigo-500 p-1"
-              >
-                --
-                <option
-                  disabled
-                  selected
-                  value=""
-                  hidden
-                  className="text-updateSR-placeholder"
-                >
-                  Select Session
-                </option>
-                --
-                <option className="text-black">Am</option>
-                <option className="text-black">Pm</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Available Room */}
-          <div className="flex mb-8">
-            <div className="flex-1 space-y-2 ">
-              <label
-                htmlFor="Available Room"
-                className="text-sm font-medium text-updateSR-label"
-              >
-                Available Room
-              </label>
-              <select
-                id="Available Room"
-                name="Available Room"
-                className="border  rounded-md w-full  shadow-md  focus:border-indigo-500 p-1"
-              >
-                --
-                <option
-                  disabled
-                  selected
-                  value=""
-                  hidden
-                  className="text-updateSR-placeholder"
-                >
-                  Select Room
-                </option>
-                --
-                <option className="text-black">Room 11</option>
-                <option className="text-black">Room 12</option>
-                <option className="text-black">Room 13</option>
-              </select>
-            </div>
-
-            {/*space in between */}
-            {/* <div className="flex-1"></div> */}
-            {/* SR Room */}
-            <div className="flex-1 space-y-2 ">
-              <label
-                htmlFor="SR Room"
-                className="text-sm font-medium text-updateSR-label"
-              >
-                SR Room
-              </label>
-
-              <select
-                id="SR Room"
-                name="SR Room"
-                className="border  rounded-md w-full  shadow-md  focus:border-indigo-500 p-1"
-              >
-                <option
-                  disabled
-                  selected
-                  value=""
-                  hidden
-                  className="text-updateSR-placeholder"
-                >
-                  Select SR Room
-                </option>
-                <option className="text-black">Room 11</option>
-                <option className="text-black">Room 12</option>
-                <option className="text-black">Room 13</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Scheduled Date */}
-          <div className="flex-1 space-y-2 mb-4">
-            <label
-              htmlFor="Scheduled Date"
-              className="text-sm font-medium text-updateSR-label"
-            >
-              Scheduled Date
-            </label>
-            <select
-              id="Scheduled Date"
-              name="Scheduled Date"
-              className="border  rounded-md w-full  shadow-md  focus:border-indigo-500 p-1"
-            >
+            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
               <option
                 disabled
                 selected
                 value=""
                 hidden
-                className="text-updateSR-placeholder"
+                className="text-form-placeholder"
               >
-                Select Date
+                Select Senior Resident
               </option>
-              <option className="text-black">
-                01 July 2024 - 31 July 2024
+              <option className="text-black">Senior 2</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col flex-1 mr-3 space-y-2">
+            <label className="text-xs font-medium text-form-label">
+              Senior Doctor
+            </label>
+
+            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+              <option
+                disabled
+                selected
+                value=""
+                hidden
+                className="text-form-placeholder"
+              >
+                Select Senior Doctor
               </option>
+              <option>Senior 1</option>
+              <option>Senior 2</option>
             </select>
           </div>
 
-          {/* Activity */}
-          <div className="space-y-2 mb-5">
-            <label className="text-sm font-medium text-updateSR-label">
-              Activity
+          <div className="flex flex-col flex-1 space-y-2 ">
+            <label className="text-xs font-medium text-form-label">
+              Session
             </label>
-            <textarea
-              id="Activity"
-              name="Activity"
-              className="border  rounded-md w-full  shadow-md  focus:border-indigo-500 p-1"
-              placeholder="Write down the activity"
-            ></textarea>
-          </div>
 
-          {/* back button */}
-          <div className="border border-yellow-400 flex justify-end space-x-4 mb-10">
-            <button
-              type="button"
-              className="border border-updateSR-backBtnBorder rounded-sm shadow-md text-updateSR-textBackBtn p-1 w-20"
-            >
-              Back
-            </button>
-
-            {/* submit button */}
-
-            <button
-              type="button"
-              // className="border  rounded-sm shadow-md bg-updateSR-bgSubmitBtn text-updateSR-textSubmitBtn p-1 w-20" //not done
-              className="border  rounded-sm shadow-md bg-updateSR-bgSubmitBtnDone text-updateSR-textSubmitBtn p-1 w-20" //done
-            >
-              Submit
-            </button>
+            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+              <option
+                disabled
+                selected
+                value=""
+                hidden
+                className="text-form-placeholder"
+              >
+                Select Session
+              </option>
+              <option>AM</option>
+              <option>PM</option>
+            </select>
           </div>
         </div>
-      </div>
-      <input type="submit" />
-    </form>
+
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col flex-1 mr-3 space-y-2">
+            <label className="text-xs font-medium text-form-label">
+              Available Room
+            </label>
+
+            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+              <option
+                disabled
+                selected
+                value=""
+                hidden
+                className="text-form-placeholder"
+              >
+                Select Availale Room
+              </option>
+              <option>Room 17</option>
+              <option>Room 18</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col flex-1 space-y-2 ">
+            <label className="text-xs font-medium text-form-label">
+              SR Room
+            </label>
+
+            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+              <option
+                disabled
+                selected
+                value=""
+                hidden
+                className="text-form-placeholder"
+              >
+                Select SR Room
+              </option>
+              <option>Room 17</option>
+              <option>Room 18</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="space-y-2 mt-4">
+          <label className="text-xs font-medium text-form-label">
+            Scheduled Date
+          </label>
+
+          <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+            <option
+              disabled
+              selected
+              value=""
+              hidden
+              className="text-form-placeholder"
+            >
+              Select Date
+            </option>
+            <option className="text-black">01 July 2024</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col space-y-2 w-full">
+          <label className="text-xs font-medium text-form-label">
+            Activity
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="border border-form-label rounded-md w-full p-3  "
+          />
+        </div>
+
+        <div className="flex justify-end items-end space-x-4">
+          <button className="bg-white border  text-black font-medium text-xs p-2 rounded-md">
+            Back
+          </button>
+
+          <button className="bg-sidebar-active  text-white font-medium text-xs p-2 rounded-md">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 export default UpdateSchedule;

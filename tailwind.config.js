@@ -19,13 +19,14 @@ module.exports = {
       },
       colors: { 
         background: { 
-          DEFAULT: '#F7F7F7'
+          DEFAULT: '#F7F7F7',
+          hr: '#707070',
         },
         sidebar: { 
-          DEFAULT: '#3C4856',   // text 
-          active: '#2371A9',  
-          hover:  '#F0FAFF',
-          border: '#A0ACBD'
+          DEFAULT: '#3C4856',   
+          active: '#2371A9',    
+          hover:  '#F0FAFF',    
+          border: '#A0ACBD'    
         },
         dashboard: { 
           border: '#D8D8D8',

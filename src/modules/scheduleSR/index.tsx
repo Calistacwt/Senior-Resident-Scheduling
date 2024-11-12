@@ -5,7 +5,7 @@ const ScheduleSR = () => {
     <div>
       <div className=" mb-3 space-y-1">
         <h1 className="font-bold text-xl">Senior Resident Schedule Planner</h1>
-        <h6 className="text-xxs text-[#5C5C5C]">
+        <h6 className="text-xs text-dashboard-text">
           List of DCD Senior doctors supervising SR in NC clinics
         </h6>
       </div>
