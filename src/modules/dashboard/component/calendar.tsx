@@ -1,33 +1,26 @@
 import { useState } from "react";
+import {
+  addMonths,
+  eachDayOfInterval,
+  endOfMonth,
+  endOfWeek,
+  format,
+  isSameMonth,
+  isToday,
+  startOfMonth,
+  startOfWeek,
+  subMonths,
+} from "date-fns";
 import { srSchedule } from "@/types/dashboard";
 
-type CalendarProps = {
-  srSchedule: srSchedule[];
-};
+interface CalendarProps {
+  scheduleData: srSchedule[];
+}
 
-const Calendar: React.FC<CalendarProps> = ({ srSchedule }) => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [view, setView] = useState("viewMonth");
-
-  // Date Information
-  const todayDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-  const today = currentDate.getDate();
-
-  // Get first and last day of the month
-  const firstDayOfMonth = new Date(year, month, 1);
-  const lastDayOfMonth = new Date(year, month + 1, 0);
-  const startDay = firstDayOfMonth.getDay();
-  const daysInMonth = lastDayOfMonth.getDate();
-
-  // Weekly view calculation
-  const currentDayOfWeek = currentDate.getDay(); // Day of the week (0 = Sunday)
-  const startOfWeek = new Date(currentDate);
-  startOfWeek.setDate(currentDate.getDate() - currentDayOfWeek);
-
-  // Array for the days of the week
-  const weekDays = [
+const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [viewMode, setViewMode] = useState<string>("month");
+  const daysOfWeek: string[] = [
     "Sunday",
     "Monday",
     "Tuesday",
@@ -37,133 +30,162 @@ const Calendar: React.FC<CalendarProps> = ({ srSchedule }) => {
     "Saturday",
   ];
 
-  // Handling moving to the previous month or week
-  const handlePrevious = () => {
-    if (view === "viewMonth") {
-      setCurrentDate(new Date(year, month - 1, 1)); // Navigate by month
+  const prevMonth = () => {
+    if (viewMode === "month") {
+      const newDate = subMonths(currentDate, 1);
+      setCurrentDate(newDate);
     } else {
       setCurrentDate(new Date(currentDate.setDate(currentDate.getDate() - 7))); // Navigate by week
     }
   };
 
-  // Handling moving to the next month or week
-  const handleNext = () => {
-    if (view === "viewMonth") {
-      setCurrentDate(new Date(year, month + 1, 1)); // Navigate by month
+  const nextMonth = () => {
+    if (viewMode === "month") {
+      const newDate = addMonths(currentDate, 1);
+      setCurrentDate(newDate);
     } else {
       setCurrentDate(new Date(currentDate.setDate(currentDate.getDate() + 7))); // Navigate by week
     }
   };
 
+  // Set the currentDate back to today's date
   const handleToday = () => {
-    setCurrentDate(new Date()); // Set the currentDate back to today's date
+    setCurrentDate(new Date());
   };
 
-  const viewMonthDays = [];
-  const viewWeeklyDays = [];
+  // Render Days
+  const renderDaysOfWeek = () => {
+    return daysOfWeek.map((day) => (
+      <div key={day} className="border p-2 text-center bg-white">
+        <div className="w-42 h-8 font-semibold text-sm flex justify-center items-center ">
+          {day}
+        </div>
+      </div>
+    ));
+  };
 
-  // Monthly View
-  for (let i = 0; i < startDay + daysInMonth; i++) {
-    const day = i - startDay + 1; // Calculate the actual day number
-    const isToday =
-      day === today &&
-      month === todayDate.getMonth() &&
-      year === todayDate.getFullYear();
+  const dateFormatted = format(currentDate, "yyyy-MM-dd");
 
-    const dateString = new Date(Date.UTC(year, month, day))
-      .toISOString()
-      .split("T")[0];
+  // Render Dates
+  const renderDates = () => {
+    const monthStart = startOfMonth(currentDate);
+    const monthEnd = endOfMonth(monthStart);
+    const startDate =
+      viewMode === "month" ? startOfWeek(monthStart) : startOfWeek(currentDate);
+    const endDate =
+      viewMode === "month" ? endOfWeek(monthEnd) : endOfWeek(currentDate);
 
-    // Check for SRinfo for that date
-    const srData = srSchedule.filter((sr) => sr.date === dateString);
+    const days = eachDayOfInterval({ start: startDate, end: endDate });
 
-    // Push each day into the viewMonthDays
-    viewMonthDays.push(
-      <div
-        key={i}
-        className={`md:h-28 lg:h-40 p-2 cursor-pointer border ${
-          isToday ? "border-[#5ca3ff]" : "border-dashboard-border"
-        } ${day > 0 ? "hover:bg-sidebar-hover bg-white" : ""}`} // Empty for leading days
-      >
-        {day > 0 && (
-          <div
-            className={`h-6 w-6 flex items-center justify-center rounded-full text-xs font-medium ${
-              isToday
-                ? "bg-dashboard-active text-white "
-                : "text-dashboard-text"
-            }`}
-          >
-            {day}
-          </div>
-        )}
+    return days.map((day, index) => {
+      const isCurrentDay = isToday(day);
+      const dateFormatted = format(day, "yyyy-MM-dd");
 
-        {/* Display SR Schedule for the day */}
-        {srData.length > 0 && day > 0 && (
-          <div className="space-y-2 ">
-            {/* Sort the data if its AM it will move up -1 */}
-            {srData
-              .sort((am, pm) =>
-                am.session === "AM" && pm.session !== "AM" ? -1 : 1,
-              )
-              .map((sessionData, index) => (
-                <div
-                  key={index}
-                  className={`text-dashboard-text-text rounded-md flex flex-col lg:flex-row justify-between ${
-                    sessionData.session === "AM"
-                      ? "bg-dashboard-AM"
-                      : "bg-dashboard-PM"
-                  }`}
-                >
-                  <div className="m-2 flex flex-col space-y-1">
-                    <p className="font-medium text-2xs">
-                      {sessionData.dcdScreener}
-                    </p>
-                    <p className="text-2xs font-light md:hidden lg:block">
-                      {sessionData.activity}
-                    </p>
-                  </div>
+      // Find matching schedules for the current day
+      const scheduleForDay = scheduleData.filter(
+        (schedule) => schedule.date === dateFormatted,
+      );
 
-                  <div className="flex lg:flex-col lg:space-y-1 lg:m-1 p-0.5 md:hidden lg:block">
-                    <div className="bg-dashboard-room rounded-sm text-3xs font-semibold text-white flex items-center justify-center self-start lg:self-center p-0.5 ml-1 mb-2 lg:mr-4 lg:mb-0">
-                      {sessionData.room}
-                    </div>
-
-                    <div className="bg-[#EC88B3] rounded-sm text-3xs font-semibold text-white flex items-center justify-center self-start lg:self-center p-0.5 ml-1 mb-2 lg:mr-4 lg:mb-0">
-                      {sessionData.srRoom}
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-        )}
-      </div>,
-    );
-  }
-
-  // Weekly View
-  for (let i = 0; i < 7; i++) {
-    const weekDayDate = new Date(startOfWeek);
-    weekDayDate.setDate(startOfWeek.getDate() + i);
-    const isToday = weekDayDate.toDateString() === todayDate.toDateString();
-
-    viewWeeklyDays.push(
-      <div
-        key={i}
-        onClick={() => setCurrentDate(weekDayDate)}
-        className={`md:h-20 lg:h-32 p-2 cursor-pointer border bg-white hover:bg-sidebar-hover ${
-          isToday ? "border-[#5ca3ff]" : "border-dashboard-border"
-        }`} // Empty for leading days
-      >
+      return (
         <div
-          className={`h-6 w-6 flex items-center justify-center rounded-full text-xs font-medium ${
-            isToday ? "bg-[#F485B8] text-white" : "text-dashboard-text"
+          key={index}
+          onClick={() => setCurrentDate(day)}
+          className={`cursor-pointer border text-left text-xs ${
+            !isSameMonth(day, monthStart) && viewMode === "month"
+              ? "bg-neutral-50"
+              : "bg-white"
+          } h-40 ${
+            !isSameMonth(day, monthStart) && viewMode === "month"
+              ? "text-dashboard-text"
+              : ""
           }`}
         >
-          {weekDayDate.getDate()}
+          <div className="p-1">
+            <div
+              className={`flex items-center justify-center rounded-full ${isCurrentDay ? "text-white" : ""} h-8 w-8 ${
+                isCurrentDay ? "bg-dashboard-active" : ""
+              }`}
+            >
+              {format(day, "d")}
+            </div>
+          </div>
+
+          {/* Display schedule details if available */}
+          <div className="relative group">
+            <div>
+              {scheduleForDay.length > 0 && (
+                <div className="space-y-2">
+                  {scheduleForDay
+                    .sort((am, pm) =>
+                      am.session === "AM" && pm.session !== "AM" ? -1 : 1,
+                    )
+                    .map((sessionData, index) => (
+                      <div
+                        key={index}
+                        className={`text-dashboard-text-text rounded-md flex flex-col lg:flex-row justify-between ml-2 mr-2 ${
+                          sessionData.session === "AM"
+                            ? "bg-dashboard-AM"
+                            : "bg-dashboard-PM"
+                        }`}
+                      >
+                        <div className="m-2 flex flex-col space-y-1">
+                          <p className="font-medium text-2xs xl:text-xs">
+                            {sessionData.dcdScreener}
+                          </p>
+
+                          <p className="text-xs font-light hidden xl:flex">
+                            {sessionData.activity}
+                          </p>
+                        </div>
+
+                        <div className="lg:flex-col lg:space-y-1 lg:m-1 hidden xl:flex ">
+                          <div className="bg-dashboard-room text-2xs rounded-sm font-normal text-white flex items-center justify-center self-start lg:self-center p-0.5 lg:mr-4 lg:mb-0">
+                            {sessionData.room}
+                          </div>
+
+                          <div className="bg-dashboard-active rounded-sm text-2xs font-normal text-white flex items-center justify-center self-start lg:self-center p-0.5 lg:mr-4 lg:mb-0">
+                            {sessionData.srRoom}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
+
+            {/* Display the card when hover over */}
+            {/*        
+              <div className="absolute hidden group-hover:block xl:group-hover:hidden bg-white p-8 pt-4 rounded-md shadow-lg w-64 z-10">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <img
+                      src={"/assets/images/KKHlogo.svg"}
+                      alt="KKH Logo"
+                      className="rounded-md w-20"
+                    />
+                  </div>
+
+                  <div className="text-right">
+                    <h2 className="text-3xs font-bold">
+                      {currentDate.toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </h2>
+                    <h5 className="font-semibold text-3xs text-card-text">
+                      Session
+                    </h5>
+                  </div>
+                </div>
+              </div> */}
+
+            {/* End of hover card  */}
+          </div>
         </div>
-      </div>,
-    );
-  }
+      );
+    });
+  };
 
   return (
     <div>
@@ -179,7 +201,7 @@ const Calendar: React.FC<CalendarProps> = ({ srSchedule }) => {
         </div>
 
         <div className="flex items-center justify-center space-x-2">
-          <button onClick={handlePrevious} className="text-xs">
+          <button onClick={prevMonth}>
             <img
               src="/assets/images/backArrow.png"
               alt="Next Logo"
@@ -188,10 +210,10 @@ const Calendar: React.FC<CalendarProps> = ({ srSchedule }) => {
           </button>
 
           <h1 className="font-semibold text-xs">
-            {`${currentDate.toLocaleString("default", { month: "long" })} ${year}`}{" "}
+            {format(currentDate, "MMMM yyyy")}
           </h1>
 
-          <button onClick={handleNext} className="text-xs">
+          <button onClick={nextMonth}>
             <img
               src="/assets/images/nextArrow.png"
               alt="Next Logo"
@@ -204,14 +226,18 @@ const Calendar: React.FC<CalendarProps> = ({ srSchedule }) => {
         <div className="flex">
           <div className="flex border-dashboard-border border rounded-md">
             <button
-              onClick={() => setView("viewMonth")}
-              className={`text-xs p-1.5  px-3 font-medium ${view === "viewMonth" ? "bg-sidebar-active text-white rounded-md" : ""}`}
+              onClick={() => setViewMode("month")}
+              className={`text-xs p-1.5 px-3 font-medium ${
+                viewMode === "month" ? "bg-sidebar-active text-white" : ""
+              }`}
             >
               Month
             </button>
             <button
-              onClick={() => setView("weekly")}
-              className={`text-xs  p-1.5  px-3   font-medium ${view === "weekly" ? "bg-sidebar-active text-white rounded-md" : ""}`}
+              onClick={() => setViewMode("week")}
+              className={`text-xs p-1.5 px-3 font-medium ${
+                viewMode === "week" ? "bg-sidebar-active text-white" : ""
+              }`}
             >
               Week
             </button>
@@ -220,187 +246,125 @@ const Calendar: React.FC<CalendarProps> = ({ srSchedule }) => {
       </header>
       {/* End of Header */}
 
-      <div className="flex items-end space-x-2 mb-2">
-        <div className="w-20 text-center text-2xs  font-semibold bg-dashboard-AM p-1 rounded-md">
-          <p>AM</p>
-        </div>
-
-        <div className="w-20 text-center text-2xs font-semibold bg-dashboard-PM p-1 rounded-md">
-          <p>PM</p>
-        </div>
-      </div>
-
       <div className="grid grid-cols-7">
-        {/* Render the days of the week */}
-        {weekDays.map((day, index) => (
-          <div
-            key={index}
-            className="font-semibold text-center text-xs border  border-dashboard-border  bg-white p-3  "
-          >
-            {day}
-          </div>
-        ))}
-
-        {view === "viewMonth" ? viewMonthDays : viewWeeklyDays}
+        {renderDaysOfWeek()}
+        {renderDates()}
       </div>
 
       {/* Card Detail  */}
-      {view === "weekly" && currentDate && (
-        <div className=" flex flex-col xl:flex-row justify-evenly items-center p-2 space-y-8 xl:space-y-0 mt-20">
-          {/* AM Card */}
-          <div className="bg-white p-8 pt-4 rounded-md w-auto">
-            <div className="flex justify-between items-center space-x-32 ">
-              <div className="">
-                <img
-                  src={"/assets/images/KKHlogo.svg"}
-                  alt="KKH Logo"
-                  className="rounded-md w-36"
+      {viewMode === "week" && currentDate && (
+        <div className="flex flex-col xl:flex-row justify-evenly items-center p-2 space-y-8 xl:space-y-0 mt-20">
+          {["AM", "PM"].map((session) => {
+            // Filter schedule data for the current date and session
+            const filteredData = scheduleData.filter(
+              (schedule) =>
+                schedule.date === dateFormatted && schedule.session === session,
+            );
+
+            return (
+              <div
+                key={session}
+                className="bg-white p-8 pt-4 rounded-md w-auto"
+              >
+                <div className="flex justify-between items-center space-x-32">
+                  <div>
+                    <img
+                      src={"/assets/images/KKHlogo.svg"}
+                      alt="KKH Logo"
+                      className="rounded-md w-36"
+                    />
+                  </div>
+
+                  <div className="text-right">
+                    <h2 className="text-xs font-bold">
+                      {currentDate.toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </h2>
+                    <h5 className="font-semibold text-xs text-card-text">
+                      {session} Session
+                    </h5>
+                  </div>
+                </div>
+
+                <hr
+                  className={`border ${session === "AM" ? "border-dashboard-active" : "border-dashboard-room"}`}
                 />
-              </div>
 
-              <div className="text-right">
-                <h2 className="text-xs font-bold">
-                  {currentDate.toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </h2>
-                <h5 className="font-semibold  text-xs text-card-text">
-                  AM Session
-                </h5>
-              </div>
-            </div>
+                {filteredData.length > 0 ? (
+                  filteredData.map((sessionData, index) => (
+                    <div key={index}>
+                      <div className="flex space-x-4 m-3">
+                        <div className="flex items-center">
+                          <img
+                            src={"/assets/images/avatar.png"}
+                            alt="Avatar Logo"
+                            className="rounded-md w-9"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-card-text font-semibold text-xs">
+                            Senior Resident
+                          </label>
+                          <p className="font-semibold text-xs">Senior 2</p>
+                        </div>
+                      </div>
 
-            <hr className="border border-[#F485B8]" />
+                      <div className="m-3 flex justify-between">
+                        <div className="space-y-1">
+                          <label className="text-card-text font-semibold text-xs">
+                            DCD DR/screener
+                          </label>
+                          <p className="font-semibold text-xs">
+                            {sessionData.dcdScreener || "-"}
+                          </p>
+                        </div>
 
-            <div className="flex space-x-4 m-3">
-              <div className="flex items-center">
-                <img
-                  src={"/assets/images/avatar.png"}
-                  alt="Avatar Logo"
-                  className="rounded-md w-9"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  Senior Resident
-                </label>
-                <p className="font-semibold text-xs">Senior 2</p>
-              </div>
-            </div>
+                        <div className="space-y-1">
+                          <label className="text-card-text font-semibold text-xs">
+                            Room
+                          </label>
+                          <p className="font-semibold text-xs">
+                            {sessionData.room || "-"}
+                          </p>
+                        </div>
 
-            <div className="m-3 flex justify-between">
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  DCD DR/screener
-                </label>
-                <p className="font-semibold text-xs">-</p>
-              </div>
+                        <div className="space-y-1">
+                          <label className="text-card-text font-semibold text-xs">
+                            SR Room
+                          </label>
+                          <p className="font-semibold text-xs">
+                            {sessionData.srRoom || "-"}
+                          </p>
+                        </div>
+                      </div>
 
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  Room
-                </label>
-                <p className="font-semibold text-xs">-</p>
+                      <div className="m-3">
+                        <div className="space-y-1">
+                          <label className="text-card-text font-semibold text-xs">
+                            Activity
+                          </label>
+                          <p className="font-semibold text-xs">
+                            {sessionData.activity || "-"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-xs text-gray-500 m-3">
+                    No data available for this session
+                  </p>
+                )}
               </div>
+            );
+          })}
 
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  SR Room
-                </label>
-                <p className="font-semibold text-xs">-</p>
-              </div>
-            </div>
-
-            <div className="m-3">
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  Activity
-                </label>
-                <p className="font-semibold text-xs">-</p>
-              </div>
-            </div>
-          </div>
-
-          {/* PM Card */}
-          <div className="bg-white p-8 pt-4 rounded-md w-auto">
-            <div className="flex justify-between items-center space-x-32">
-              <div className="">
-                <img
-                  src={"/assets/images/KKHlogo.svg"}
-                  alt="KKH Logo"
-                  className="rounded-md w-36"
-                />
-              </div>
-
-              <div className="text-right">
-                <h2 className="text-xs font-bold">
-                  {currentDate.toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </h2>
-                <h5 className="font-semibold text-xs text-card-text">
-                  PM Session
-                </h5>
-              </div>
-            </div>
-
-            <hr className="border border-sidebar-active" />
-
-            <div className="flex space-x-4 m-3">
-              <div className="flex items-center">
-                <img
-                  src={"/assets/images/avatar.png"}
-                  alt="Avatar Logo"
-                  className="rounded-md w-9"
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  Senior Resident
-                </label>
-                <p className="font-semibold text-xs">Senior 2</p>
-              </div>
-            </div>
-
-            <div className="m-3 flex justify-between">
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  DCD DR/screener
-                </label>
-                <p className="font-semibold text-xs">-</p>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  Room
-                </label>
-                <p className="font-semibold text-xs">-</p>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  SR Room
-                </label>
-                <p className="font-semibold text-xs">-</p>
-              </div>
-            </div>
-
-            <div className="m-3">
-              <div className="space-y-1">
-                <label className="text-card-text font-semibold text-xs">
-                  Activity
-                </label>
-                <p className="font-semibold text-xs">-</p>
-              </div>
-            </div>
-          </div>
+          {/* End of Card Detail  */}
         </div>
       )}
-      {/* End of Card Detail  */}
     </div>
   );
 };

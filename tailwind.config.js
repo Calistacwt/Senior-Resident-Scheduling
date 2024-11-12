@@ -35,6 +35,11 @@ module.exports = {
           AM:"#EBFCF2",
           PM: "#EDEDFC",
         },
+        form: {
+          label: '#968C8C',
+          text:  '#5C5C5C',
+          placeholder: '#797979',
+        },
         card: { 
           line: '#F488BA',
           line2: '#4C8FCB',

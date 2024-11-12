@@ -1,1 +1,3 @@
-export const DASHBOARD = "http://localhost:4000/srSchedule";
+//Senior Resident Schedule
+export const SCHEDULE = "/srSchedule";
+export const SCHEDULE_UPDATE = "/srSchedule/:id";
