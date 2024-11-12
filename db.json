@@ -8,6 +8,24 @@
       "room": "Rm 25",
       "srRoom": "Rm 17",
       "session": "AM"
+    },
+    {
+      "id": "2",
+      "date": "2024-11-04",
+      "dcdScreener": "Dr Sandra",
+      "activity": "Observe triage clinic",
+      "room": "Rm 17",
+      "srRoom": "Rm 25",
+      "session": "AM"
+    },
+    {
+      "id": "c8bd",
+      "date": "2024-11-04",
+      "dcdScreener": "Dr Kenneth",
+      "activity": "Observe triage clinic",
+      "room": "Rm 17",
+      "srRoom": "Rm 25",
+      "session": "PM"
     }
   ]
 }

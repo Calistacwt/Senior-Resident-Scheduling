@@ -1,1 +1,1 @@
-export const DASHBOARD = "http://localhost:4000/srSchedule";
+export const SCHEDULE = "http://localhost:4000/srSchedule";

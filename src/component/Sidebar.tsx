@@ -28,15 +28,21 @@ const Sidebar: FC = () => {
     <div className="relative px-3 py-5 bg-white border-r border-sidebar-border lg:px-4 lg:py-3">
       <div className="flex items-center justify-center">
         <a href="/">
-          <img
-            src={
-              collapsed
-                ? "/assets/images/logo.svg"
-                : "/assets/images/KKHlogo.svg"
-            }
-            alt="KKH Logo"
-            className="rounded-md cursor-pointer w-11 lg:w-36"
-          />
+          {collapsed && (
+            <img
+              src="/assets/images/logo.svg"
+              alt="KKH Logo"
+              className="rounded-md cursor-pointer w-14 "
+            />
+          )}
+
+          {!collapsed && (
+            <img
+              src="/assets/images/KKHlogo.svg"
+              alt="KKH Logo"
+              className="rounded-md cursor-pointer lg:w-36 "
+            />
+          )}
         </a>
       </div>
       <div>

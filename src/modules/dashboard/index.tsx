@@ -1,22 +1,19 @@
-import { srSchedule } from "@/types/dashboard";
+import { SCHEDULE } from "@/config/endpoint";
 import { useEffect, useState } from "react";
+
+import { srSchedule } from "@/types/dashboard";
 import Calendar from "./component/calendar";
-import { DASHBOARD } from "@/config/endpoint";
 
 const Dashboard = () => {
-  const [srSchedule, setSRSchedule] = useState<srSchedule[]>([]);
+  const [scheduleData, setScheduleData] = useState<srSchedule[]>([]);
 
-  // Retrieve the data
   useEffect(() => {
-    const fetchSRSchedule = async () => {
-      const response = await fetch(DASHBOARD);
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
+    const fetchSchedule = async () => {
+      const response = await fetch(SCHEDULE);
       const data = await response.json();
-      setSRSchedule(data);
+      setScheduleData(data);
     };
-    fetchSRSchedule();
+    fetchSchedule();
   }, []);
 
   return (
@@ -45,7 +42,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <Calendar srSchedule={srSchedule} />
+      <Calendar scheduleData={scheduleData} />
     </div>
   );
 };
