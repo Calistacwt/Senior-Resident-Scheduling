@@ -20,7 +20,7 @@ const Searchbar = (props: SearchProps) => {
     };
 
     return (
-        <div className="relative w-full flex items-center text-gray-600">
+        <div className="relative w-full flex items-center text-sidebar">   
             <input
                 type="search"
                 name="search"
