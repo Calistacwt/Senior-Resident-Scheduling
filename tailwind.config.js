@@ -40,6 +40,18 @@ module.exports = {
           label: '#968C8C',
           text:  '#5C5C5C',
           placeholder: '#797979',
+          linehr: '#CBCBCB',
+          availSlotColor: '#1483D1',
+          availSlotBg: '#D1EDFF',
+     
+
+        },
+        badge: { 
+          am: '#EEFDF3',
+          pm: '#EDEDFC',
+          sessionText: '#45835B',
+
+
         },
         card: {
           line: '#F488BA',

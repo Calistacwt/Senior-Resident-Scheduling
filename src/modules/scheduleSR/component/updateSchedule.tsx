@@ -1,14 +1,7 @@
 const UpdateSchedule = () => {
   return (
-    <div className="bg-white w-full p-8 rounded-lg mt-5">
+    <div className="w-full mt-8">
       <form className="space-y-4">
-        <div>
-          <h3 className=" font-bold text-md mb-3 ">
-            Senior Resident Scheduling
-          </h3>
-          <hr className="border-1 border-background-hr" />
-        </div>
-
         {/* Posting Period */}
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
@@ -59,6 +52,7 @@ const UpdateSchedule = () => {
           </div>
         </div>
 
+        {/* Senior Doctor */}
         <div className="flex justify-between items-center">
           <div className="flex flex-col flex-1 mr-3 space-y-2">
             <label className="text-xs font-medium text-form-label">
@@ -80,6 +74,7 @@ const UpdateSchedule = () => {
             </select>
           </div>
 
+          {/* Session */}
           <div className="flex flex-col flex-1 space-y-2 ">
             <label className="text-xs font-medium text-form-label">
               Session
@@ -101,6 +96,7 @@ const UpdateSchedule = () => {
           </div>
         </div>
 
+        {/* Available Room */}
         <div className="flex justify-between items-center">
           <div className="flex flex-col flex-1 mr-3 space-y-2">
             <label className="text-xs font-medium text-form-label">
@@ -122,6 +118,7 @@ const UpdateSchedule = () => {
             </select>
           </div>
 
+          {/* SR Room */}
           <div className="flex flex-col flex-1 space-y-2 ">
             <label className="text-xs font-medium text-form-label">
               SR Room
@@ -143,6 +140,7 @@ const UpdateSchedule = () => {
           </div>
         </div>
 
+        {/* Scheduled Date */}
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
             Scheduled Date
@@ -162,6 +160,7 @@ const UpdateSchedule = () => {
           </select>
         </div>
 
+        {/* Activity */}
         <div className="flex flex-col space-y-2 w-full">
           <label className="text-xs font-medium text-form-label">
             Activity
@@ -173,11 +172,14 @@ const UpdateSchedule = () => {
           />
         </div>
 
+        {/* Btn */}
         <div className="flex justify-end items-end space-x-4">
+          {/* Back Btn */}
           <button className="bg-white border  text-black font-medium text-xs p-2 rounded-md">
             Back
           </button>
 
+          {/* Submit Btn */}
           <button className="bg-sidebar-active  text-white font-medium text-xs p-2 rounded-md">
             Submit
           </button>
