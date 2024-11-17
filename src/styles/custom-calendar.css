@@ -1,0 +1,27 @@
+.react-datepicker__header {
+  background-color: white;
+  border: none;
+  font-size: small;
+  margin-top: 2px;
+}
+
+.react-datepicker__current-month {
+  font-size: small;
+}
+
+.react-datepicker__day--selected {
+  background-color: #2371a9;
+  color: white;
+  border-radius: 100%;
+}
+
+.react-datepicker__day-name {
+  color: #968c8c;
+  font-weight: 500;
+}
+
+.react-datepicker__month {
+  margin: 0;
+  margin-left: 2px;
+  margin-right: 2px;
+}

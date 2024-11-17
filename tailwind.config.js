@@ -44,6 +44,14 @@ module.exports = {
           line: '#F488BA',
           line2: '#4C8FCB',
           text: '#968C8C',
+        },
+        component: {
+          background: '#D5D5D5',
+          modalText: '#888888'
+        },
+        badge: { 
+          background: '#BEDAFE',
+          text: '#006FFF',
         }
       },
    
