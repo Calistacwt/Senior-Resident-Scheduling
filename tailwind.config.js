@@ -43,6 +43,9 @@ module.exports = {
           hr: '#CBCBCB',
           availSlotColor: '#1483D1',
           availSlotBg: '#D1EDFF',
+          search: '#F7F7F7',
+          border: '#D9D9D9'
+
         },
         badge: { 
           am: '#EEFDF3',

@@ -1,54 +1,79 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from "react";
 
 export type SearchProps = {
-    onSearch: (value: string) => void
-}
+  onSearch: (value: string) => void;
+};
 
 const Searchbar = (props: SearchProps) => {
-    const { onSearch } = props;
-    const [value, setValue] = useState('Enter search...');
+  const { onSearch } = props;
+  const [value, setValue] = useState("Search");
 
-    const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        const { target } = event;
-        setValue(target.value);
-    };
+  const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { target } = event;
+    setValue(target.value);
+  };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            onSearch(value);
-        }
-    };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      onSearch(value);
+    }
+  };
 
-    return (
-        <div className="relative w-full flex items-center text-sidebar">   
-            <input
-                type="search"
-                name="search"
-                placeholder={value}
-                className="bg-white h-10 px-5 pr-10 w-full rounded-full text-sm focus:outline-none"
-                onChange={searchHandler}
-                onKeyDown={handleKeyDown}
+  return (
+    <div className="w-full flex items-center text-sidebar bg-white p-3 rounded-lg">
+      <div className="flex w-full space-x-2">
+        <div className="relative flex-grow">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+            <img
+              src="/assets/images/search.png"
+              alt="Search Logo"
+              className="rounded-md w-4 "
             />
-            <button type="submit" className="right-0 top-0 mt-3 mr-4">
-                <svg
-                    className="h-4 w-4 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                >
-                    <path
-                        fillRule="evenodd"
-                        d="M13.53 14.47a8 8 0 111.414-1.414l3.96 3.96a1 1 0 01-1.414 1.414l-3.96-3.96zM8 14a6 6 0 100-12 6 6 0 000 12z"
-                        clipRule="evenodd"
-                    />
-                </svg>
-            </button>
-            <div className="flex space-x-2 ml-2">
-                <button className="border-dashboard-border rounded">Filter</button>
-                <button className="border-dashboard-border rounded">Import</button>
-                <button className="border-dashboard-border rounded">Export</button>
-            </div>
+          </span>
+          <input
+            type="search"
+            name="search"
+            placeholder={value}
+            className="bg-form-search w-full p-3 pl-10 text-sm focus:outline-none rounded-xl"
+            onChange={searchHandler}
+            onKeyDown={handleKeyDown}
+          />
         </div>
-    );
+        <div className="flex-shrink-0 flex justify-center items-center space-x-4">
+          <button className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center">
+            <img
+              src="/assets/images/filter.png"
+              alt="Import Logo"
+              className="rounded-md cursor-pointer w-4"
+            />
+            <div>
+              <p>Filter</p>
+            </div>
+          </button>
+          <button className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center">
+            <img
+              src="/assets/images/import.png"
+              alt="Import Logo"
+              className="rounded-md cursor-pointer w-4"
+            />
+            <div>
+              <p>Import</p>
+            </div>
+          </button>
+          <button className="text-xs text-black rounded p-1.5 font-semibold border-form-border border flex space-x-2 justify-center items-center">
+            <img
+              src="/assets/images/export.svg"
+              alt="Export Logo"
+              className="rounded-md cursor-pointer w-5"
+            />
+            <div>
+              <p className="text-xs">Export</p>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Searchbar;
