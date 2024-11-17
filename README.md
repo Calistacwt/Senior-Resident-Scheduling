@@ -41,5 +41,5 @@ npm install
 ## Contributors
 - Aysham Rashid
 - Chew Wei Ting Calista
-- Darryll Vincet Manalo
+- Darryll Vincent Manalo
 - Yip Jun Hong

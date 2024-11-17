@@ -46,13 +46,8 @@ const sidebarMenu: SidebarMenu[] = [
     path: "/srList",
     icon: ListBulletIcon,
     label: "Senior Resident List",
+    active: ["/srList"],
   },
-  // {
-  //   id: "ncList",
-  //   type: "link",
-  //   path: "/ncList",
-  //   label: "New Case Clinics List",
-  // },
 ];
 
 export default sidebarMenu;
