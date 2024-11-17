@@ -8,7 +8,7 @@ const UpdateSchedule = () => {
             Posting Period
           </label>
 
-          <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+          <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
             <option
               disabled
               selected
@@ -37,7 +37,7 @@ const UpdateSchedule = () => {
               Senior Resident
             </label>
 
-            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
               <option
                 disabled
                 selected
@@ -59,7 +59,7 @@ const UpdateSchedule = () => {
               Senior Doctor
             </label>
 
-            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
               <option
                 disabled
                 selected
@@ -80,7 +80,7 @@ const UpdateSchedule = () => {
               Session
             </label>
 
-            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
               <option
                 disabled
                 selected
@@ -103,7 +103,7 @@ const UpdateSchedule = () => {
               Available Room
             </label>
 
-            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
               <option
                 disabled
                 selected
@@ -124,7 +124,7 @@ const UpdateSchedule = () => {
               SR Room
             </label>
 
-            <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
               <option
                 disabled
                 selected
@@ -146,7 +146,7 @@ const UpdateSchedule = () => {
             Scheduled Date
           </label>
 
-          <select className="text-black text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
+          <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
             <option
               disabled
               selected

@@ -1,4 +1,4 @@
-import UpdateSchedule from "./component/updateSchedule";
+import UpdateSchedule from "./component/updateForm";
 import Card from "./component/card";
 
 const ScheduleSR = () => {
@@ -11,7 +11,7 @@ const ScheduleSR = () => {
         </h6>
       </div>
 
-      <div className="bg-white  p-8 rounded-lg mt-5">
+      <div className="bg-white  p-8 rounded-xl mt-5">
         <div>
           <h3 className=" font-bold text-md mb-3 ">
             Senior Resident Scheduling
@@ -19,12 +19,12 @@ const ScheduleSR = () => {
           <hr className="border-1 border-background-hr" />
         </div>
 
-        <div className="flex justify-evenly space-x-20">
-          <div className="">
+        <div className="flex space-x-14">
+          <div className="flex-1 ">
             <UpdateSchedule />
           </div>
 
-          <div className="">
+          <div className="flex-2">
             <Card />
           </div>
         </div>

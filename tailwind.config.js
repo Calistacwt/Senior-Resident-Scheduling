@@ -40,18 +40,16 @@ module.exports = {
           label: '#968C8C',
           text:  '#5C5C5C',
           placeholder: '#797979',
-          linehr: '#CBCBCB',
+          hr: '#CBCBCB',
           availSlotColor: '#1483D1',
           availSlotBg: '#D1EDFF',
-     
-
         },
         badge: { 
           am: '#EEFDF3',
           pm: '#EDEDFC',
           sessionText: '#45835B',
-
-
+          background: '#BEDAFE',
+          text: '#006FFF',
         },
         card: {
           line: '#F488BA',
@@ -62,10 +60,7 @@ module.exports = {
           background: '#D5D5D5',
           modalText: '#888888'
         },
-        badge: {
-          background: '#BEDAFE',
-          text: '#006FFF',
-        }
+    
       },
    
     },
