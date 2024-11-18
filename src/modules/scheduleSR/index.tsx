@@ -1,30 +1,31 @@
-import InfoCard from "./component/infoCard";
-import RegisterForm from "./component/registerForm";
+import UpdateSchedule from "./component/updateForm";
+import Card from "./component/card";
 
-const RegisterSR = () => {
+const ScheduleSR = () => {
   return (
     <div>
       <div className=" mb-3 space-y-1">
-        <h1 className="font-bold text-xl">Senior Resident Registration</h1>
+        <h1 className="font-bold text-xl">Senior Resident Schedule Planner</h1>
         <h6 className="text-xs text-dashboard-text">
-          Entry of Senior Resident Doctor Information
+          List of DCD Senior doctors supervising SR in NC clinics
         </h6>
       </div>
 
       <div className="bg-white  p-8 rounded-xl mt-5">
         <div>
           <h3 className=" font-bold text-md mb-3 ">
-            Details of Senior Resident Doctor
+            Senior Resident Scheduling
           </h3>
           <hr className="border-1 border-background-hr" />
         </div>
 
         <div className="flex space-x-14">
           <div className="flex-1 ">
-            <RegisterForm />
+            <UpdateSchedule />
           </div>
-          <div className="flex-1">
-            <InfoCard />
+
+          <div className="flex-2">
+            <Card />
           </div>
         </div>
       </div>
@@ -32,4 +33,4 @@ const RegisterSR = () => {
   );
 };
 
-export default RegisterSR;
+export default ScheduleSR;

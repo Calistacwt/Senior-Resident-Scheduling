@@ -19,13 +19,14 @@ module.exports = {
       },
       colors: { 
         background: { 
-          DEFAULT: '#F7F7F7'
+          DEFAULT: '#F7F7F7',
+          hr: '#707070',
         },
         sidebar: { 
-          DEFAULT: '#3C4856',   // text 
-          active: '#2371A9',  
-          hover:  '#F0FAFF',
-          border: '#A0ACBD'
+          DEFAULT: '#3C4856',   
+          active: '#2371A9',    
+          hover:  '#F0FAFF',    
+          border: '#A0ACBD'    
         },
         dashboard: { 
           border: '#D8D8D8',
@@ -35,11 +36,34 @@ module.exports = {
           AM:"#EBFCF2",
           PM: "#EDEDFC",
         },
-        card: { 
+        form: {
+          label: '#968C8C',
+          text:  '#5C5C5C',
+          placeholder: '#797979',
+          hr: '#CBCBCB',
+          availSlotColor: '#1483D1',
+          availSlotBg: '#D1EDFF',
+          search: '#F7F7F7',
+          border: '#D9D9D9'
+
+        },
+        badge: { 
+          am: '#EEFDF3',
+          pm: '#EDEDFC',
+          sessionText: '#45835B',
+          background: '#BEDAFE',
+          text: '#006FFF',
+        },
+        card: {
           line: '#F488BA',
           line2: '#4C8FCB',
           text: '#968C8C',
-        }
+        },
+        component: {
+          background: '#D5D5D5',
+          modalText: '#888888'
+        },
+    
       },
    
     },

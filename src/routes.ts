@@ -23,5 +23,22 @@ const registerSRroute = createRoute({
   getParentRoute: () => rootRoute,
 });
 
+const scheduleSRroute = createRoute({
+  path: "/scheduleSR",
+  component: lazyRouteComponent(() => import("@/modules/scheduleSR")),
+  getParentRoute: () => rootRoute,
+});
+
+const srListRoute = createRoute({
+  path: "/srList",
+  component: lazyRouteComponent(() => import("@/modules/srList")),
+  getParentRoute: () => rootRoute,
+});
+
 // Export Routes
-export default rootRoute.addChildren([dashboardRoute, registerSRroute]);
+export default rootRoute.addChildren([
+  dashboardRoute,
+  registerSRroute,
+  scheduleSRroute,
+  srListRoute,
+]);

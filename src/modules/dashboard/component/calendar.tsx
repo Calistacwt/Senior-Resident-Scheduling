@@ -56,7 +56,7 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
   // Render Days
   const renderDaysOfWeek = () => {
     return daysOfWeek.map((day) => (
-      <div key={day} className="border p-2 text-center">
+      <div key={day} className="border p-2 text-center bg-white">
         <div className="w-42 h-8 font-semibold text-sm flex justify-center items-center ">
           {day}
         </div>
@@ -83,18 +83,22 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
 
       // Find matching schedules for the current day
       const scheduleForDay = scheduleData.filter(
-        (schedule) => schedule.date === dateFormatted,
+        (schedule) => schedule.date === dateFormatted
       );
 
       return (
         <div
           key={index}
           onClick={() => setCurrentDate(day)}
-          className={`cursor-pointer border  text-left text-xs ${
+          className={`cursor-pointer border text-left text-xs ${
+            !isSameMonth(day, monthStart) && viewMode === "month"
+              ? "bg-neutral-50"
+              : "bg-white"
+          } h-40 ${
             !isSameMonth(day, monthStart) && viewMode === "month"
               ? "text-dashboard-text"
               : ""
-          } h-40 ${isCurrentDay ? "" : !isSameMonth(day, monthStart) && viewMode === "month" ? "bg-neutral-50" : ""}`}
+          }`}
         >
           <div className="p-1">
             <div
@@ -107,44 +111,77 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
           </div>
 
           {/* Display schedule details if available */}
-          {scheduleForDay.length > 0 && (
-            <div className="space-y-2">
-              {scheduleForDay
-                .sort((am, pm) =>
-                  am.session === "AM" && pm.session !== "AM" ? -1 : 1,
-                )
-                .map((sessionData, index) => (
-                  <div
-                    key={index}
-                    className={`text-dashboard-text-text rounded-md flex flex-col lg:flex-row justify-between ml-2 mr-2 ${
-                      sessionData.session === "AM"
-                        ? "bg-dashboard-AM"
-                        : "bg-dashboard-PM"
-                    }`}
-                  >
-                    <div className="m-2 flex flex-col space-y-1">
-                      <p className="font-medium text-xs">
-                        {sessionData.dcdScreener}
-                      </p>
+          <div className="relative group">
+            <div>
+              {scheduleForDay.length > 0 && (
+                <div className="space-y-2">
+                  {scheduleForDay
+                    .sort((am, pm) =>
+                      am.session === "AM" && pm.session !== "AM" ? -1 : 1
+                    )
+                    .map((sessionData, index) => (
+                      <div
+                        key={index}
+                        className={`text-dashboard-text-text rounded-md flex flex-col lg:flex-row justify-between ml-2 mr-2 ${
+                          sessionData.session === "AM"
+                            ? "bg-dashboard-AM"
+                            : "bg-dashboard-PM"
+                        }`}
+                      >
+                        <div className="m-2 flex flex-col space-y-1">
+                          <p className="font-medium text-2xs xl:text-xs">
+                            {sessionData.dcdScreener}
+                          </p>
 
-                      <p className="text-xs font-light hidden xl:flex">
-                        {sessionData.activity}
-                      </p>
-                    </div>
+                          <p className="text-xs font-light hidden xl:flex">
+                            {sessionData.activity}
+                          </p>
+                        </div>
 
-                    <div className="lg:flex-col lg:space-y-1 lg:m-1 hidden xl:flex ">
-                      <div className="bg-dashboard-room text-2xs rounded-sm font-normal text-white flex items-center justify-center self-start lg:self-center p-0.5 lg:mr-4 lg:mb-0">
-                        {sessionData.room}
+                        <div className="lg:flex-col lg:space-y-1 lg:m-1 hidden xl:flex ">
+                          <div className="bg-dashboard-room text-2xs rounded-sm font-normal text-white flex items-center justify-center self-start lg:self-center p-0.5 lg:mr-4 lg:mb-0">
+                            {sessionData.room}
+                          </div>
+
+                          <div className="bg-dashboard-active rounded-sm text-2xs font-normal text-white flex items-center justify-center self-start lg:self-center p-0.5 lg:mr-4 lg:mb-0">
+                            {sessionData.srRoom}
+                          </div>
+                        </div>
                       </div>
-
-                      <div className="bg-dashboard-active rounded-sm text-2xs font-normal text-white flex items-center justify-center self-start lg:self-center p-0.5 lg:mr-4 lg:mb-0">
-                        {sessionData.srRoom}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                    ))}
+                </div>
+              )}
             </div>
-          )}
+
+            {/* Display the card when hover over */}
+            {/*        
+              <div className="absolute hidden group-hover:block xl:group-hover:hidden bg-white p-8 pt-4 rounded-md shadow-lg w-64 z-10">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <img
+                      src={"/assets/images/KKHlogo.svg"}
+                      alt="KKH Logo"
+                      className="rounded-md w-20"
+                    />
+                  </div>
+
+                  <div className="text-right">
+                    <h2 className="text-3xs font-bold">
+                      {currentDate.toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </h2>
+                    <h5 className="font-semibold text-3xs text-card-text">
+                      Session
+                    </h5>
+                  </div>
+                </div>
+              </div> */}
+
+            {/* End of hover card  */}
+          </div>
         </div>
       );
     });
@@ -215,14 +252,13 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
       </div>
 
       {/* Card Detail  */}
-
       {viewMode === "week" && currentDate && (
         <div className="flex flex-col xl:flex-row justify-evenly items-center p-2 space-y-8 xl:space-y-0 mt-20">
           {["AM", "PM"].map((session) => {
             // Filter schedule data for the current date and session
             const filteredData = scheduleData.filter(
               (schedule) =>
-                schedule.date === dateFormatted && schedule.session === session,
+                schedule.date === dateFormatted && schedule.session === session
             );
 
             return (

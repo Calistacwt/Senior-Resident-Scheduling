@@ -1,18 +1,16 @@
-import { SCHEDULE } from "@/config/endpoint";
 import { useEffect, useState } from "react";
-
-import { srSchedule } from "@/types/dashboard";
 import Calendar from "./component/calendar";
+import { getSRSchedule } from "@/services/dashboard";
 
 const Dashboard = () => {
-  const [scheduleData, setScheduleData] = useState<srSchedule[]>([]);
+  const [scheduleData, setScheduleData] = useState([]);
 
   useEffect(() => {
     const fetchSchedule = async () => {
-      const response = await fetch(SCHEDULE);
-      const data = await response.json();
+      const data = await getSRSchedule();
       setScheduleData(data);
     };
+
     fetchSchedule();
   }, []);
 
@@ -36,13 +34,15 @@ const Dashboard = () => {
               className="rounded-md cursor-pointer w-5"
             />
             <div>
-              <p>Export</p>
+              <p>Import</p>
             </div>
           </button>
         </div>
       </div>
 
-      <Calendar scheduleData={scheduleData} />
+      <div id="calendar-content">
+        <Calendar scheduleData={scheduleData} />
+      </div>
     </div>
   );
 };
