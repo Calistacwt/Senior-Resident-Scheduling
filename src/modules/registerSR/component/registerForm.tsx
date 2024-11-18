@@ -113,13 +113,9 @@ const RegisterForm = () => {
               onClick={() => setIsCallDateOpen(true)}
               className="text-left w-full text-black text-xs border rounded-md border-form-label p-2"
             >
-              {selectedDates.length > 0 ? (
-                selectedDates.map((date) => formatDate(date)).join(", ")
-              ) : (
-                <span className="text-form-placeholder text-2xs xl:text-xs">
-                  Select Date
-                </span>
-              )}
+              {selectedDates.length > 0
+                ? selectedDates.map((date) => formatDate(date)).join(", ")
+                : "Select Date"}
             </button>
 
             <div>
@@ -142,13 +138,9 @@ const RegisterForm = () => {
               onClick={() => setIsLeaveOpen(true)}
               className="text-left w-full text-black text-xs border rounded-md border-form-label p-2"
             >
-              {selectedLeaveDate.length > 0 ? (
-                selectedLeaveDate.map((date) => formatDate(date)).join(", ")
-              ) : (
-                <span className="text-form-placeholder text-2xs xl:text-xs">
-                  Select Date
-                </span>
-              )}
+              {selectedLeaveDate.length > 0
+                ? selectedLeaveDate.map((date) => formatDate(date)).join(", ")
+                : "Select Date"}
             </button>
 
             <div>
@@ -161,7 +153,7 @@ const RegisterForm = () => {
               />
             </div>
           </div>
-        </div>
+          </div>
 
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
@@ -198,6 +190,7 @@ const RegisterForm = () => {
             Submit
           </button>
         </div>
+        
       </form>
     </div>
   );

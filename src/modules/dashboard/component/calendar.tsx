@@ -83,7 +83,7 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
 
       // Find matching schedules for the current day
       const scheduleForDay = scheduleData.filter(
-        (schedule) => schedule.date === dateFormatted,
+        (schedule) => schedule.date === dateFormatted
       );
 
       return (
@@ -117,7 +117,7 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
                 <div className="space-y-2">
                   {scheduleForDay
                     .sort((am, pm) =>
-                      am.session === "AM" && pm.session !== "AM" ? -1 : 1,
+                      am.session === "AM" && pm.session !== "AM" ? -1 : 1
                     )
                     .map((sessionData, index) => (
                       <div
@@ -258,7 +258,7 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
             // Filter schedule data for the current date and session
             const filteredData = scheduleData.filter(
               (schedule) =>
-                schedule.date === dateFormatted && schedule.session === session,
+                schedule.date === dateFormatted && schedule.session === session
             );
 
             return (
