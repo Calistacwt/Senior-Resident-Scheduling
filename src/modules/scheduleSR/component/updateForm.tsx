@@ -8,14 +8,11 @@ const UpdateSchedule = () => {
             Posting Period
           </label>
 
-          <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
-            <option
-              disabled
-              selected
-              value=""
-              hidden
-              className="text-form-placeholder"
-            >
+          <select
+            className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
+            defaultValue=""
+          >
+            <option disabled value="" hidden className="text-form-placeholder">
               Select Date
             </option>
             <option className="text-black">01 July 2024 - 31 July 2024</option>
@@ -37,14 +34,11 @@ const UpdateSchedule = () => {
               Senior Resident
             </label>
 
-            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
-              <option
-                disabled
-                selected
-                value=""
-                hidden
-                className="text-form-placeholder"
-              >
+            <select
+              className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
+              defaultValue=""
+            >
+              <option value="" hidden className="text-form-placeholder">
                 Select Senior Resident
               </option>
               <option className="text-black">Senior 2</option>
@@ -59,18 +53,14 @@ const UpdateSchedule = () => {
               Senior Doctor
             </label>
 
-            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
-              <option
-                disabled
-                selected
-                value=""
-                hidden
-                className="text-form-placeholder"
-              >
+            <select
+              className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
+              defaultValue=""
+            >
+              <option value="" hidden className="text-form-placeholder">
                 Select Senior Doctor
               </option>
-              <option>Senior 1</option>
-              <option>Senior 2</option>
+              <option className="text-black">Dr Christelle</option>
             </select>
           </div>
 
@@ -80,18 +70,14 @@ const UpdateSchedule = () => {
               Session
             </label>
 
-            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
-              <option
-                disabled
-                selected
-                value=""
-                hidden
-                className="text-form-placeholder"
-              >
+            <select
+              className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
+              defaultValue=""
+            >
+              <option value="" hidden className="text-form-placeholder">
                 Select Session
               </option>
-              <option>AM</option>
-              <option>PM</option>
+              <option className="text-black">AM</option>
             </select>
           </div>
         </div>
@@ -103,18 +89,14 @@ const UpdateSchedule = () => {
               Available Room
             </label>
 
-            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
-              <option
-                disabled
-                selected
-                value=""
-                hidden
-                className="text-form-placeholder"
-              >
-                Select Availale Room
+            <select
+              className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
+              defaultValue=""
+            >
+              <option value="" hidden className="text-form-placeholder">
+                Select Available Room
               </option>
-              <option>Room 17</option>
-              <option>Room 18</option>
+              <option className="text-black">Senior 2</option>
             </select>
           </div>
 
@@ -124,18 +106,14 @@ const UpdateSchedule = () => {
               SR Room
             </label>
 
-            <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
-              <option
-                disabled
-                selected
-                value=""
-                hidden
-                className="text-form-placeholder"
-              >
+            <select
+              className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
+              defaultValue=""
+            >
+              <option value="" hidden className="text-form-placeholder">
                 Select SR Room
               </option>
-              <option>Room 17</option>
-              <option>Room 18</option>
+              <option className="text-black">Senior 2</option>
             </select>
           </div>
         </div>
@@ -146,17 +124,14 @@ const UpdateSchedule = () => {
             Scheduled Date
           </label>
 
-          <select className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5">
-            <option
-              disabled
-              selected
-              value=""
-              hidden
-              className="text-form-placeholder"
-            >
+          <select
+            className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
+            defaultValue=""
+          >
+            <option value="" hidden className="text-form-placeholder">
               Select Date
             </option>
-            <option className="text-black">01 July 2024</option>
+            <option className="text-black">Senior 2</option>
           </select>
         </div>
 

@@ -140,6 +140,7 @@ const DateModal: React.FC<CalendarModalProps> = ({
           {/* Add Date Button */}
           <div className="flex justify-end items-end">
             <button
+              type="button"
               onClick={handleAddDateInput}
               className="mt-2 bg-badge-background bg-opacity-35 text-2xs font-semibold p-1 px-3 text-badge-text rounded-full"
             >
@@ -151,12 +152,14 @@ const DateModal: React.FC<CalendarModalProps> = ({
         {/* Action Buttons */}
         <div className="flex space-x-5 mt-4">
           <button
+            type="button"
             onClick={onClose}
             className="bg-white text-component-modalText font-semibold p-2 rounded-md w-full border border-sidebar-border text-sm"
           >
             Cancel
           </button>
           <button
+            type="button"
             onClick={handleApply}
             className="bg-sidebar-active text-white p-2 rounded-md w-full font-semibold text-sm"
           >
