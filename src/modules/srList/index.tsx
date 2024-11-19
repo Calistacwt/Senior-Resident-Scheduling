@@ -1,7 +1,20 @@
+import { useEffect, useState } from "react";
+import { getSRData } from "@/services/srList";
 import Searchbar from "./component/searchbar";
 import List from "./component/list";
 
 const srList = () => {
+  const [SRData, setSRData] = useState([]);
+
+  useEffect(() => {
+    const fetchSRData = async () => {
+      const data = await getSRData();
+      setSRData(data);
+    };
+
+    fetchSRData();
+  }, []);
+
   return (
     <>
       <div className="m-3">
@@ -18,7 +31,7 @@ const srList = () => {
           }}
         />
 
-        <List />
+        <List SRData={SRData} />
       </div>
     </>
   );
