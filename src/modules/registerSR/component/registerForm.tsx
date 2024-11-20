@@ -1,4 +1,4 @@
-import DateModal from "@/component/DateModal";
+import CalendarModel from "@/component/CalendarModel";
 import { formatDate } from "@/utils/formatter";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,19 +11,11 @@ import { DateRange } from "react-date-range";
 
 const RegisterForm = () => {
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
-  const [selectedLeaveDate, setSelectedLeaveDate] = useState<Date[]>([]);
-  // const [postingDate, setPostingDate] = useState<Date[]>([]);
   const [isCallDateOpen, setIsCallDateOpen] = useState(false);
-  const [isLeaveOpen, setIsLeaveOpen] = useState(false);
 
   const handleCallDateChange = (dates: Date[]) => {
     setSelectedDates(dates);
     setIsCallDateOpen(false);
-  };
-
-  const handleLeaveChange = (dates: Date[]) => {
-    setIsLeaveOpen(false);
-    setSelectedLeaveDate(dates);
   };
 
   const [postingPeriod, setPostingPeriod] = useState({
@@ -75,8 +67,6 @@ const RegisterForm = () => {
               </button>
             </div>
           )}
-
-          {/* <DatePicker inline calendarClassName="custom-calendar" />  */}
         </div>
 
         <div className="mt-4 flex items-center space-x-4">
@@ -133,9 +123,9 @@ const RegisterForm = () => {
         </div>
 
         <div className="flex justify-between items-center">
-          <div className="flex flex-col flex-1 mr-3  ">
+          <div className="flex flex-col flex-1">
             <label className="text-xs font-medium text-form-label mb-2">
-              Call Dates
+              Commitment
             </label>
             <button
               type="button"
@@ -148,41 +138,15 @@ const RegisterForm = () => {
             </button>
 
             <div>
-              <DateModal
+              <CalendarModel
                 isOpen={isCallDateOpen}
                 onClose={() => setIsCallDateOpen(false)}
                 selectedDate={selectedDates}
                 onDateChange={handleCallDateChange}
-                title="Call Dates"
               />
             </div>
           </div>
-
-          <div className="flex flex-col flex-1   ">
-            <label className="text-xs font-medium text-form-label mb-2">
-              Leave
-            </label>
-            <button
-              type="button"
-              onClick={() => setIsLeaveOpen(true)}
-              className="text-left w-full text-black text-xs border rounded-md border-form-label p-2"
-            >
-              {selectedLeaveDate.length > 0
-                ? selectedLeaveDate.map((date) => formatDate(date)).join(", ")
-                : "Select Date"}
-            </button>
-
-            <div>
-              <DateModal
-                isOpen={isLeaveOpen}
-                onClose={() => setIsLeaveOpen(false)}
-                selectedDate={selectedLeaveDate}
-                onDateChange={handleLeaveChange}
-                title="Leave"
-              />
-            </div>
-          </div>
-          </div>
+        </div>
 
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
@@ -219,7 +183,6 @@ const RegisterForm = () => {
             Submit
           </button>
         </div>
-        
       </form>
     </div>
   );

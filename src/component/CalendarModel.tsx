@@ -9,15 +9,13 @@ interface CalendarModalProps {
   onClose: () => void;
   selectedDate: Date[];
   onDateChange: (dates: Date[]) => void;
-  title?: string;
 }
 
-const DateModal: React.FC<CalendarModalProps> = ({
+const CalendarModal: React.FC<CalendarModalProps> = ({
   isOpen,
   onClose,
   selectedDate,
   onDateChange,
-  title = "",
 }) => {
   // If modal is not open, dont render anything
   if (!isOpen) return null;
@@ -84,10 +82,20 @@ const DateModal: React.FC<CalendarModalProps> = ({
       setDateInputs((prevInputs) => prevInputs.filter((_, i) => i !== index));
     }
   };
+  const [selectedReasons, setSelectedReasons] = useState<string[]>(
+    new Array(dateInputs.length).fill(""),
+  );
+  const handleReasonChange = (reason: string, index: number) => {
+    setSelectedReasons((prevReasons) => {
+      const newReasons = [...prevReasons];
+      newReasons[index] = reason;
+      return newReasons;
+    });
+  };
 
   return (
     <div className="bg-component-background fixed inset-0 bg-opacity-30 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg w-96 shadow-lg relative">
+      <div className="bg-white p-6 rounded-lg w-[500px] shadow-lg relative">
         {/* Modal Header */}
         <div className="flex justify-start items-start space-x-3 mb-5">
           <img
@@ -95,37 +103,96 @@ const DateModal: React.FC<CalendarModalProps> = ({
             alt="Calendar Logo"
             className="rounded-md w-8"
           />
-          <h1 className="text-xl font-bold">{title}</h1>
+          <h1 className="text-xl font-bold">Commitment</h1>
         </div>
 
         {/* Date Input Fields */}
         <div>
           {dateInputs.map((_, index) => (
             <div key={index} className="mb-2 relative">
-              <button
-                type="button"
-                onClick={() => toggleCalendar(index)}
-                className="text-left w-full text-black text-xs border rounded-md border-form-label p-2.5 font-semibold"
-              >
-                {tempSelectedDates[index]
-                  ? formatDate(tempSelectedDates[index])
-                  : "Select Date"}
-              </button>
+              <div>
+                <div className="flex space-x-3 justify-center items-center  ">
+                  <div className="flex flex-col  flex-1  space-y-3 p-1">
+                    <div className="flex space-x-3 ">
+                      <button
+                        type="button"
+                        onClick={() => toggleCalendar(index)}
+                        className="text-left w-full text-black text-xs border rounded-md border-form-label p-2.5 font-semibold"
+                      >
+                        {tempSelectedDates[index]
+                          ? formatDate(tempSelectedDates[index])
+                          : "Select Date"}
+                      </button>
 
-              {/* Delete Date Button */}
-              {tempSelectedDates[index] && tempSelectedDates.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => handleDelete(index)}
-                  className="absolute top-1 right-3 text-red-500 font-bold text-lg"
-                >
-                  &times;
-                </button>
-              )}
+                      <select
+                        onChange={(e) =>
+                          handleReasonChange(e.target.value, index)
+                        }
+                        className="text-black text-xs font-semibold border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
+                        defaultValue=""
+                      >
+                        <option
+                          value=""
+                          hidden
+                          className="text-form-placeholder"
+                        >
+                          Reason
+                        </option>
+                        <option className="text-black">Leave</option>
+                        <option className="text-black">Call Dates</option>
+                        <option className="text-black">On-Course</option>
+                        <option className="text-black">Others</option>
+                      </select>
+                    </div>
+
+                    {selectedReasons[index] === "Leave" && (
+                      <select className="text-black text-xs font-semibold border rounded-md w-full  border-form-label focus:border-indigo-500 p-2.5">
+                        <option
+                          value=""
+                          hidden
+                          className="text-form-placeholder"
+                        >
+                          Session
+                        </option>
+                        <option value="Full Day" className="text-black">
+                          Full Day
+                        </option>
+                        <option value="AM" className="text-black">
+                          AM
+                        </option>
+                        <option value="PM" className="text-black">
+                          PM
+                        </option>
+                      </select>
+                    )}
+
+                    {selectedReasons[index] === "Others" && (
+                      <input
+                        type="text"
+                        placeholder="Enter Reasons"
+                        className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
+                      />
+                    )}
+                  </div>
+
+                  <div>
+                    {/* Delete Date Button */}
+                    {tempSelectedDates.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(index)}
+                        className="text-red-500 font-bold text-lg"
+                      >
+                        &times;
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               {/* Date Picker */}
               {activeDatePickerIndex === index && (
-                <div className="z-10 absolute">
+                <div className="z-10 top-12 left-1 absolute">
                   <DatePicker
                     selected={tempSelectedDates[index]}
                     onChange={(date) => handleDateChange(date, index)}
@@ -171,4 +238,4 @@ const DateModal: React.FC<CalendarModalProps> = ({
   );
 };
 
-export default DateModal;
+export default CalendarModal;
