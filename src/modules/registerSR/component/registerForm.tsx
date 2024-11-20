@@ -4,9 +4,15 @@ import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import "/src/styles/custom-calendar.css";
 
+//---------
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import { DateRange } from "react-date-range";
+
 const RegisterForm = () => {
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
   const [selectedLeaveDate, setSelectedLeaveDate] = useState<Date[]>([]);
+  // const [postingDate, setPostingDate] = useState<Date[]>([]);
   const [isCallDateOpen, setIsCallDateOpen] = useState(false);
   const [isLeaveOpen, setIsLeaveOpen] = useState(false);
 
@@ -20,23 +26,55 @@ const RegisterForm = () => {
     setSelectedLeaveDate(dates);
   };
 
+  const [postingPeriod, setPostingPeriod] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: "selection",
+  });
+
+  const [isPostingPeriodOpen, setIsPostingPeriodOpen] = useState(false);
+
+  const handleDateRangeChange = (ranges: any) => {
+    const { startDate, endDate } = ranges.selection; // Extract the selected range
+    setPostingPeriod({ ...postingPeriod, startDate, endDate }); // Update state
+  };
+
   return (
     <div className="w-full">
       <form className="space-y-4">
         <div className="space-y-2 mt-4">
-          <label className="text-xs font-medium text-form-label">
+          <label className="text-xs font-medium text-form-label mb-2">
             Posting Period
           </label>
-
-          <select
-            className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
-            defaultValue=""
+          <button
+            type="button"
+            onClick={() => setIsPostingPeriodOpen(true)}
+            className="text-left w-full text-black text-xs border rounded-md border-form-label p-2"
           >
-            <option disabled value="" hidden className="text-form-placeholder">
-              Select Date
-            </option>
-            <option className="text-black">01 July 2024 - 31 July 2024</option>
-          </select>
+            {postingPeriod.startDate && postingPeriod.endDate
+              ? `${formatDate(postingPeriod.startDate)} - ${formatDate(postingPeriod.endDate)}`
+              : "Select Date Range"}
+          </button>
+
+          {isPostingPeriodOpen && (
+            <div className="absolute z-10">
+              <DateRange
+                editableDateInputs={true}
+                onChange={handleDateRangeChange}
+                moveRangeOnFirstSelection={false}
+                ranges={[postingPeriod]}
+                className="custom-calendar"
+              />
+
+              <button
+                type="button"
+                className="mt-2 text-xs bg-gray-200 px-3 py-1 rounded-md"
+                onClick={() => setIsPostingPeriodOpen(false)}
+              >
+                Close
+              </button>
+            </div>
+          )}
 
           {/* <DatePicker inline calendarClassName="custom-calendar" />  */}
         </div>
@@ -55,20 +93,11 @@ const RegisterForm = () => {
               Senior Resident
             </label>
 
-            <select
-              className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
-              defaultValue=""
-            >
-              <option
-                disabled
-                value=""
-                hidden
-                className="text-form-placeholder"
-              >
-                Select Senior Resident
-              </option>
-              <option className="text-black">Senior 2</option>
-            </select>
+            <input
+              type="text"
+              placeholder="Enter Senior Resident Name"
+              className="border border-form-label rounded-md w-full text-xs p-2 "
+            />
           </div>
         </div>
 
