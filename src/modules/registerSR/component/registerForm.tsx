@@ -10,12 +10,19 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
 
 const RegisterForm = () => {
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+  const [selectedDates, setSelectedDates] = useState<{
+    dates: Date[];
+    reasons: string[];
+    sessions: string[];
+  }>({ dates: [], reasons: [], sessions: [] });
   const [isCallDateOpen, setIsCallDateOpen] = useState(false);
 
-  const handleCallDateChange = (dates: Date[]) => {
-    setSelectedDates(dates);
-    setIsCallDateOpen(false);
+  const handleCallDateChange = (data: {
+    dates: Date[];
+    reasons: string[];
+    sessions: string[];
+  }) => {
+    setSelectedDates(data);
   };
 
   const [postingPeriod, setPostingPeriod] = useState({
@@ -132,8 +139,16 @@ const RegisterForm = () => {
               onClick={() => setIsCallDateOpen(true)}
               className="text-left w-full text-black text-xs border rounded-md border-form-label p-2"
             >
-              {selectedDates.length > 0
-                ? selectedDates.map((date) => formatDate(date)).join(", ")
+              {selectedDates.dates.length > 0
+                ? selectedDates.dates.map((date, index) => (
+                    <div key={index} className="flex space-x-2  items-center">
+                      <div className="bg-amber-200 rounded-lg p-2 font-semibold text-form-text flex space-x-3">
+                        <p>{formatDate(date)}</p>
+                        <p>{selectedDates.reasons[index]}</p>
+                        <p>{selectedDates.sessions[index]}</p>
+                      </div>
+                    </div>
+                  ))
                 : "Select Date"}
             </button>
 
@@ -141,7 +156,7 @@ const RegisterForm = () => {
               <CalendarModel
                 isOpen={isCallDateOpen}
                 onClose={() => setIsCallDateOpen(false)}
-                selectedDate={selectedDates}
+                selectedDate={selectedDates.dates}
                 onDateChange={handleCallDateChange}
               />
             </div>
