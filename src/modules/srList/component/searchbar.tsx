@@ -3,15 +3,20 @@ import React, { ChangeEvent, useState } from "react";
 export type SearchProps = {
   onSearch: (value: string) => void;
   onFilterToggle: () => void;
+  onClearSearch: () => void;
 };
 
 const Searchbar = (props: SearchProps) => {
-  const { onSearch, onFilterToggle } = props;
+  const { onSearch, onFilterToggle, onClearSearch} = props;
   const [value, setValue] = useState("Search");
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
     setValue(target.value);
+
+    if (target.value === "") {
+      onClearSearch();
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -43,7 +48,7 @@ const Searchbar = (props: SearchProps) => {
         <div className="flex-shrink-0 flex justify-center items-center space-x-4">
           <button
             className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center"
-            onClick={onFilterToggle} // Call the filter toggle function
+            onClick={onFilterToggle}
           >
             <img
               src="/assets/images/filter.png"

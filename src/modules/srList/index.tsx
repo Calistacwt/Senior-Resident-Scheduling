@@ -46,6 +46,11 @@ const srList = () => {
     }
   };
 
+  const handleClearSearch = async() => {
+    const data = await getSRData();
+    setSRData(data);
+  }
+
   return (
     <>
       <div className="m-3">
@@ -63,6 +68,7 @@ const srList = () => {
 
           onSearch={handleSearch}
           onFilterToggle={handleFilterToggle}
+          onClearSearch={handleClearSearch}
         />
 
         <List SRData={SRData} />
