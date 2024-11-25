@@ -1,7 +1,21 @@
-import UpdateSchedule from "./component/updateForm";
-import Card from "./component/card";
+import Card from "../component/card";
+import UpdateSchedule from "../component/updateForm";
+import { useEffect, useState } from "react";
+import { getSRSchedule } from "@/services/dashboard";
 
-const ScheduleSR = () => {
+const ScheduleSRUpdate = () => {
+  const [scheduleData, setScheduleData] = useState([]);
+
+  useEffect(() => {
+    const fetchSRInfo = async () => {
+      const data = await getSRSchedule();
+      console.log(data);
+      setScheduleData(data);
+    };
+
+    fetchSRInfo();
+  }, []);
+
   return (
     <div>
       <div className=" mb-3 space-y-1">
@@ -21,7 +35,7 @@ const ScheduleSR = () => {
 
         <div className="flex space-x-14">
           <div className="flex-1 ">
-            <UpdateSchedule scheduleData={[]} />
+            <UpdateSchedule scheduleData={scheduleData} />
           </div>
 
           <div className="flex-2">
@@ -33,4 +47,4 @@ const ScheduleSR = () => {
   );
 };
 
-export default ScheduleSR;
+export default ScheduleSRUpdate;

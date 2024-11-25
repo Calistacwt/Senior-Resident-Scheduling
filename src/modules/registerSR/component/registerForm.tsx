@@ -153,7 +153,7 @@ const RegisterForm = () => {
               />
             </div>
           </div>
-          </div>
+        </div>
 
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
@@ -190,7 +190,6 @@ const RegisterForm = () => {
             Submit
           </button>
         </div>
-        
       </form>
     </div>
   );

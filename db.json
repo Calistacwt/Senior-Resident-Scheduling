@@ -22,6 +22,15 @@
       "date": "2024-11-21",
       "dcdScreener": "Dr Kenneth",
       "activity": "Observe triage clinic",
+      "room": "Rm 07",
+      "srRoom": "Rm 12",
+      "session": "PM",
+      "id": "2"
+    },
+    {
+      "date": "2024-11-21",
+      "dcdScreener": "Dr Kenneth",
+      "activity": "Observe triage clinic",
       "room": "Rm 06",
       "srRoom": "Rm 25",
       "session": "PM",

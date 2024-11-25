@@ -1,4 +1,11 @@
-const UpdateSchedule = () => {
+import { srSchedule } from "@/types/dashboard";
+import { useState } from "react";
+
+interface UpdateScheduleProps {
+  scheduleData: srSchedule[];
+}
+
+const UpdateSchedule: React.FC<UpdateScheduleProps> = ({ scheduleData }) => {
   return (
     <div className="w-full mt-8">
       <form className="space-y-4">
@@ -23,7 +30,7 @@ const UpdateSchedule = () => {
         <div className="mt-4 flex items-center space-x-4">
           <div>
             <img
-              src="./assets/images/avatar.png"
+              src="../assets/images/avatar.png"
               alt="Senior Resident Icon"
               className="w-11 rounded-full"
             />
@@ -55,11 +62,12 @@ const UpdateSchedule = () => {
 
             <select
               className="text-black text-2xs xl:text-xs border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
-              defaultValue=""
+              // defaultValue=""
             >
               <option value="" hidden className="text-form-placeholder">
                 Select Senior Doctor
               </option>
+
               <option className="text-black">Dr Christelle</option>
             </select>
           </div>
@@ -78,6 +86,9 @@ const UpdateSchedule = () => {
                 Select Session
               </option>
               <option className="text-black">AM</option>
+              <option className="text-black">PM</option>
+
+              {/* <option className="text-black">AM</option> */}
             </select>
           </div>
         </div>
@@ -86,7 +97,7 @@ const UpdateSchedule = () => {
         <div className="flex justify-between items-center">
           <div className="flex flex-col flex-1 mr-3 space-y-2">
             <label className="text-xs font-medium text-form-label">
-              Available Room
+              Doctors Room
             </label>
 
             <select
@@ -94,9 +105,9 @@ const UpdateSchedule = () => {
               defaultValue=""
             >
               <option value="" hidden className="text-form-placeholder">
-                Select Available Room
+                Select Available Doctor Room
               </option>
-              <option className="text-black">Senior 2</option>
+              <option className="text-black">Rm 17</option>
             </select>
           </div>
 
@@ -113,7 +124,8 @@ const UpdateSchedule = () => {
               <option value="" hidden className="text-form-placeholder">
                 Select SR Room
               </option>
-              <option className="text-black">Senior 2</option>
+
+              <option className="text-black">Rm 19</option>
             </select>
           </div>
         </div>
@@ -131,7 +143,7 @@ const UpdateSchedule = () => {
             <option value="" hidden className="text-form-placeholder">
               Select Date
             </option>
-            <option className="text-black">Senior 2</option>
+            <option className="text-black">01 July 2024 - 31 July 2024</option>
           </select>
         </div>
 
@@ -142,7 +154,7 @@ const UpdateSchedule = () => {
           </label>
           <input
             type="text"
-            placeholder=""
+            placeholder="Write down the activity"
             className="border border-form-label rounded-md w-full p-3  "
           />
         </div>
@@ -150,12 +162,12 @@ const UpdateSchedule = () => {
         {/* Btn */}
         <div className="flex justify-end items-end space-x-4">
           {/* Back Btn */}
-          <button className="bg-white border  text-black font-medium text-xs p-2 rounded-md">
+          <button className="bg-white border text-black font-medium text-xs p-2 rounded-md">
             Back
           </button>
 
           {/* Submit Btn */}
-          <button className="bg-sidebar-active  text-white font-medium text-xs p-2 rounded-md">
+          <button className="bg-sidebar-active text-white font-medium text-xs p-2 rounded-md">
             Submit
           </button>
         </div>
