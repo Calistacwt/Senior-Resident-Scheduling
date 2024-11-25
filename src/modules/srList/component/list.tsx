@@ -1,4 +1,4 @@
-import { srList } from "@/types/srlist";
+import { srList } from "@/types/srList";
 
 interface SRProps {
   SRData: srList[]; 
