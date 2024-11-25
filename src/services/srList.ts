@@ -1,4 +1,9 @@
-import { SR, SR_NAMESEARCH, SR_SORT_NAME_ASC, SR_SORT_NAME_DESC } from "@/config/endpoint";
+import {
+  SR,
+  SR_NAMESEARCH,
+  SR_SORT_NAME_ASC,
+  SR_SORT_NAME_DESC,
+} from "@/config/endpoint";
 
 import axios from "axios";
 
@@ -11,7 +16,7 @@ export const getSRData = async () => {
 
 export const searchSRData = async (name: String) => {
   const response = await axios.get(
-    `${BASE_URL}${SR_NAMESEARCH.replace("search", String(name))}`
+    `${BASE_URL}${SR_NAMESEARCH.replace("search", String(name))}`,
   );
   return response.data;
 };

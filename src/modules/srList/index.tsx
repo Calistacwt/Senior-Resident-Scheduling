@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getSRData, searchSRData, sortSRDataASC, sortSRDataDESC } from "@/services/srList";
+import {
+  getSRData,
+  searchSRData,
+  sortSRDataASC,
+  sortSRDataDESC,
+} from "@/services/srList";
 import Searchbar from "./component/searchbar";
 import List from "./component/list";
 
@@ -61,7 +66,6 @@ const srList = () => {
         />
 
         <List SRData={SRData} />
-        
       </div>
     </>
   );

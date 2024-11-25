@@ -1,10 +1,10 @@
 import { srList } from "@/types/srList";
 
 interface SRProps {
-  SRData: srList[]; 
+  SRData: srList[];
 }
 
-const List : React.FC<SRProps> = ({ SRData }) => {
+const List: React.FC<SRProps> = ({ SRData }) => {
   return (
     <div className="overflow-x-auto bg-background rounded-lg">
       <table className="w-full whitespace-nowrap bg-white mt-3">
@@ -35,15 +35,6 @@ const List : React.FC<SRProps> = ({ SRData }) => {
         </thead>
 
         <tbody className="w-full border-y border-outline bg-white rounded-2xl">
-          {/* <td className="p-4  font-medium text-xs ">01</td>
-          <td className="p-4  font-medium text-xs ">Senior 1</td>
-          <td className="p-4 font-medium text-xs ">M12345E</td>
-          <td className="p-4 font-medium text-xs">+6598764321</td>
-          <td className="p-4 font-medium text-xs">senior1@mohh.com.sg</td>
-          <td className="p-4 font-medium text-xs ">
-            06 May 2024 - 02 June 2024
-          </td> */}
-
           {SRData.map((SRData, index) => (
             <tr key={index} className="border-b border-dashboard-border">
               <td className="p-4  font-medium text-xs ">{index + 1}</td>
