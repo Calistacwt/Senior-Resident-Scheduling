@@ -1,11 +1,22 @@
-import InfoCard from "./component/infoCard";
-import RegisterForm from "./component/registerForm";
+import { useState } from "react";
+import InfoCard from "../component/infoCard";
+import SeniorResidentForm from "../component/seniorResidentForm";
 
-const RegisterSR = () => {
+const DetailsSR = () => {
+  const [formData, setFormData] = useState({
+    postingPeriod: { startDate: new Date(), endDate: new Date() },
+    name: "",
+    mobile: "",
+    email: "",
+    MCR: "",
+    noSession: "",
+    remarks: "",
+    callDates: "",
+  });
   return (
     <div>
       <div className=" mb-3 space-y-1">
-        <h1 className="font-bold text-xl">Senior Resident Registration</h1>
+        <h1 className="font-bold text-xl">Senior Resident Details</h1>
         <h6 className="text-xs text-dashboard-text">
           Entry of Senior Resident Doctor Information
         </h6>
@@ -21,7 +32,7 @@ const RegisterSR = () => {
 
         <div className="flex space-x-14">
           <div className="flex-1 ">
-            <RegisterForm />
+            <SeniorResidentForm formData={formData} setFormData={setFormData} />
           </div>
           <div className="flex-1">
             <InfoCard />
@@ -32,4 +43,4 @@ const RegisterSR = () => {
   );
 };
 
-export default RegisterSR;
+export default DetailsSR;

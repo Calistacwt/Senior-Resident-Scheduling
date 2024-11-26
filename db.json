@@ -87,5 +87,24 @@
       "numsession": "30",
       "remarks": "abcdef"
     }
+  ],
+  "registerSR": [
+    {
+      "postingPeriod": {
+        "startDate": "2024-11-26T15:01:26.588Z",
+        "endDate": "2024-11-26T15:01:26.588Z"
+      },
+      "name": "Senior 1",
+      "mobile": "98235982",
+      "email": "senior1@mohh.com.sg",
+      "MCR": "M23456E",
+      "noSession": "30 session",
+      "remarks": "activity",
+      "callDates": [
+        "12 November 2024",
+        "14 November 2024"
+      ],
+      "id": "SHePsR_"
+    }
   ]
 }

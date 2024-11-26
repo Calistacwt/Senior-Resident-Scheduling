@@ -27,10 +27,10 @@ const sidebarMenu: SidebarMenu[] = [
   {
     id: "registerSR",
     type: "link",
-    path: "/registerSR",
+    path: "/seniorResidentForm",
     label: "Register SR",
     icon: UserPlusIcon,
-    active: ["/registerSR"],
+    active: ["/seniorResidentForm"],
   },
   {
     id: "scheduleSR",

@@ -25,3 +25,16 @@
   margin-left: 2px;
   margin-right: 2px;
 }
+
+.custom-placeholder::placeholder {
+  color: #797979; /* Hides the placeholder text */
+  font-size: 12px;
+}
+
+.custom-placeholder {
+  border: #968c8c 1px solid;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  width: 100%;
+}
