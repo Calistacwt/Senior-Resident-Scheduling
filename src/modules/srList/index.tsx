@@ -47,10 +47,10 @@ const srList = () => {
     }
   };
 
-  const handleClearSearch = async() => {
+  const handleClearSearch = async () => {
     const data = await getSRData();
     setSRData(data);
-  }
+  };
 
   return (
     <>

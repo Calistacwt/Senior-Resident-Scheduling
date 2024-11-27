@@ -7,7 +7,7 @@ export type SearchProps = {
 };
 
 const Searchbar = (props: SearchProps) => {
-  const { onSearch, onFilterToggle, onClearSearch} = props;
+  const { onSearch, onFilterToggle, onClearSearch } = props;
   const [value, setValue] = useState("Search");
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -16,8 +16,7 @@ const Searchbar = (props: SearchProps) => {
 
     if (target.value === "") {
       onClearSearch();
-    }
-    else {
+    } else {
       onSearch(target.value);
     }
   };
