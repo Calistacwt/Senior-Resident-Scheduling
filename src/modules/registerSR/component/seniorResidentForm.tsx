@@ -1,29 +1,29 @@
-import CalendarModel from "@/component/CalendarModel";
 import { formatDate } from "@/utils/formatter";
 import { useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import "/src/styles/custom-calendar.css";
+import { useNavigate } from "@tanstack/react-router";
 
-//---------
+/*--------- Date Range Picker --------- */
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
 
-const RegisterForm = () => {
-  const [selectedDates, setSelectedDates] = useState<{
-    dates: Date[];
-    reasons: string[];
-    sessions: string[];
-  }>({ dates: [], reasons: [], sessions: [] });
-  const [isCallDateOpen, setIsCallDateOpen] = useState(false);
+/*--------- Date Picker & Calendar Modal --------- */
+import "react-datepicker/dist/react-datepicker.css";
+import "/src/styles/custom-calendar.css";
 
-  const handleCallDateChange = (data: {
-    dates: Date[];
-    reasons: string[];
-    sessions: string[];
-  }) => {
-    setSelectedDates(data);
-  };
+import "react-multi-date-picker";
+import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
+import DatePicker from "react-multi-date-picker";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
+
+const SeniorResidentForm = ({
+  formData,
+  setFormData,
+  handleSubmit,
+  callDates,
+  setCallDates,
+}: any) => {
+  const navigate = useNavigate();
 
   const [postingPeriod, setPostingPeriod] = useState({
     startDate: new Date(),
@@ -38,9 +38,23 @@ const RegisterForm = () => {
     setPostingPeriod({ ...postingPeriod, startDate, endDate }); // Update state
   };
 
+  const handleCallDatesChange = (dates: any) => {
+    setCallDates(dates); // Update state with selected dates
+  };
+
+  const handleBack = async () => {
+    navigate({ to: `/` });
+  };
+
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   return (
     <div className="w-full">
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label mb-2">
             Posting Period
@@ -79,7 +93,7 @@ const RegisterForm = () => {
         <div className="mt-4 flex items-center space-x-4">
           <div>
             <img
-              src="./assets/images/avatar.png"
+              src="/assets/images/avatar.png"
               alt="Senior Resident Icon"
               className="w-11 rounded-full"
             />
@@ -92,6 +106,9 @@ const RegisterForm = () => {
 
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
               placeholder="Enter Senior Resident Name"
               className="border border-form-label rounded-md w-full text-xs p-2 "
             />
@@ -103,6 +120,9 @@ const RegisterForm = () => {
             <label className="text-xs font-medium text-form-label">MCR</label>
             <input
               type="text"
+              name="MCR"
+              value={formData.MCR}
+              onChange={handleInputChange}
               placeholder="Enter MCR"
               className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
             />
@@ -114,6 +134,9 @@ const RegisterForm = () => {
             </label>
             <input
               type="text"
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleInputChange}
               placeholder="Enter Mobile Number"
               className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
             />
@@ -125,41 +148,29 @@ const RegisterForm = () => {
           <input
             type="text"
             placeholder="Enter Email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
             className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
           />
         </div>
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center space-x-4">
           <div className="flex flex-col flex-1">
             <label className="text-xs font-medium text-form-label mb-2">
-              Commitment
+              Call Dates
             </label>
-            <button
-              type="button"
-              onClick={() => setIsCallDateOpen(true)}
-              className="text-left w-full text-black text-xs border rounded-md border-form-label p-2"
-            >
-              {selectedDates.dates.length > 0
-                ? selectedDates.dates.map((date, index) => (
-                    <div key={index} className="flex space-x-2  items-center">
-                      <div className="bg-amber-200 rounded-lg p-2 font-semibold text-form-text flex space-x-3">
-                        <p>{formatDate(date)}</p>
-                        <p>{selectedDates.reasons[index]}</p>
-                        <p>{selectedDates.sessions[index]}</p>
-                      </div>
-                    </div>
-                  ))
-                : "Select Date"}
-            </button>
 
-            <div>
-              <CalendarModel
-                isOpen={isCallDateOpen}
-                onClose={() => setIsCallDateOpen(false)}
-                selectedDate={selectedDates.dates}
-                onDateChange={handleCallDateChange}
-              />
-            </div>
+            <DatePicker
+              value={callDates}
+              onChange={handleCallDatesChange}
+              multiple
+              sort
+              placeholder=" Call Dates"
+              inputClass="custom-placeholder"
+              plugins={[<DatePanel />]}
+              required
+            />
           </div>
         </div>
 
@@ -169,6 +180,9 @@ const RegisterForm = () => {
           </label>
           <input
             type="text"
+            name="noSession"
+            value={formData.noSession}
+            onChange={handleInputChange}
             placeholder="No. of sessions"
             className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
           />
@@ -179,12 +193,16 @@ const RegisterForm = () => {
           <input
             type="text"
             placeholder=""
+            name="remarks"
+            value={formData.remarks}
+            onChange={handleInputChange}
             className="border border-form-label rounded-md w-full text-xs p-3 py-5  "
           />
         </div>
 
         <div className="flex justify-end items-end space-x-4">
           <button
+            onClick={handleBack}
             type="button"
             className="bg-white border  text-black font-medium text-xs p-2 rounded-md px-3"
           >
@@ -192,7 +210,7 @@ const RegisterForm = () => {
           </button>
 
           <button
-            type="button"
+            type="submit"
             className="bg-sidebar-active  text-white font-medium text-xs p-2 rounded-md"
           >
             Submit
@@ -202,4 +220,4 @@ const RegisterForm = () => {
     </div>
   );
 };
-export default RegisterForm;
+export default SeniorResidentForm;
