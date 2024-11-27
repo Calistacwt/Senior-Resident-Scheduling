@@ -1,4 +1,6 @@
-const InfoCard = () => {
+const InfoCard = ({ formData }: any) => {
+  const { seniorResident, mcr, mobile, email, dcd, remarks, postingPeriod } =
+    formData;
   return (
     <div className="bg-background rounded-lg mt-10 p-6">
       <div className="flex justify-between items-center space-x-5">
@@ -30,25 +32,25 @@ const InfoCard = () => {
             <label className="text-card-text font-semibold text-xs">
               Senior Resident
             </label>
-            <p className="font-semibold text-xs">Senior 1</p>
+            <p className="font-semibold text-xs">{seniorResident || "-"}</p>
           </div>
           <div className="space-y-2">
             <label className="text-card-text font-semibold text-xs">MCR</label>
-            <p className="font-semibold text-xs">M12345E</p>
+            <p className="font-semibold text-xs">{mcr || "-"}</p>
           </div>
 
           <div className="space-y-2">
             <label className="text-card-text font-semibold text-xs">
               Mobile
             </label>
-            <p className="font-semibold text-xs">+6598764321</p>
+            <p className="font-semibold text-xs">{mobile || "-"}</p>
           </div>
 
           <div className="space-y-2">
             <label className="text-card-text font-semibold text-xs">
               Email
             </label>
-            <p className="font-semibold text-xs">senior1@mohh.com.sg</p>
+            <p className="font-semibold text-xs">{email || "-"}</p>
           </div>
         </div>
 
@@ -68,14 +70,14 @@ const InfoCard = () => {
           <label className="text-card-text font-semibold text-xs">
             No of DCD sessions after deducting leave and workshop
           </label>
-          <p className="font-semibold text-xs">30 Session</p>
+          <p className="font-semibold text-xs">{dcd || "-"}</p>
         </div>
 
         <div className="flex-1  space-y-2">
           <label className="text-card-text font-semibold text-xs">
             Remarks
           </label>
-          <p className="font-semibold text-xs">-</p>
+          <p className="font-semibold text-xs">{remarks || "-"}</p>
         </div>
       </div>
     </div>

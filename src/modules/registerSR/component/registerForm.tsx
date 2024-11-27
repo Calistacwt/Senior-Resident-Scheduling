@@ -9,7 +9,7 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
 
-const RegisterForm = () => {
+const RegisterForm = ({ formData, setFormData }: any) => {
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
   const [selectedLeaveDate, setSelectedLeaveDate] = useState<Date[]>([]);
   // const [postingDate, setPostingDate] = useState<Date[]>([]);
@@ -37,6 +37,17 @@ const RegisterForm = () => {
   const handleDateRangeChange = (ranges: any) => {
     const { startDate, endDate } = ranges.selection; // Extract the selected range
     setPostingPeriod({ ...postingPeriod, startDate, endDate }); // Update state
+  };
+
+  //form fields
+  // const [seniorResident, setSeniorResident] = useState("");
+  // const [mcr, setMcr] = useState("");
+  // const [mobile, setMobile] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [remarks, setRemarks] = useState("");
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value }); // update a specific field in the form data
   };
 
   return (
@@ -96,6 +107,10 @@ const RegisterForm = () => {
             <input
               type="text"
               placeholder="Enter Senior Resident Name"
+              value={formData.seniorResident}
+              onChange={(e) =>
+                handleInputChange("seniorResident", e.target.value)
+              }
               className="border border-form-label rounded-md w-full text-xs p-2 "
             />
           </div>
@@ -107,6 +122,8 @@ const RegisterForm = () => {
             <input
               type="text"
               placeholder="Enter MCR"
+              value={formData.mcr}
+              onChange={(e) => handleInputChange("mcr", e.target.value)}
               className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
             />
           </div>
@@ -118,6 +135,8 @@ const RegisterForm = () => {
             <input
               type="text"
               placeholder="Enter Mobile Number"
+              value={formData.mobile}
+              onChange={(e) => handleInputChange("mobile", e.target.value)}
               className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
             />
           </div>
@@ -128,6 +147,8 @@ const RegisterForm = () => {
           <input
             type="text"
             placeholder="Enter Email"
+            value={formData.email}
+            onChange={(e) => handleInputChange("email", e.target.value)}
             className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
           />
         </div>
@@ -182,7 +203,7 @@ const RegisterForm = () => {
               />
             </div>
           </div>
-          </div>
+        </div>
 
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
@@ -191,6 +212,8 @@ const RegisterForm = () => {
           <input
             type="text"
             placeholder="No. of sessions"
+            value={formData.dcd}
+            onChange={(e) => handleInputChange("dcd", e.target.value)}
             className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
           />
         </div>
@@ -200,6 +223,8 @@ const RegisterForm = () => {
           <input
             type="text"
             placeholder=""
+            value={formData.remarks}
+            onChange={(e) => handleInputChange("remarks", e.target.value)}
             className="border border-form-label rounded-md w-full text-xs p-3 py-5  "
           />
         </div>
@@ -219,7 +244,6 @@ const RegisterForm = () => {
             Submit
           </button>
         </div>
-        
       </form>
     </div>
   );

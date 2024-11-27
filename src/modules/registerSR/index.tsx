@@ -1,7 +1,21 @@
 import InfoCard from "./component/infoCard";
 import RegisterForm from "./component/registerForm";
 
+import { useState } from "react";
+
 const RegisterSR = () => {
+  const [formData, setFormData] = useState({
+    seniorResident: "",
+    mcr: "",
+    mobile: "",
+    email: "",
+    dcd: "",
+    remarks: "",
+    // postingPeriod: { startDate: new Date(), endDate: new Date() },
+    // callDates: [],
+    // leaveDates: [],
+  });
+
   return (
     <div>
       <div className=" mb-3 space-y-1">
@@ -21,10 +35,10 @@ const RegisterSR = () => {
 
         <div className="flex space-x-14">
           <div className="flex-1 ">
-            <RegisterForm />
+            <RegisterForm formData={formData} setFormData={setFormData} />
           </div>
           <div className="flex-1">
-            <InfoCard />
+            <InfoCard formData={formData} />
           </div>
         </div>
       </div>
