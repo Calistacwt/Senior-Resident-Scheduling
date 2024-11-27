@@ -36,5 +36,56 @@
       "srRoom": "Rm 25",
       "session": "PM"
     }
+  ],
+
+  "srList" : [
+    {
+      "id" : "1",
+      "name": "darryll",
+      "mcr": "M12345E",
+      "mobile": "+6598764321",
+      "email": "senior1@mohh.com.sg",
+      "posting": "06 May 2024 - 02 June 2024",
+      "leaves": "insertleavedate",
+      "oncall": "insertcalldate",
+      "numsession": "30",
+      "remarks": "abcdef"
+    },
+    {
+      "id" : "2",
+      "name": "jun hong",
+      "mcr": "M27345E",
+      "mobile": "+6591234987",
+      "email": "senior2@mohh.com.sg",
+      "posting": "01 July 2024 - 31 July 2024",
+      "leaves": "insertleavedate",
+      "oncall": "insertcalldate",
+      "numsession": "30",
+      "remarks": "abcdef"
+    },
+    {
+      "id" : "3",
+      "name": "calista",
+      "mcr": "M87384E",
+      "mobile": "+6598764321",
+      "email": "senior3@mohh.com.sg",
+      "posting": "01 August 2024 - 31 August 2024",
+      "leaves": "insertleavedate",
+      "oncall": "insertcalldate",
+      "numsession": "30",
+      "remarks": "abcdef"
+    },
+    {
+      "id" : "4",
+      "name": "aysham",
+      "mcr": "M03843E",
+      "mobile": "+6598764321",
+      "email": "senior4@mohh.com.sg",
+      "posting": "01 September 2024 - 30 September 2024",
+      "leaves": "insertleavedate",
+      "oncall": "insertcalldate",
+      "numsession": "30",
+      "remarks": "abcdef"
+    }
   ]
 }

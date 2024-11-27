@@ -23,19 +23,20 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
-  const [tempSelectedDates, setTempSelectedDates] = useState<Date[]>(
-    selectedDate
-  );
+  const [tempSelectedDates, setTempSelectedDates] =
+    useState<Date[]>(selectedDate);
   const [dateInputs, setDateInputs] = useState<number[]>(
-    new Array(Math.max(selectedDate.length, 1)).fill(0)
+    new Array(Math.max(selectedDate.length, 1)).fill(0),
   );
   const [selectedReasons, setSelectedReasons] = useState<string[]>(
-    new Array(Math.max(selectedDate.length, 1)).fill("")
+    new Array(Math.max(selectedDate.length, 1)).fill(""),
   );
   const [selectedSessions, setSelectedSessions] = useState<string[]>(
-    new Array(Math.max(selectedDate.length, 1)).fill("")
+    new Array(Math.max(selectedDate.length, 1)).fill(""),
   );
-  const [activeDatePickerIndex, setActiveDatePickerIndex] = useState<number | null>(null);
+  const [activeDatePickerIndex, setActiveDatePickerIndex] = useState<
+    number | null
+  >(null);
 
   const handleDateChange = useCallback(
     (date: Date | null, index: number) => {
@@ -43,7 +44,7 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
 
       if (
         tempSelectedDates.some(
-          (existingDate) => existingDate.getTime() === date.getTime()
+          (existingDate) => existingDate.getTime() === date.getTime(),
         )
       ) {
         return;
@@ -57,12 +58,12 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
 
       setActiveDatePickerIndex(null);
     },
-    [tempSelectedDates]
+    [tempSelectedDates],
   );
 
   const toggleCalendar = (index: number) => {
     setActiveDatePickerIndex((prevIndex) =>
-      prevIndex === index ? null : index
+      prevIndex === index ? null : index,
     );
   };
 
@@ -76,14 +77,14 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
   const handleDelete = (index: number) => {
     if (tempSelectedDates.length > 1) {
       setTempSelectedDates((prevDates) =>
-        prevDates.filter((_, i) => i !== index)
+        prevDates.filter((_, i) => i !== index),
       );
       setDateInputs((prevInputs) => prevInputs.filter((_, i) => i !== index));
       setSelectedReasons((prevReasons) =>
-        prevReasons.filter((_, i) => i !== index)
+        prevReasons.filter((_, i) => i !== index),
       );
       setSelectedSessions((prevSessions) =>
-        prevSessions.filter((_, i) => i !== index)
+        prevSessions.filter((_, i) => i !== index),
       );
     }
   };
@@ -98,7 +99,7 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
     if (reason !== "Leave") {
       setSelectedSessions((prevSessions) => {
         const newSessions = [...prevSessions];
-        newSessions[index] = ""; 
+        newSessions[index] = "";
         return newSessions;
       });
     }
@@ -118,7 +119,7 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
       reasons: selectedReasons,
       sessions: selectedSessions,
     });
-    onClose(); 
+    onClose();
   };
 
   return (
@@ -150,7 +151,9 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
                     </button>
 
                     <select
-                      onChange={(e) => handleReasonChange(e.target.value, index)}
+                      onChange={(e) =>
+                        handleReasonChange(e.target.value, index)
+                      }
                       className="text-black text-xs font-semibold border rounded-md w-full border-form-label focus:border-indigo-500 p-2.5"
                       value={selectedReasons[index]}
                     >
@@ -235,6 +238,5 @@ const CalendarModal: React.FC<CalendarModalProps> = ({
     </div>
   );
 };
-
 
 export default CalendarModal;

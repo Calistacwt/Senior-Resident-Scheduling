@@ -1,21 +1,23 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export type SearchProps = {
   onSearch: (value: string) => void;
+  onFilterToggle: () => void;
+  onClearSearch: () => void;
 };
 
 const Searchbar = (props: SearchProps) => {
-  const { onSearch } = props;
+  const { onSearch, onFilterToggle, onClearSearch } = props;
   const [value, setValue] = useState("Search");
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
     setValue(target.value);
-  };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      onSearch(value);
+    if (target.value === "") {
+      onClearSearch();
+    } else {
+      onSearch(target.value);
     }
   };
 
@@ -36,11 +38,13 @@ const Searchbar = (props: SearchProps) => {
             placeholder={value}
             className="bg-form-search w-full p-3 pl-10 text-sm focus:outline-none rounded-xl"
             onChange={searchHandler}
-            onKeyDown={handleKeyDown}
           />
         </div>
         <div className="flex-shrink-0 flex justify-center items-center space-x-4">
-          <button className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center">
+          <button
+            className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center"
+            onClick={onFilterToggle}
+          >
             <img
               src="/assets/images/filter.png"
               alt="Import Logo"
