@@ -8,6 +8,8 @@ import { registerSRInfo } from "@/services/registerSR";
 const RegisterSR = () => {
   const navigate = useNavigate();
   const [callDates, setCallDates] = useState([]);
+  const [isRegisteredSuccessfully, setIsRegisteredSuccessfully] =
+    useState(false); // Success state
 
   const [postingPeriod, _setPostingPeriod] = useState({
     startDate: new Date(),
@@ -24,6 +26,7 @@ const RegisterSR = () => {
     noSession: "",
     remarks: "",
     callDates: "",
+    leaves: "",
   });
 
   // Handle Form Submission
@@ -39,8 +42,13 @@ const RegisterSR = () => {
           endDate: postingPeriod.endDate.toISOString(),
         },
         callDates: formattedCallDates,
+        leaves: formattedCallDates,
       });
-      navigate({ to: `/srList` });
+      setIsRegisteredSuccessfully(true); // Set success state
+      setTimeout(() => {
+        navigate({ to: `/srList` });
+      }, 1500); // Redirect after showing success badge
+      // navigate({ to: `/srList` });
     } catch (error) {
       console.error("Registration failed", error);
     }
@@ -56,6 +64,13 @@ const RegisterSR = () => {
           Entry of Senior Resident Doctor Information
         </h6>
       </div>
+
+      {/* Success Badge */}
+      {isRegisteredSuccessfully && (
+        <div className="bg-badge-am text-black p-2 rounded-md mb-4">
+          Registration Successful!
+        </div>
+      )}
 
       <div className="bg-white  p-8 rounded-xl mt-5">
         <div>

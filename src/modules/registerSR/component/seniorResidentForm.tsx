@@ -155,7 +155,7 @@ const SeniorResidentForm = ({
           />
         </div>
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center space-x-4">
           <div className="flex flex-col flex-1">
             <label className="text-xs font-medium text-form-label mb-2">
               Call Dates

@@ -11,6 +11,7 @@ export type registerSR = {
     endDate: string;
   };
   callDates: string[];
+  leaves: string[];
 };
 
 export type detailsSR = {
