@@ -37,157 +37,29 @@
       "session": "PM"
     }
   ],
-
-  "srList" : [
-    {
-      "id" : "1",
-      "name": "darryll",
-      "mcr": "M12345E",
-      "mobile": "+6598764321",
-      "email": "senior1@mohh.com.sg",
-      "posting": "06 May 2024 - 02 June 2024",
-      "leaves": "insertleavedate",
-      "oncall": "insertcalldate",
-      "numsession": "30",
-      "remarks": "abcdef"
-    },
-    {
-      "id" : "2",
-      "name": "jun hong",
-      "mcr": "M27345E",
-      "mobile": "+6591234987",
-      "email": "senior2@mohh.com.sg",
-      "posting": "01 July 2024 - 31 July 2024",
-      "leaves": "insertleavedate",
-      "oncall": "insertcalldate",
-      "numsession": "30",
-      "remarks": "abcdef"
-    },
-    {
-      "id" : "3",
-      "name": "calista",
-      "mcr": "M87384E",
-      "mobile": "+6598764321",
-      "email": "senior3@mohh.com.sg",
-      "posting": "01 August 2024 - 31 August 2024",
-      "leaves": "insertleavedate",
-      "oncall": "insertcalldate",
-      "numsession": "30",
-      "remarks": "abcdef"
-    },
-    {
-      "id" : "4",
-      "name": "aysham",
-      "mcr": "M03843E",
-      "mobile": "+6598764321",
-      "email": "senior4@mohh.com.sg",
-      "posting": "01 September 2024 - 30 September 2024",
-      "leaves": "insertleavedate",
-      "oncall": "insertcalldate",
-      "numsession": "30",
-      "remarks": "abcdef"
-    }
-  ],
-  "registerSR": [
+  "srList": [
     {
       "postingPeriod": {
-        "startDate": "2024-11-26T15:01:26.588Z",
-        "endDate": "2024-11-26T15:01:26.588Z"
+        "startDate": "2027-12-07T16:00:00.000Z",
+        "endDate": "2027-12-22T16:00:00.000Z"
       },
-      "name": "Senior 1",
+      "name": "SR11",
       "mobile": "98235982",
-      "email": "senior1@mohh.com.sg",
-      "MCR": "M23456E",
-      "noSession": "30 session",
-      "remarks": "activity",
+      "email": "sr11@mohh.com.sg",
+      "MCR": "M12334E",
+      "noSession": "30",
+      "remarks": "-",
       "callDates": [
-        "12 November 2024",
-        "14 November 2024"
-      ],
-      "id": "SHePsR_"
-    },
-    {
-      "postingPeriod": {
-        "startDate": "2024-11-26T18:06:04.862Z",
-        "endDate": "2024-11-26T18:06:04.862Z"
-      },
-      "name": "Senior 2",
-      "mobile": "98235982",
-      "email": "senior2@mohh.com.sg",
-      "MCR": "M12345E",
-      "noSession": "30session",
-      "remarks": "Activity",
-      "callDates": [
-        "12 November 2024",
-        "21 November 2024",
-        "29 November 2024"
-      ],
-      "id": "QChpeXJ"
-    },
-    {
-      "postingPeriod": {
-        "startDate": "2024-11-27T01:08:14.365Z",
-        "endDate": "2024-11-27T01:08:14.365Z"
-      },
-      "name": "Senior 7",
-      "mobile": "98235982",
-      "email": "senior7@mohh.com.sg",
-      "MCR": "M12345E",
-      "noSession": "20 session",
-      "remarks": "Activity",
-      "callDates": [
-        "04 November 2024",
-        "07 November 2024",
-        "18 November 2024",
+        "14 November 2024",
+        "20 November 2024",
         "21 November 2024"
       ],
-      "id": "AUcyhyO"
-    },
-    {
-      "postingPeriod": {
-        "startDate": "2024-11-27T02:24:18.635Z",
-        "endDate": "2024-11-27T02:24:18.635Z"
-      },
-      "name": "Senior 6",
-      "mobile": "98235982",
-      "email": "senior6@mohh.com.sg",
-      "MCR": "M56789E",
-      "noSession": "20 session",
-      "remarks": "activity",
-      "callDates": [
-        "12 November 2024",
-        "21 November 2024",
-        "28 November 2024"
-      ],
-      "leaves": [
-        "12 November 2024",
-        "21 November 2024",
-        "28 November 2024"
-      ],
-      "id": "JehC5zO"
-    },
-    {
-      "postingPeriod": {
-        "startDate": "2024-11-27T02:25:40.223Z",
-        "endDate": "2024-11-27T02:25:40.223Z"
-      },
-      "name": "Senior 9",
-      "mobile": "98235982",
-      "email": "senior9@mohh.com.sg",
-      "MCR": "M123456E",
-      "noSession": "20 session",
-      "remarks": "Activity",
-      "callDates": [
-        "14 November 2024",
-        "19 November 2024",
-        "22 November 2024"
-      ],
       "leaves": [
         "14 November 2024",
-        "19 November 2024",
-        "22 November 2024"
+        "20 November 2024",
+        "21 November 2024"
       ],
-      "id": "feOY2xo"
+      "id": "-cdsQGy"
     }
   ]
 }

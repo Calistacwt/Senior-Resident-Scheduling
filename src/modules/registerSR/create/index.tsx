@@ -11,14 +11,8 @@ const RegisterSR = () => {
   const [isRegisteredSuccessfully, setIsRegisteredSuccessfully] =
     useState(false); // Success state
 
-  const [postingPeriod, _setPostingPeriod] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
-
   const [formData, setFormData] = useState({
-    postingPeriod: { startDate: new Date(), endDate: new Date() },
+    postingPeriod: { startDate: "", endDate: "" },
     name: "",
     mobile: "",
     email: "",
@@ -32,23 +26,17 @@ const RegisterSR = () => {
   // Handle Form Submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const formattedCallDates = callDates.map((date) => formatDate(date));
       await registerSRInfo({
         ...formData,
-        postingPeriod: {
-          startDate: postingPeriod.startDate.toISOString(),
-          endDate: postingPeriod.endDate.toISOString(),
-        },
         callDates: formattedCallDates,
         leaves: formattedCallDates,
       });
-      setIsRegisteredSuccessfully(true); // Set success state
+      setIsRegisteredSuccessfully(true);
       setTimeout(() => {
         navigate({ to: `/srList` });
-      }, 1500); // Redirect after showing success badge
-      // navigate({ to: `/srList` });
+      }, 1500);
     } catch (error) {
       console.error("Registration failed", error);
     }

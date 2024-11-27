@@ -1,4 +1,5 @@
 import { srList } from "@/types/srList";
+import { formatDate } from "@/utils/formatter";
 
 interface SRProps {
   SRData: srList[];
@@ -39,10 +40,19 @@ const List: React.FC<SRProps> = ({ SRData }) => {
             <tr key={index} className="border-b border-dashboard-border">
               <td className="p-4  font-medium text-xs ">{index + 1}</td>
               <td className="p-4  font-medium text-xs ">{SRData.name}</td>
-              <td className="p-4  font-medium text-xs ">{SRData.mcr}</td>
+              <td className="p-4  font-medium text-xs ">{SRData.MCR}</td>
               <td className="p-4  font-medium text-xs ">{SRData.mobile}</td>
               <td className="p-4  font-medium text-xs ">{SRData.email}</td>
-              <td className="p-4  font-medium text-xs ">{SRData.posting}</td>
+              <td className="p-4 font-medium text-xs">
+                {SRData.postingPeriod && SRData.postingPeriod.startDate
+                  ? formatDate(new Date(SRData.postingPeriod.startDate))
+                  : "N/A"}{" "}
+                -{" "}
+                {SRData.postingPeriod && SRData.postingPeriod.endDate
+                  ? formatDate(new Date(SRData.postingPeriod.endDate))
+                  : "N/A"}
+              </td>
+
               <td className="p-4 font-medium text-xs ">
                 <button className="bg-sidebar-active  text-white font-medium text-2xs p-2 rounded-md">
                   Information
