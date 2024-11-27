@@ -1,11 +1,11 @@
-const UpdateSchedule = () => {
+const RoomForm = () => {
   return (
     <div className="w-full mt-8">
       <form className="space-y-4">
-        {/* Posting Period */}
+        {/* Room Type */}
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
-            Posting Period
+            Room Type
           </label>
 
           <select
@@ -13,25 +13,25 @@ const UpdateSchedule = () => {
             defaultValue=""
           >
             <option disabled value="" hidden className="text-form-placeholder">
-              Select Date
+              Select type of room
             </option>
             <option className="text-black">01 July 2024 - 31 July 2024</option>
           </select>
         </div>
 
-        {/* Senior Resident */}
+        {/* Room Number */}
         <div className="mt-4 flex items-center space-x-4">
-          <div>
+          {/* <div>
             <img
               src="./assets/images/avatar.png"
               alt="Senior Resident Icon"
               className="w-11 rounded-full"
             />
-          </div>
+          </div> */}
 
           <div className="flex flex-col space-y-2 w-full">
             <label className="text-xs font-medium text-form-label">
-              Senior Resident
+              Room Number
             </label>
 
             <select
@@ -39,18 +39,18 @@ const UpdateSchedule = () => {
               defaultValue=""
             >
               <option value="" hidden className="text-form-placeholder">
-                Select Senior Resident
+                Select Room
               </option>
               <option className="text-black">Senior 2</option>
             </select>
           </div>
         </div>
 
-        {/* Senior Doctor */}
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col flex-1 mr-3 space-y-2">
+        {/* Floor Number */}
+        {/* <div className="flex justify-between items-center"> */}
+        {/* <div className="flex flex-col flex-1 mr-3 space-y-2">
             <label className="text-xs font-medium text-form-label">
-              Senior Doctor
+              Floor Number
             </label>
 
             <select
@@ -62,12 +62,12 @@ const UpdateSchedule = () => {
               </option>
               <option className="text-black">Dr Christelle</option>
             </select>
-          </div>
+          </div> */}
 
-          {/* Session */}
-          <div className="flex flex-col flex-1 space-y-2 ">
+        {/* Bed Type */}
+        {/* <div className="flex flex-col flex-1 space-y-2 ">
             <label className="text-xs font-medium text-form-label">
-              Session
+              Bed type
             </label>
 
             <select
@@ -78,14 +78,13 @@ const UpdateSchedule = () => {
                 Select Session
               </option>
               <option className="text-black">AM</option>
-              <option className="text-black">PM</option>
             </select>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
 
         {/* Available Room */}
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col flex-1 mr-3 space-y-2">
+        {/* <div className="flex justify-between items-center"> */}
+        {/* <div className="flex flex-col flex-1 mr-3 space-y-2">
             <label className="text-xs font-medium text-form-label">
               Available Room
             </label>
@@ -99,10 +98,10 @@ const UpdateSchedule = () => {
               </option>
               <option className="text-black">Senior 2</option>
             </select>
-          </div>
+          </div> */}
 
-          {/* SR Room */}
-          <div className="flex flex-col flex-1 space-y-2 ">
+        {/* SR Room */}
+        {/* <div className="flex flex-col flex-1 space-y-2 ">
             <label className="text-xs font-medium text-form-label">
               SR Room
             </label>
@@ -116,13 +115,13 @@ const UpdateSchedule = () => {
               </option>
               <option className="text-black">Senior 2</option>
             </select>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
 
-        {/* Scheduled Date */}
+        {/* Floor Number */}
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
-            Scheduled Date
+            Floor Number
           </label>
 
           <select
@@ -143,8 +142,8 @@ const UpdateSchedule = () => {
           </label>
           <input
             type="text"
-            placeholder="Write down the activity"
-            className="border border-form-label rounded-md w-full p-3"
+            placeholder=""
+            className="border border-form-label rounded-md w-full p-3  "
           />
         </div>
 
@@ -164,4 +163,4 @@ const UpdateSchedule = () => {
     </div>
   );
 };
-export default UpdateSchedule;
+export default RoomForm;
