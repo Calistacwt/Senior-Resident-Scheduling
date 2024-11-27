@@ -48,6 +48,22 @@ const sidebarMenu: SidebarMenu[] = [
     label: "Senior Resident List",
     active: ["/srList"],
   },
+  {
+    id: "roomForm",
+    type: "link",
+    path: "/roomForm",
+    icon: UserPlusIcon,
+    label: "Room Form",
+    active: ["/roomForm"],
+  },
+  {
+    id: "approvedDoctor",
+    type: "link",
+    path: "/approvedDoctor",
+    icon: UserPlusIcon,
+    label: "Approved Doctor List",
+    active: ["/approvedDoctor"],
+  },
 ];
 
 export default sidebarMenu;

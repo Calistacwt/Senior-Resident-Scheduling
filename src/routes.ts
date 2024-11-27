@@ -35,10 +35,26 @@ const srListRoute = createRoute({
   getParentRoute: () => rootRoute,
 });
 
+const roomFormRoute = createRoute({
+  path: "/roomForm",
+  component: lazyRouteComponent(() => import("@/modules/room/create")),
+  getParentRoute: () => rootRoute,
+});
+
+const approvedDoctorRoute = createRoute({
+  path: "/approvedDoctor",
+  component: lazyRouteComponent(
+    () => import("@/modules/approvedDoctor/create"),
+  ),
+  getParentRoute: () => rootRoute,
+});
+
 // Export Routes
 export default rootRoute.addChildren([
   dashboardRoute,
   registerSRroute,
   scheduleSRroute,
   srListRoute,
+  roomFormRoute,
+  approvedDoctorRoute,
 ]);

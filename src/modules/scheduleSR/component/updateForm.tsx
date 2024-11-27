@@ -78,6 +78,7 @@ const UpdateSchedule = () => {
                 Select Session
               </option>
               <option className="text-black">AM</option>
+              <option className="text-black">PM</option>
             </select>
           </div>
         </div>
@@ -142,8 +143,8 @@ const UpdateSchedule = () => {
           </label>
           <input
             type="text"
-            placeholder=""
-            className="border border-form-label rounded-md w-full p-3  "
+            placeholder="Write down the activity"
+            className="border border-form-label rounded-md w-full p-3"
           />
         </div>
 
