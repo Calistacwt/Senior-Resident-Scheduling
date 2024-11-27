@@ -1,4 +1,3 @@
-import Room from "@/modules/Room";
 import {
   ClockIcon,
   HomeIcon,
@@ -53,7 +52,7 @@ const sidebarMenu: SidebarMenu[] = [
     id: "roomForm",
     type: "link",
     path: "/roomForm",
-    icon: ListBulletIcon,
+    icon: UserPlusIcon,
     label: "Room Form",
     active: ["/roomForm"],
   },
@@ -61,7 +60,7 @@ const sidebarMenu: SidebarMenu[] = [
     id: "approvedDoctor",
     type: "link",
     path: "/approvedDoctor",
-    icon: ListBulletIcon,
+    icon: UserPlusIcon,
     label: "Approved Doctor List",
     active: ["/approvedDoctor"],
   },

@@ -37,13 +37,15 @@ const srListRoute = createRoute({
 
 const roomFormRoute = createRoute({
   path: "/roomForm",
-  component: lazyRouteComponent(() => import("@/modules/Room")),
+  component: lazyRouteComponent(() => import("@/modules/room/create")),
   getParentRoute: () => rootRoute,
 });
 
 const approvedDoctorRoute = createRoute({
   path: "/approvedDoctor",
-  component: lazyRouteComponent(() => import("@/modules/approvedDoctor")),
+  component: lazyRouteComponent(
+    () => import("@/modules/approvedDoctor/create"),
+  ),
   getParentRoute: () => rootRoute,
 });
 
