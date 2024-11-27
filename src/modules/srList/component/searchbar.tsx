@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export type SearchProps = {
   onSearch: (value: string) => void;
@@ -17,11 +17,8 @@ const Searchbar = (props: SearchProps) => {
     if (target.value === "") {
       onClearSearch();
     }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      onSearch(value);
+    else {
+      onSearch(target.value);
     }
   };
 
@@ -42,7 +39,6 @@ const Searchbar = (props: SearchProps) => {
             placeholder={value}
             className="bg-form-search w-full p-3 pl-10 text-sm focus:outline-none rounded-xl"
             onChange={searchHandler}
-            onKeyDown={handleKeyDown}
           />
         </div>
         <div className="flex-shrink-0 flex justify-center items-center space-x-4">

@@ -36,11 +36,12 @@ const srList = () => {
     }
   };
 
+  //currently sorts by name only, maybe will change to filter by date
   const handleFilterToggle = async () => {
     try {
       const data = isAscending ? await sortSRDataASC() : await sortSRDataDESC();
       setSRData(data);
-      setIsAscending(!isAscending); // Toggle the sorting order
+      setIsAscending(!isAscending); // Toggles between Ascending and Descending sort by name
     } catch (error) {
       console.error("Error sorting SR data:", error);
     }
@@ -62,10 +63,6 @@ const srList = () => {
         </div>
 
         <Searchbar
-          // onSearch={function (value: string): void {
-          //   console.log(value);
-          // }}
-
           onSearch={handleSearch}
           onFilterToggle={handleFilterToggle}
           onClearSearch={handleClearSearch}
