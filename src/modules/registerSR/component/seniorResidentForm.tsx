@@ -22,6 +22,8 @@ const SeniorResidentForm = ({
   handleSubmit,
   callDates,
   setCallDates,
+  leaveDates,
+  setLeaveDates,
 }: any) => {
   const navigate = useNavigate();
 
@@ -50,6 +52,10 @@ const SeniorResidentForm = ({
 
   const handleCallDatesChange = (dates: any) => {
     setCallDates(dates); // Update state with selected dates
+  };
+
+  const handleLeaveDatesChange = (dates: any) => {
+    setLeaveDates(dates); // Update state with selected dates
   };
 
   const handleBack = async () => {
@@ -177,6 +183,22 @@ const SeniorResidentForm = ({
               multiple
               sort
               placeholder=" Call Dates"
+              inputClass="custom-placeholder"
+              plugins={[<DatePanel />]}
+            />
+          </div>
+
+          <div className="flex flex-col flex-1">
+            <label className="text-xs font-medium text-form-label mb-2">
+              Leaves
+            </label>
+
+            <DatePicker
+              value={leaveDates}
+              onChange={handleLeaveDatesChange}
+              multiple
+              sort
+              placeholder="Leave Dates"
               inputClass="custom-placeholder"
               plugins={[<DatePanel />]}
             />

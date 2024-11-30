@@ -2,7 +2,7 @@
   "srSchedule": [
     {
       "id": "1",
-      "date": "2024-11-08",
+      "date": "08-11-2024",
       "dcdScreener": "Dr Christelle",
       "activity": "Observe DP4",
       "room": "Rm 25",
@@ -11,7 +11,7 @@
     },
     {
       "id": "3",
-      "date": "2024-11-08",
+      "date": "08-11-2024",
       "dcdScreener": "Dr Vidya",
       "activity": "Observe DP4",
       "room": "Rm 25",
@@ -19,17 +19,8 @@
       "session": "PM"
     },
     {
-      "date": "2024-11-21",
-      "dcdScreener": "Dr Kenneth",
-      "activity": "Observe triage clinic",
-      "room": "Rm 06",
-      "srRoom": "Rm 25",
-      "session": "PM",
-      "id": "2"
-    },
-    {
       "id": "c8bd",
-      "date": "2024-11-04",
+      "date": "04-11-2024",
       "dcdScreener": "Dr Kenneth",
       "activity": "Observe triage clinic",
       "room": "Rm 17",
@@ -40,26 +31,150 @@
   "srList": [
     {
       "postingPeriod": {
-        "startDate": "2027-12-07T16:00:00.000Z",
-        "endDate": "2027-12-22T16:00:00.000Z"
+        "startDate": "2024-11-30T16:00:00.000Z",
+        "endDate": "2024-12-30T16:00:00.000Z"
       },
-      "name": "SR11",
+      "name": "Senior 4",
       "mobile": "98235982",
-      "email": "sr11@mohh.com.sg",
-      "MCR": "M12334E",
-      "noSession": "30",
-      "remarks": "-",
+      "email": "senior4@mohh.com.sg",
+      "MCR": "M45678E",
+      "noSession": "30 Session",
+      "remarks": "Meeting",
       "callDates": [
-        "14 November 2024",
-        "20 November 2024",
-        "21 November 2024"
+        "04 December 2024",
+        "18 December 2024",
+        "25 December 2024"
       ],
-      "leaves": [
-        "14 November 2024",
-        "20 November 2024",
-        "21 November 2024"
+      "leaveDates": [
+        "09 December 2024",
+        "16 December 2024",
+        "24 December 2024"
       ],
-      "id": "-cdsQGy"
+      "id": 1
+    },
+    {
+      "postingPeriod": {
+        "startDate": "2020-11-30T16:00:00.000Z",
+        "endDate": "2020-12-14T16:00:00.000Z"
+      },
+      "name": "Senior 5",
+      "mobile": "98235982",
+      "email": "senior5@mohh.com.sg",
+      "MCR": "M45678E",
+      "noSession": "30 Session",
+      "remarks": "Meeting",
+      "callDates": [
+        "04 December 2024",
+        "16 December 2024",
+        "24 December 2024"
+      ],
+      "leaveDates": [
+        "05 December 2024",
+        "12 December 2024",
+        "18 December 2024"
+      ],
+      "id": 2
+    },
+    {
+      "postingPeriod": {
+        "startDate": "2024-12-31T16:00:00.000Z",
+        "endDate": "2025-01-30T16:00:00.000Z"
+      },
+      "name": "Calista",
+      "mobile": "98235982",
+      "email": "calistachew.cc@gmail.com",
+      "MCR": "M45678E",
+      "noSession": "30 Session",
+      "remarks": "Meeting",
+      "callDates": [
+        "08 January 2025",
+        "15 January 2025",
+        "20 January 2025",
+        "23 January 2025"
+      ],
+      "leaveDates": [
+        "01 January 2025",
+        "13 January 2025",
+        "16 January 2025"
+      ],
+      "id": 3
+    },
+    {
+      "postingPeriod": {
+        "startDate": "2026-11-30T16:00:00.000Z",
+        "endDate": "2026-12-30T16:00:00.000Z"
+      },
+      "name": "Internship",
+      "mobile": "98235982",
+      "email": "senior4@mohh.com.sg",
+      "MCR": "M45678E",
+      "noSession": "30 Session",
+      "remarks": "Meeting",
+      "callDates": [
+        "04 December 2024",
+        "17 December 2024",
+        "18 December 2024"
+      ],
+      "leaveDates": [
+        "09 December 2024",
+        "16 December 2024",
+        "23 December 2024"
+      ],
+      "id": 4
+    }
+  ],
+  "clinicSchedule": [
+    {
+      "Day": "Monday 01/07/24",
+      "Session": "AM",
+      "Rm 13": "",
+      "Rm 14": "",
+      "Rm 15": "Kenneth (Dr Agarwal pt) (Make-up)",
+      "Rm 16": "Vidya (DSNC)",
+      "Rm 17": "Rashmi (NC)",
+      "Rm 18": "Ngiam (DSNC)",
+      "Rm 19": "Deepti (FP)",
+      "Clinic G Rm 2": "",
+      "Clinic G Rm 3": "",
+      "Clinic G Rm 4": "Yeo CL (FP)",
+      "TPC/TVC": "",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY": "",
+      "Punggol": "Anitha (ASD NC)",
+      "SKH": "Giselle (NC & FP)",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 1
+    },
+    {
+      "Day": "",
+      "Session": "PM",
+      "Rm 13": "",
+      "Rm 14": " Sandra (LB NC)",
+      "Rm 15": "Ho LY (FP)",
+      "Rm 16": "Kwan Rui (DSNC)",
+      "Rm 17": "Rashmi (FP)",
+      "Rm 18": "Ngiam (NC)",
+      "Rm 19": "Kenneth (DSNC)",
+      "Clinic G Rm 2": "Chitra (FP) ",
+      "Clinic G Rm 3": "Vidya (FP)",
+      "Clinic G Rm 4": "Yeo CL (FP)",
+      "TPC/TVC": "Christelle (TVC)",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY": "",
+      "Punggol": "Anitha (FP)",
+      "SKH": "Giselle (NC & FP)",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 2
     }
   ]
 }

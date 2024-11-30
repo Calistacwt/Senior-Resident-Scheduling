@@ -15,9 +15,15 @@ import { srSchedule } from "@/types/dashboard";
 
 interface CalendarProps {
   scheduleData: srSchedule[];
+  callDates: string[];
+  leaveDates: string[];
 }
 
-const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
+const Calendar: React.FC<CalendarProps> = ({
+  scheduleData,
+  callDates,
+  leaveDates,
+}) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [viewMode, setViewMode] = useState<string>("month");
   const daysOfWeek: string[] = [
@@ -29,6 +35,21 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
     "Friday",
     "Saturday",
   ];
+
+  // Function to check if the next day is a post-call date
+  const isPostCall = (date: Date): boolean => {
+    const nextDay = new Date(date);
+    nextDay.setDate(date.getDate() - 1); // Add one day
+
+    const formattedNextDay = format(nextDay, "dd MMMM yyyy");
+    return callDates.includes(formattedNextDay);
+  };
+
+  // Function to check if the day is a leave day
+  const isLeaveDay = (date: Date): boolean => {
+    const formattedDate = format(date, "dd MMMM yyyy");
+    return leaveDates.includes(formattedDate);
+  };
 
   const prevMonth = () => {
     if (viewMode === "month") {
@@ -64,7 +85,7 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
     ));
   };
 
-  const dateFormatted = format(currentDate, "yyyy-MM-dd");
+  const dateFormatted = format(currentDate, "dd-MM-yyyy");
 
   // Render Dates
   const renderDates = () => {
@@ -79,7 +100,7 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
 
     return days.map((day, index) => {
       const isCurrentDay = isToday(day);
-      const dateFormatted = format(day, "yyyy-MM-dd");
+      const dateFormatted = format(day, "dd-MM-yyyy");
 
       // Find matching schedules for the current day
       const scheduleForDay = scheduleData.filter(
@@ -153,34 +174,19 @@ const Calendar: React.FC<CalendarProps> = ({ scheduleData }) => {
               )}
             </div>
 
-            {/* Display the card when hover over */}
-            {/*        
-              <div className="absolute hidden group-hover:block xl:group-hover:hidden bg-white p-8 pt-4 rounded-md shadow-lg w-64 z-10">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <img
-                      src={"/assets/images/KKHlogo.svg"}
-                      alt="KKH Logo"
-                      className="rounded-md w-20"
-                    />
-                  </div>
+            {/* Check if it’s a Post Call day */}
+            {isPostCall(day) && (
+              <div className="ml-4 text-xs text-red-500 font-semibold">
+                Post Call
+              </div>
+            )}
 
-                  <div className="text-right">
-                    <h2 className="text-3xs font-bold">
-                      {currentDate.toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </h2>
-                    <h5 className="font-semibold text-3xs text-card-text">
-                      Session
-                    </h5>
-                  </div>
-                </div>
-              </div> */}
-
-            {/* End of hover card  */}
+            {/* Check if its On-Leave */}
+            {isLeaveDay(day) && (
+              <div className="ml-4 text-xs text-blue-500 font-semibold">
+                On-Leave
+              </div>
+            )}
           </div>
         </div>
       );

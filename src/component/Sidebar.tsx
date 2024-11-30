@@ -9,6 +9,14 @@ const Sidebar: FC = () => {
 
   // Collapsed Sidebar
   const [collapsed, setCollapsed] = useState(false);
+  const [openSubMenus, setOpenSubMenus] = useState<Record<string, boolean>>({});
+
+  const toggleSubMenu = (menuId: string) => {
+    setOpenSubMenus((prev) => ({
+      ...prev,
+      [menuId]: !prev[menuId],
+    }));
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,52 +33,95 @@ const Sidebar: FC = () => {
   }, []);
 
   return (
-    <div className="relative px-3 py-5 bg-white border-r border-sidebar-border lg:px-4 lg:py-3">
+    <div className="relative px-3 py-5 bg-white lg:px-4 lg:py-5">
+      {/* KKH Logo */}
       <div className="flex items-center justify-center">
         <a href="/">
           {collapsed && (
             <img
               src="/assets/images/logo.svg"
               alt="KKH Logo"
-              className="rounded-md cursor-pointer w-14 "
+              className="rounded-md cursor-pointer w-9 "
             />
           )}
 
           {!collapsed && (
             <img
-              src="/assets/images/KKHlogo.svg"
+              src="/assets/images/KKHLogo_transparent.svg"
               alt="KKH Logo"
               className="rounded-md cursor-pointer lg:w-36 "
             />
           )}
         </a>
       </div>
+      <hr className="border border-sidebar-border-0.5 mt-3" />
+
+      {/* Sidebar Icon */}
       <div>
         <ul>
           {sidebarMenu.map((item) => {
             // Check if the current path is active
             const isActive = item.active?.includes(pathname);
-            const Icon = item.icon;
+
             return (
               <li key={item.id} className="my-6">
                 <a
                   href={item.path}
-                  className={`flex items-center text-xs font-semibold px-4 py-3 rounded-md ${
+                  className={`flex items-center text-xs font-semibold px-4 py-3 rounded-md  ${
                     isActive
-                      ? "bg-sidebar-active text-white"
+                      ? "bg-sidebar-active  backdrop-blur-lg rounded-md text-white shadow-lg"
                       : "text-sidebar hover:bg-sidebar-hover"
-                  } ${collapsed ? "justify-center" : ""}`}
+                  } ${collapsed ? "justify-center bg-opacity-35" : ""}`}
+                  onClick={() =>
+                    item.subMenu
+                      ? toggleSubMenu(item.id)
+                      : router.navigate({ to: item.path || "/" })
+                  }
                 >
-                  {collapsed && Icon && (
-                    <Icon
-                      className={`w-5  fill-none stroke-current stroke-1 ${
-                        isActive ? "text-white" : "text-sidebar"
-                      }`}
+                  {/* Render Icon Image only when collapsed */}
+                  {collapsed && item.icons ? (
+                    <img
+                      src={item.icons}
+                      alt={item.label}
+                      className={`w-4 h-4 ${isActive ? "text-white" : "text-sidebar"} mr-2`}
                     />
-                  )}
+                  ) : null}
 
                   {!collapsed && item.label}
                 </a>
+
+                {/* Render Submenu */}
+                {!collapsed && item.subMenu && openSubMenus[item.id] && (
+                  <ul className=" mt-2 space-y-2">
+                    {item.subMenu.map((subItem) => {
+                      const isSubActive = subItem.active?.includes(pathname);
+                      return (
+                        <li key={subItem.id}>
+                          <a
+                            href={subItem.path}
+                            className={`flex items-center text-xs font-semibold px-4 py-3  rounded-md ${
+                              isSubActive
+                                ? "bg-sidebar-active text-white"
+                                : "text-sidebar hover:bg-sidebar-hover"
+                            }`}
+                          >
+                            {subItem.icons &&
+                            typeof subItem.icons === "string" ? (
+                              <img
+                                src={subItem.icons}
+                                alt={subItem.label}
+                                className="w-4 h-4 mr-2"
+                              />
+                            ) : (
+                              subItem.icons
+                            )}
+                            {subItem.label}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </li>
             );
           })}

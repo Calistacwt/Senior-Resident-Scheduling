@@ -16,3 +16,8 @@ export const updateSRSchedule = async (id: number, updatedData: object) => {
   );
   return response.data;
 };
+
+export const getSRScheduleById = async (id: any) => {
+  const response = await axios.get(`${BASE_URL}${SCHEDULE}/${id}`);
+  return response.data;
+};

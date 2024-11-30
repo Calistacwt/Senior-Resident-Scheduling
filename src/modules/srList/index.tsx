@@ -24,15 +24,14 @@ const srList = () => {
   const handleSearch = async (value: string) => {
     try {
       if (value.trim() === "") {
-        const data = await getSRData(); // Reload the full list if search query is empty
+        const data = await getSRData();
         setSRData(data);
       } else {
-        const data = await searchSRData(value); // Fetch the filtered list
+        const data = await searchSRData(value);
         setSRData(data);
       }
     } catch (error) {
       console.error("Error searching SR data:", error);
-      //maybe will send to some kind of error page?
     }
   };
 
@@ -53,24 +52,28 @@ const srList = () => {
   };
 
   return (
-    <>
-      <div className="m-3">
-        <div className=" mb-3 space-y-1">
+    <div className="m-2">
+      <div>
+        <div className=" mb-3">
           <h1 className="font-bold text-xl">Senior Resident's List</h1>
           <h6 className="text-xs text-dashboard-text">
             List of Senior Residents in KK Woman's and Children's Hospital
           </h6>
         </div>
+      </div>
 
+      <div>
         <Searchbar
           onSearch={handleSearch}
           onFilterToggle={handleFilterToggle}
           onClearSearch={handleClearSearch}
         />
+      </div>
 
+      <div>
         <List SRData={SRData} />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -7,13 +7,14 @@ interface SRProps {
 
 const List: React.FC<SRProps> = ({ SRData }) => {
   return (
-    <div className="overflow-x-auto bg-background rounded-lg">
-      <table className="w-full whitespace-nowrap bg-white mt-3">
+    <div className=" bg-background  ">
+      <table className="w-full bg-white mt-3">
         <thead className="text-left bg-background">
           <tr>
-            <th className="gap-3 whitespace-nowrap px-4 py-3 text-2xs font-medium">
-              NO
+            <th className=" gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
+              SR ID
             </th>
+
             <th className=" gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
               SR NAME
             </th>
@@ -26,6 +27,9 @@ const List: React.FC<SRProps> = ({ SRData }) => {
             <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
               EMAIL
             </th>
+            {/* <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
+              CALL DATES
+            </th> */}
             <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
               POSTING PERIOD
             </th>
@@ -38,12 +42,24 @@ const List: React.FC<SRProps> = ({ SRData }) => {
         <tbody className="w-full border-y border-outline bg-white rounded-2xl">
           {SRData.map((SRData, index) => (
             <tr key={index} className="border-b border-dashboard-border">
-              <td className="p-4  font-medium text-xs ">{index + 1}</td>
-              <td className="p-4  font-medium text-xs ">{SRData.name}</td>
-              <td className="p-4  font-medium text-xs ">{SRData.MCR}</td>
-              <td className="p-4  font-medium text-xs ">{SRData.mobile}</td>
-              <td className="p-4  font-medium text-xs ">{SRData.email}</td>
-              <td className="p-4 font-medium text-xs">
+              <td className="p-4  font-medium text-2xs xl:text-xs ">
+                {SRData.id}
+              </td>
+
+              <td className="p-4  font-medium text-2xs xl:text-xs ">
+                {SRData.name}
+              </td>
+              <td className="p-4  font-medium text-2xs xl:text-xs">
+                {SRData.MCR}
+              </td>
+              <td className="p-4  font-medium text-2xs xl:text-xs">
+                {SRData.mobile}
+              </td>
+              <td className="p-4  font-medium text-2xs xl:text-xs ">
+                {SRData.email}
+              </td>
+
+              <td className="p-4 font-medium text-2xs xl:text-xs">
                 {SRData.postingPeriod && SRData.postingPeriod.startDate
                   ? formatDate(new Date(SRData.postingPeriod.startDate))
                   : "N/A"}{" "}
@@ -53,7 +69,7 @@ const List: React.FC<SRProps> = ({ SRData }) => {
                   : "N/A"}
               </td>
 
-              <td className="p-4 font-medium text-xs ">
+              <td className="p-4 font-medium  ">
                 <button className="bg-sidebar-active  text-white font-medium text-2xs p-2 rounded-md">
                   Information
                 </button>

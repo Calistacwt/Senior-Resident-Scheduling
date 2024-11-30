@@ -4,24 +4,15 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:4000";
 
-export const registerSRInfo = async (
-  data: Omit<srList, "id">,
-): Promise<srList> => {
+export const registerSRInfo = async (data: srList): Promise<srList> => {
   const response = await axios.post(`${BASE_URL}${SR}`, data);
   return response.data;
 };
 
-// export const getSRInfo = async () => {
-//   const response = await axios.get(`${BASE_URL}${REGISTERSR}`);
-//   return response.data;
-// };
-
-// export const getSRInfoById = async (id: string) => {
-//   try {
-//     const response = await axios.get(`${BASE_URL}${REGISTERSR}${id}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching SR data:", error);
-//     throw error;
-//   }
-// };
+export const updateSRInfo = async (
+  id: number,
+  data: srList,
+): Promise<srList> => {
+  const response = await axios.put(`${BASE_URL}${SR}/${id}`, data);
+  return response.data;
+};
