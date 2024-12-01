@@ -150,13 +150,27 @@
       "id": 2
     }
   ],
-  "drList": [
+  "seniorDoctorList": [
     {
       "name": "Dr 1",
       "mobile": "87126102",
       "email": "doctor1@mohh.com.sg",
       "remarks": "Activity",
       "id": 1
+    },
+    {
+      "name": "Dimas",
+      "mobile": "98235982",
+      "email": "dimas@nbs.com",
+      "remarks": "Meeting",
+      "id": 2
+    },
+    {
+      "name": "Internship",
+      "mobile": "98235982",
+      "email": "calistachew.cc@gmail.com",
+      "remarks": "Meeting",
+      "id": 3
     }
   ]
 }

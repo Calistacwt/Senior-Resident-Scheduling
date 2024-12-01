@@ -1,4 +1,4 @@
-export type drList = {
+export type seniorDoctorList = {
   id: number;
   name: string;
   mobile: string;

@@ -8,6 +8,6 @@ export const SR_SORT_NAME_ASC = "/srList?_sort=name&_order=ASC";
 export const SR_SORT_NAME_DESC = "/srList?_sort=name&_order=DESC";
 
 // Register Approved Doctor
-export const APPROVED_DOCTOR = "/drList";
+export const SENIOR_DOCTOR = "/seniorDoctorList";
 
 export const CLINIC_SCHEDULE = "/clinicSchedule";

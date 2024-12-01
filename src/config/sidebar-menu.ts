@@ -55,7 +55,7 @@ const sidebarMenu: SidebarMenu[] = [
     type: "link",
     label: "Master Data",
     icons: "/assets/images/sidebar/database.png",
-    active: ["/roomForm", "/approvedDoctor"],
+    active: ["/roomForm", "/seniorDoctorForm"],
     subMenu: [
       {
         id: "roomForm",
@@ -67,9 +67,9 @@ const sidebarMenu: SidebarMenu[] = [
       {
         id: "approvedDoctor",
         type: "link",
-        path: "/approvedDoctor",
+        path: "/seniorDoctorForm",
         label: "Register Overseeing Doctor",
-        active: ["/approvedDoctor"],
+        active: ["/seniorDoctorForm"],
       },
     ],
   },
