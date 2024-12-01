@@ -26,6 +26,14 @@ const sidebarMenu: SidebarMenu[] = [
     active: ["/seniorResidentForm"],
   },
   {
+    id: "clinicSchedule",
+    type: "link",
+    path: "/clinicSchedule",
+    label: "Clinic Schedule",
+    icons: "/assets/images/sidebar/schedule.png",
+    active: ["/clinicSchedule"],
+  },
+  {
     id: "scheduleSR",
     type: "link",
     path: "/scheduleSR",
@@ -41,28 +49,13 @@ const sidebarMenu: SidebarMenu[] = [
     icons: "/assets/images/sidebar/list.png",
     active: ["/srList"],
   },
-  {
-    id: "seniorDoctorList",
-    type: "link",
-    path: "/seniorDoctorList",
-    label: "Senior Doctors List",
-    icons: "/assets/images/sidebar/list.png",
-    active: ["/seniorDoctorList"],
-  },
-  // {
-  //   id: "clinicSchedule",
-  //   type: "link",
-  //   path: "/clinicSchedule",
-  //   label: "Clinic Schedule",
-  //   icons: "/assets/images/sidebar/addUser.png",
-  //   active: ["/clinicSchedule"],
-  // },
+
   {
     id: "masterData",
     type: "link",
     label: "Master Data",
     icons: "/assets/images/sidebar/database.png",
-    active: ["/roomForm", "/seniorDoctorForm"],
+    active: ["/roomForm", "/seniorDoctorForm", "/seniorDoctorList"],
     subMenu: [
       {
         id: "roomForm",
@@ -77,6 +70,14 @@ const sidebarMenu: SidebarMenu[] = [
         path: "/seniorDoctorForm",
         label: "Register Overseeing Doctor",
         active: ["/seniorDoctorForm"],
+      },
+      {
+        id: "seniorDoctorList",
+        type: "link",
+        path: "/seniorDoctorList",
+        label: "Senior Doctors List",
+        icons: "/assets/images/sidebar/list.png",
+        active: ["/seniorDoctorList"],
       },
     ],
   },

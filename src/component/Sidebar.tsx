@@ -57,7 +57,7 @@ const Sidebar: FC = () => {
               >
                 <a
                   href={item.path}
-                  className={`flex items-center px-6 py-3 text-2xs font-semibold rounded-md transition-all duration-300 ${
+                  className={`flex items-center px-6 py-3 text-2xs font-semibold rounded-md transition-all duration-300 m-1 ${
                     isActive
                       ? "bg-sidebar-active  backdrop-blur-lg rounded-lg text-white shadow-lg"
                       : "text-sidebar hover:bg-sidebar-hover"
