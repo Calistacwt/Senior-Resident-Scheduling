@@ -1,6 +1,6 @@
 const UpdateSchedule = () => {
   return (
-    <div className="w-full mt-8">
+    <div className="w-full">
       <form className="space-y-4">
         {/* Posting Period */}
         <div className="space-y-2 mt-4">
@@ -143,7 +143,7 @@ const UpdateSchedule = () => {
           </label>
           <input
             type="text"
-            placeholder="Write down the activity"
+            placeholder=""
             className="border border-form-label rounded-md w-full p-3"
           />
         </div>

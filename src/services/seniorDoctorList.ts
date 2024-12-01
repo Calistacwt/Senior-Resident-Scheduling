@@ -1,4 +1,9 @@
-import { SENIOR_DOCTOR } from "@/config/endpoint";
+import {
+  SENIOR_DOCTOR,
+  SENIOR_DOCTOR_NAMESEARCH,
+  SENIOR_DOCTOR_SORT_NAME_ASC,
+  SENIOR_DOCTOR_SORT_NAME_DESC,
+} from "@/config/endpoint";
 import { seniorDoctorList } from "@/types/seniorDoctorList";
 
 import axios from "axios";
@@ -9,5 +14,29 @@ export const registerSeniorDoctorInfo = async (
   data: seniorDoctorList,
 ): Promise<seniorDoctorList> => {
   const response = await axios.post(`${BASE_URL}${SENIOR_DOCTOR}`, data);
+  return response.data;
+};
+
+export const getSeniorDoctorData = async () => {
+  const response = await axios.get(`${BASE_URL}${SENIOR_DOCTOR}`);
+  return response.data;
+};
+
+export const searchSeniorDoctorData = async (name: String) => {
+  const response = await axios.get(
+    `${BASE_URL}${SENIOR_DOCTOR_NAMESEARCH.replace("search", String(name))}`,
+  );
+  return response.data;
+};
+
+export const sortSeniorDoctorDataASC = async () => {
+  const response = await axios.get(`${BASE_URL}${SENIOR_DOCTOR_SORT_NAME_ASC}`);
+  return response.data;
+};
+
+export const sortSeniorDoctorDataDESC = async () => {
+  const response = await axios.get(
+    `${BASE_URL}${SENIOR_DOCTOR_SORT_NAME_DESC}`,
+  );
   return response.data;
 };

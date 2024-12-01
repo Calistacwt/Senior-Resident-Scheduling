@@ -26,7 +26,7 @@ const RegisterApprovedDoctor = () => {
       });
       setIsRegisteredSuccessfully(true); // Set success state
       setTimeout(() => {
-        navigate({ to: `/seniorDoctorForm` });
+        navigate({ to: `/seniorDoctorList` });
       }, 1500); // Redirect after showing success badge
     } catch (error) {
       console.error("Registration failed", error);

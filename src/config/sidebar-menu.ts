@@ -26,6 +26,14 @@ const sidebarMenu: SidebarMenu[] = [
     active: ["/seniorResidentForm"],
   },
   {
+    id: "scheduleSR",
+    type: "link",
+    path: "/scheduleSR",
+    label: "Schedule Senior Resident",
+    icons: "/assets/images/sidebar/rescheduling.png",
+    active: ["/scheduleSR"],
+  },
+  {
     id: "srList",
     type: "link",
     path: "/srList",
@@ -33,15 +41,14 @@ const sidebarMenu: SidebarMenu[] = [
     icons: "/assets/images/sidebar/list.png",
     active: ["/srList"],
   },
-  // {
-  //   id: "scheduleSR",
-  //   type: "link",
-  //   path: "/scheduleSR",
-  //   label: "Schedule SR",
-  //   icons: "/assets/images/sidebar/rescheduling.png",
-  //   active: ["/scheduleSR"],
-  // },
-
+  {
+    id: "seniorDoctorList",
+    type: "link",
+    path: "/seniorDoctorList",
+    label: "Senior Doctors List",
+    icons: "/assets/images/sidebar/list.png",
+    active: ["/seniorDoctorList"],
+  },
   // {
   //   id: "clinicSchedule",
   //   type: "link",

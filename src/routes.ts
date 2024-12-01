@@ -59,6 +59,12 @@ const registerSeniorDoctorRoute = createRoute({
   getParentRoute: () => rootRoute,
 });
 
+const seniorDoctorListRoute = createRoute({
+  path: "/seniorDoctorList",
+  component: lazyRouteComponent(() => import("@/modules/seniorDoctorList")),
+  getParentRoute: () => rootRoute,
+});
+
 // Export Routes
 export default rootRoute.addChildren([
   dashboardRoute,
@@ -69,4 +75,5 @@ export default rootRoute.addChildren([
   registerSeniorDoctorRoute,
   clinicScheduleRoute,
   srDetailsRoute,
+  seniorDoctorListRoute,
 ]);
