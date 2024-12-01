@@ -20,7 +20,7 @@
     },
     {
       "id": 3,
-      "date": "26-11-2024",
+      "date": "31-12-2024",
       "dcdScreener": "Dr Ellen Tay",
       "activity": "Observe DP4",
       "room": "Rm 18",
@@ -29,7 +29,7 @@
     },
     {
       "id": 4,
-      "date": "25-11-2024",
+      "date": "24-12-2024",
       "dcdScreener": "Dr Argarwal",
       "activity": "Observe DP4",
       "room": "Rm 16",
@@ -38,7 +38,7 @@
     },
     {
       "id": 5,
-      "date": "07-11-2024",
+      "date": "18-12-2024",
       "dcdScreener": "Dr Ellen Tay",
       "activity": "Observe DP4",
       "room": "Rm 18",
@@ -124,6 +124,9 @@
       "Remarks": "",
       "id": 2
     }
+  ],
+  "clinicSchedule": [
+
   ],
   "seniorDoctorList": [
     {
