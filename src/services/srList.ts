@@ -1,5 +1,6 @@
 import {
   SR,
+  SR_DETAILS,
   SR_NAMESEARCH,
   SR_SORT_NAME_ASC,
   SR_SORT_NAME_DESC,
@@ -11,6 +12,11 @@ const BASE_URL = "http://localhost:4000";
 
 export const getSRData = async () => {
   const response = await axios.get(`${BASE_URL}${SR}`);
+  return response.data;
+};
+
+export const getSRDataById = async (id: number) => {
+  const response = await axios.get(`${BASE_URL}${SR_DETAILS}${id}`);
   return response.data;
 };
 

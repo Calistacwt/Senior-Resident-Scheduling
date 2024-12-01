@@ -1,5 +1,4 @@
 import { useState } from "react";
-import InfoCard from "../component/infoCard";
 import SeniorResidentForm from "../component/seniorResidentForm";
 import { useNavigate } from "@tanstack/react-router";
 import { formatDate } from "@/utils/formatter";
@@ -8,17 +7,12 @@ import { registerSRInfo } from "@/services/registerSR";
 const RegisterSR = () => {
   const navigate = useNavigate();
   const [callDates, setCallDates] = useState([]);
+  const [leaveDates, setLeaveDates] = useState([]);
   const [isRegisteredSuccessfully, setIsRegisteredSuccessfully] =
     useState(false); // Success state
 
-  const [postingPeriod, _setPostingPeriod] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
-
   const [formData, setFormData] = useState({
-    postingPeriod: { startDate: new Date(), endDate: new Date() },
+    postingPeriod: { startDate: "", endDate: "" },
     name: "",
     mobile: "",
     email: "",
@@ -26,51 +20,58 @@ const RegisterSR = () => {
     noSession: "",
     remarks: "",
     callDates: "",
-    leaves: "",
+    leaveDates: "",
   });
 
   // Handle Form Submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const formattedCallDates = callDates.map((date) => formatDate(date));
+      const formattedLeaveDates = leaveDates.map((date) => formatDate(date));
+
       await registerSRInfo({
         ...formData,
-        postingPeriod: {
-          startDate: postingPeriod.startDate.toISOString(),
-          endDate: postingPeriod.endDate.toISOString(),
-        },
         callDates: formattedCallDates,
-        leaves: formattedCallDates,
+        leaveDates: formattedLeaveDates,
+        id: 0,
       });
-      setIsRegisteredSuccessfully(true); // Set success state
+      setIsRegisteredSuccessfully(true);
       setTimeout(() => {
         navigate({ to: `/srList` });
-      }, 1500); // Redirect after showing success badge
-      // navigate({ to: `/srList` });
+      }, 1500);
     } catch (error) {
       console.error("Registration failed", error);
     }
   };
 
   return (
-    <div>
+    <div className="m-2">
       <div className=" mb-3 space-y-1">
-        <h1 className="font-bold text-xl">
-          Senior Resident Doctor Registration
-        </h1>
-        <h6 className="text-xs text-dashboard-text">
-          Entry of Senior Resident Doctor Information
-        </h6>
-      </div>
-
-      {/* Success Badge */}
-      {isRegisteredSuccessfully && (
-        <div className="bg-badge-am text-black p-2 rounded-md mb-4">
-          Registration Successful!
+        <div className="flex justify-between">
+          <div>
+            <h1 className="font-bold text-xl">
+              Senior Resident Doctor Registration
+            </h1>
+            <h6 className="text-xs text-dashboard-text">
+              Entry of Senior Resident Doctor Information
+            </h6>
+          </div>
+          {/* Success Badge */}
+          {isRegisteredSuccessfully && (
+            <div className="bg-badge-am font-semibold text-xs text-badge-success p-2 rounded-md mb-4 flex  items-center space-x-2">
+              <div>
+                <img
+                  src="/assets/images/success.png"
+                  alt="Success Icon"
+                  className="w-3 rounded-full"
+                />
+              </div>
+              <div>Registration Successful!</div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       <div className="bg-white  p-8 rounded-xl mt-5">
         <div>
@@ -87,12 +88,14 @@ const RegisterSR = () => {
               setFormData={setFormData}
               callDates={callDates}
               setCallDates={setCallDates}
+              leaveDates={leaveDates}
+              setLeaveDates={setLeaveDates}
               handleSubmit={handleSubmit}
             />
           </div>
-          <div className="flex-1">
+          {/* <div className="flex-1">
             <InfoCard />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

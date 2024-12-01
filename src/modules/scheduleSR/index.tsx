@@ -1,5 +1,4 @@
 import UpdateSchedule from "./component/updateForm";
-import Card from "./component/card";
 
 const ScheduleSR = () => {
   return (
@@ -24,9 +23,9 @@ const ScheduleSR = () => {
             <UpdateSchedule />
           </div>
 
-          <div className="flex-2">
+          {/* <div className="flex-2">
             <Card />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

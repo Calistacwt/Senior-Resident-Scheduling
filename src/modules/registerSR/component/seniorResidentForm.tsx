@@ -22,24 +22,40 @@ const SeniorResidentForm = ({
   handleSubmit,
   callDates,
   setCallDates,
+  leaveDates,
+  setLeaveDates,
 }: any) => {
   const navigate = useNavigate();
 
   const [postingPeriod, setPostingPeriod] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: formData.postingPeriod.startDate
+      ? new Date(formData.postingPeriod.startDate)
+      : new Date(),
+    endDate: formData.postingPeriod.endDate
+      ? new Date(formData.postingPeriod.endDate)
+      : new Date(),
     key: "selection",
   });
-
   const [isPostingPeriodOpen, setIsPostingPeriodOpen] = useState(false);
 
   const handleDateRangeChange = (ranges: any) => {
-    const { startDate, endDate } = ranges.selection; // Extract the selected range
-    setPostingPeriod({ ...postingPeriod, startDate, endDate }); // Update state
+    const { startDate, endDate } = ranges.selection;
+    setPostingPeriod({ startDate, endDate, key: "selection" });
+    setFormData((prevData: any) => ({
+      ...prevData,
+      postingPeriod: {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+      },
+    }));
   };
 
   const handleCallDatesChange = (dates: any) => {
     setCallDates(dates); // Update state with selected dates
+  };
+
+  const handleLeaveDatesChange = (dates: any) => {
+    setLeaveDates(dates); // Update state with selected dates
   };
 
   const handleBack = async () => {
@@ -169,7 +185,22 @@ const SeniorResidentForm = ({
               placeholder=" Call Dates"
               inputClass="custom-placeholder"
               plugins={[<DatePanel />]}
-              required
+            />
+          </div>
+
+          <div className="flex flex-col flex-1">
+            <label className="text-xs font-medium text-form-label mb-2">
+              Leaves
+            </label>
+
+            <DatePicker
+              value={leaveDates}
+              onChange={handleLeaveDatesChange}
+              multiple
+              sort
+              placeholder="Leave Dates"
+              inputClass="custom-placeholder"
+              plugins={[<DatePanel />]}
             />
           </div>
         </div>

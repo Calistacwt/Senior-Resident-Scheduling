@@ -1,8 +1,15 @@
 export type srList = {
   id: number;
   name: string;
-  mcr: string;
-  mobile: number;
+  mobile: string;
   email: string;
-  posting: string;
+  MCR: string;
+  noSession: string;
+  remarks: string;
+  postingPeriod: {
+    startDate: string;
+    endDate: string;
+  };
+  callDates: string[];
+  leaveDates: string[];
 };

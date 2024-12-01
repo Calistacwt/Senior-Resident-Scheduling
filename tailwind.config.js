@@ -53,6 +53,7 @@ module.exports = {
           sessionText: '#45835B',
           background: '#BEDAFE',
           text: '#006FFF',
+          success: '#047a49'
         },
         card: {
           line: '#F488BA',

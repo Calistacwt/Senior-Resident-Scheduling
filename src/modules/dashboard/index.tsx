@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import Calendar from "./component/calendar";
 import { getSRSchedule } from "@/services/dashboard";
+import { getSRData } from "@/services/srList";
 
 const Dashboard = () => {
   const [scheduleData, setScheduleData] = useState([]);
+  const [_SRData, setSRData] = useState([]);
+
+  const [callDates, setCallDates] = useState<string[]>([]);
+  const [leaveDates, setLeaveDates] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -12,6 +17,26 @@ const Dashboard = () => {
     };
 
     fetchSchedule();
+  }, []);
+
+  useEffect(() => {
+    const fetchSRData = async () => {
+      const data = await getSRData();
+
+      // Find the entry with the latest `endDate`
+      const latestSR = data.reduce((latest: any, current: any) => {
+        const latestEndDate = new Date(latest.postingPeriod.endDate);
+        const currentEndDate = new Date(current.postingPeriod.endDate);
+
+        return currentEndDate > latestEndDate ? current : latest;
+      });
+
+      setSRData(latestSR);
+      setCallDates(latestSR.callDates);
+
+      setLeaveDates(latestSR.leaveDates);
+    };
+    fetchSRData();
   }, []);
 
   return (
@@ -34,14 +59,18 @@ const Dashboard = () => {
               className="rounded-md cursor-pointer w-5"
             />
             <div>
-              <p>Import</p>
+              <p>Export</p>
             </div>
           </button>
         </div>
       </div>
 
       <div id="calendar-content">
-        <Calendar scheduleData={scheduleData} />
+        <Calendar
+          scheduleData={scheduleData}
+          callDates={callDates}
+          leaveDates={leaveDates}
+        />
       </div>
     </div>
   );
