@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
-import ApprovedDoctorForm from "../component/approvedDoctorForm";
+import ApprovedDoctorForm from "../component/seniorDoctorForm";
 import { useState } from "react";
-import { registerApprovedDocotrInfo } from "@/services/approvedDrList";
+import { registerSeniorDoctorInfo } from "@/services/seniorDoctorList";
 
 const RegisterApprovedDoctor = () => {
   const navigate = useNavigate();
@@ -20,13 +20,13 @@ const RegisterApprovedDoctor = () => {
     e.preventDefault();
 
     try {
-      await registerApprovedDocotrInfo({
+      await registerSeniorDoctorInfo({
         ...formData,
         id: 0,
       });
       setIsRegisteredSuccessfully(true); // Set success state
       setTimeout(() => {
-        navigate({ to: `/approvedDoctor` });
+        navigate({ to: `/seniorDoctorList` });
       }, 1500); // Redirect after showing success badge
     } catch (error) {
       console.error("Registration failed", error);

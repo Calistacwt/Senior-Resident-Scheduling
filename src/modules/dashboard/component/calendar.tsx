@@ -36,7 +36,6 @@ const Calendar: React.FC<CalendarProps> = ({
     "Saturday",
   ];
 
-  // Function to check if the next day is a post-call date
   const isPostCall = (date: Date): boolean => {
     const nextDay = new Date(date);
     nextDay.setDate(date.getDate() - 1); // Add one day
@@ -45,7 +44,6 @@ const Calendar: React.FC<CalendarProps> = ({
     return callDates.includes(formattedNextDay);
   };
 
-  // Function to check if the day is a leave day
   const isLeaveDay = (date: Date): boolean => {
     const formattedDate = format(date, "dd MMMM yyyy");
     return leaveDates.includes(formattedDate);

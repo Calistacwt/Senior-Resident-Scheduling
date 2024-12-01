@@ -2,7 +2,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "/src/styles/custom-calendar.css";
 import { useNavigate } from "@tanstack/react-router";
 
-const ApprovedDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
+const SeniorDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
   const navigate = useNavigate();
 
   const handleBack = async () => {
@@ -105,4 +105,4 @@ const ApprovedDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
     </div>
   );
 };
-export default ApprovedDoctorForm;
+export default SeniorDoctorForm;
