@@ -57,7 +57,8 @@ const srList = () => {
         <div className=" mb-3">
           <h1 className="font-bold text-xl">Senior Resident's List</h1>
           <h6 className="text-xs text-dashboard-text">
-            List of Senior Residents in KK Woman's and Children's Hospital
+            List of Senior Residents Doctors in KK Woman's and Children's
+            Hospital
           </h6>
         </div>
       </div>

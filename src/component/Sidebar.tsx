@@ -3,28 +3,15 @@ import { FC, useEffect, useState } from "react";
 import { useRouter } from "@tanstack/react-router";
 
 const Sidebar: FC = () => {
-  // Get the current path
   const router = useRouter();
   const pathname = router.state.location.pathname;
 
-  // Collapsed Sidebar
   const [collapsed, setCollapsed] = useState(false);
-  const [openSubMenus, setOpenSubMenus] = useState<Record<string, boolean>>({});
-
-  const toggleSubMenu = (menuId: string) => {
-    setOpenSubMenus((prev) => ({
-      ...prev,
-      [menuId]: !prev[menuId],
-    }));
-  };
+  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1280) {
-        setCollapsed(true);
-      } else {
-        setCollapsed(false);
-      }
+      setCollapsed(window.innerWidth < 1280);
     };
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -33,52 +20,54 @@ const Sidebar: FC = () => {
   }, []);
 
   return (
-    <div className="relative px-3 py-5 bg-white lg:px-4 lg:py-5">
-      {/* KKH Logo */}
-      <div className="flex items-center justify-center">
+    <div
+      className={`relative bg-white transition-all duration-300 ease-in-out ${
+        collapsed ? "w-20" : "w-48"
+      }`}
+    >
+      {/* Logo Section */}
+      <div className="flex items-center justify-center py-3">
         <a href="/">
-          {collapsed && (
-            <img
-              src="/assets/images/logo.svg"
-              alt="KKH Logo"
-              className="rounded-md cursor-pointer w-9 "
-            />
-          )}
-
-          {!collapsed && (
-            <img
-              src="/assets/images/KKHLogo_transparent.svg"
-              alt="KKH Logo"
-              className="rounded-md cursor-pointer lg:w-36 "
-            />
-          )}
+          <img
+            src={
+              collapsed
+                ? "/assets/images/logo.svg"
+                : "/assets/images/KKHLogo_transparent.svg"
+            }
+            alt="KKH Logo"
+            className={`cursor-pointer transition-all duration-300 ${
+              collapsed ? "w-9" : "lg:w-36"
+            }`}
+          />
         </a>
       </div>
-      <hr className="border border-sidebar-border-0.5 mt-3" />
 
-      {/* Sidebar Icon */}
-      <div>
+      {/* Sidebar Menu */}
+      <div className="relative">
         <ul>
           {sidebarMenu.map((item) => {
-            // Check if the current path is active
             const isActive = item.active?.includes(pathname);
 
             return (
-              <li key={item.id} className="my-6">
+              <li
+                key={item.id}
+                className="my-3 relative"
+                onMouseEnter={() => setHoveredMenu(item.id)}
+                onMouseLeave={() => setHoveredMenu(null)}
+              >
                 <a
                   href={item.path}
-                  className={`flex items-center text-xs font-semibold px-4 py-3 rounded-md  ${
+                  className={`flex items-center px-6 py-3 text-2xs font-semibold rounded-md transition-all duration-300 ${
                     isActive
-                      ? "bg-sidebar-active  backdrop-blur-lg rounded-md text-white shadow-lg"
+                      ? "bg-sidebar-active  backdrop-blur-lg rounded-lg text-white shadow-lg"
                       : "text-sidebar hover:bg-sidebar-hover"
                   } ${collapsed ? "justify-center bg-opacity-35" : ""}`}
-                  onClick={() =>
-                    item.subMenu
-                      ? toggleSubMenu(item.id)
-                      : router.navigate({ to: item.path || "/" })
-                  }
+                  onClick={() => {
+                    if (!collapsed || !item.subMenu) {
+                      router.navigate({ to: item.path || "/" });
+                    }
+                  }}
                 >
-                  {/* Render Icon Image only when collapsed */}
                   {collapsed && item.icons ? (
                     <img
                       src={item.icons}
@@ -87,40 +76,47 @@ const Sidebar: FC = () => {
                     />
                   ) : null}
 
+                  {/* Label */}
                   {!collapsed && item.label}
                 </a>
 
-                {/* Render Submenu */}
-                {!collapsed && item.subMenu && openSubMenus[item.id] && (
-                  <ul className=" mt-2 space-y-2">
-                    {item.subMenu.map((subItem) => {
-                      const isSubActive = subItem.active?.includes(pathname);
-                      return (
-                        <li key={subItem.id}>
-                          <a
-                            href={subItem.path}
-                            className={`flex items-center text-xs font-semibold px-4 py-3  rounded-md ${
-                              isSubActive
-                                ? "bg-sidebar-active text-white"
-                                : "text-sidebar hover:bg-sidebar-hover"
-                            }`}
-                          >
-                            {subItem.icons &&
-                            typeof subItem.icons === "string" ? (
-                              <img
-                                src={subItem.icons}
-                                alt={subItem.label}
-                                className="w-4 h-4 mr-2"
-                              />
-                            ) : (
-                              subItem.icons
-                            )}
-                            {subItem.label}
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                {/* Floating Submenu */}
+                {item.subMenu && (
+                  <div
+                    className={`absolute ${
+                      collapsed ? "left-12" : "left-full"
+                    } top-0 z-10 bg-white shadow-lg rounded-md py-2 w-48 transition-transform duration-300  ${
+                      hoveredMenu === item.id ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={{
+                      transform:
+                        hoveredMenu === item.id
+                          ? "translateX(10px)"
+                          : "translateX(0)",
+                      visibility:
+                        hoveredMenu === item.id ? "visible" : "hidden",
+                    }}
+                  >
+                    <ul>
+                      {item.subMenu.map((subItem) => {
+                        const isSubActive = subItem.active?.includes(pathname);
+                        return (
+                          <li key={subItem.id}>
+                            <a
+                              href={subItem.path}
+                              className={`block px-4 py-2 text-2xs font-medium transition-all rounded-md ${
+                                isSubActive
+                                  ? "bg-sidebar-active text-white"
+                                  : "text-sidebar hover:bg-sidebar-hover"
+                              }`}
+                            >
+                              {subItem.label}
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 )}
               </li>
             );

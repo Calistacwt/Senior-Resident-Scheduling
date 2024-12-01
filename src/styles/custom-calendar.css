@@ -38,3 +38,7 @@
   font-size: 12px;
   width: 100%;
 }
+
+.custom-placeholder::placeholder {
+  font-size: 10px;
+}

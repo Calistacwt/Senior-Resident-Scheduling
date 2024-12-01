@@ -126,7 +126,7 @@ const SeniorResidentForm = ({
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Enter Senior Resident Name"
-              className="border border-form-label rounded-md w-full text-xs p-2 "
+              className="border border-form-label rounded-md w-full text-xs p-2 placeholder:text-2xs placeholder-form-placeholder  "
             />
           </div>
         </div>
@@ -140,7 +140,7 @@ const SeniorResidentForm = ({
               value={formData.MCR}
               onChange={handleInputChange}
               placeholder="Enter MCR"
-              className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
+              className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs "
             />
           </div>
 
@@ -154,7 +154,7 @@ const SeniorResidentForm = ({
               value={formData.mobile}
               onChange={handleInputChange}
               placeholder="Enter Mobile Number"
-              className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
+              className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs"
             />
           </div>
         </div>
@@ -167,7 +167,7 @@ const SeniorResidentForm = ({
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
+            className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs "
           />
         </div>
 
@@ -215,7 +215,7 @@ const SeniorResidentForm = ({
             value={formData.noSession}
             onChange={handleInputChange}
             placeholder="No. of sessions"
-            className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
+            className="border border-form-label rounded-md w-full  p-2 placeholder-form-placeholder placeholder:text-2xs  "
           />
         </div>
 

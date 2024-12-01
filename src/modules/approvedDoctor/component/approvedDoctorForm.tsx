@@ -37,7 +37,7 @@ const ApprovedDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Enter Senior Doctor Name"
-              className="border border-form-label rounded-md w-full placeholder:text-2xs placeholder:xl:text-xs p-2 "
+              className="border border-form-label rounded-md w-full text-xs p-2 placeholder:text-2xs placeholder-form-placeholder"
             />
           </div>
         </div>
@@ -53,7 +53,7 @@ const ApprovedDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
               value={formData.mobile}
               onChange={handleInputChange}
               placeholder="Enter Mobile Number"
-              className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
+              className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs"
             />
           </div>
         </div>
@@ -66,11 +66,10 @@ const ApprovedDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
             value={formData.email}
             onChange={handleInputChange}
             placeholder="Enter Email"
-            className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs placeholder:xl:text-xs "
+            className="border border-form-label rounded-md w-full text-xs p-2 placeholder-form-placeholder placeholder:text-2xs "
           />
         </div>
 
-        {/* Remarks */}
         <div className="flex flex-col space-y-2 w-full">
           <label className="text-xs font-medium text-form-label">Remarks</label>
           <input
@@ -78,7 +77,7 @@ const ApprovedDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
             name="remarks"
             value={formData.remarks}
             onChange={handleInputChange}
-            placeholder="Write down any remarks"
+            placeholder=""
             className="border border-form-label rounded-md w-full text-xs p-3 py-5  "
           />
         </div>

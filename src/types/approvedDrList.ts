@@ -1,5 +1,5 @@
 export type drList = {
-  id: string;
+  id: number;
   name: string;
   mobile: string;
   email: string;
