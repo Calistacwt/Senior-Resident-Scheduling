@@ -1,6 +1,6 @@
 export type drList = {
   id: number;
-  doctor: string;
+  name: string;
   mobile: string;
   email: string;
   remarks: string;

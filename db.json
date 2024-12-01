@@ -54,73 +54,46 @@
     },
     {
       "postingPeriod": {
-        "startDate": "2020-11-30T16:00:00.000Z",
-        "endDate": "2020-12-14T16:00:00.000Z"
+        "startDate": "2024-12-05T16:00:00.000Z",
+        "endDate": "2024-12-26T16:00:00.000Z"
       },
-      "name": "Senior 5",
+      "name": "Senior 1",
       "mobile": "98235982",
-      "email": "senior5@mohh.com.sg",
+      "email": "senior1@mohh.com.sg",
       "MCR": "M45678E",
       "noSession": "30 Session",
       "remarks": "Meeting",
       "callDates": [
         "04 December 2024",
-        "16 December 2024",
-        "24 December 2024"
+        "25 December 2024"
       ],
       "leaveDates": [
-        "05 December 2024",
-        "12 December 2024",
-        "18 December 2024"
+        "15 December 2024",
+        "16 December 2024"
       ],
       "id": 2
     },
     {
       "postingPeriod": {
-        "startDate": "2024-12-31T16:00:00.000Z",
-        "endDate": "2025-01-30T16:00:00.000Z"
+        "startDate": "2024-12-09T16:00:00.000Z",
+        "endDate": "2024-12-30T16:00:00.000Z"
       },
-      "name": "Calista",
+      "name": "Internship1",
       "mobile": "98235982",
       "email": "calistachew.cc@gmail.com",
       "MCR": "M45678E",
       "noSession": "30 Session",
       "remarks": "Meeting",
       "callDates": [
-        "08 January 2025",
-        "15 January 2025",
-        "20 January 2025",
-        "23 January 2025"
+        "05 December 2024",
+        "16 December 2024",
+        "19 December 2024"
       ],
       "leaveDates": [
-        "01 January 2025",
-        "13 January 2025",
-        "16 January 2025"
+        "03 December 2024",
+        "17 December 2024"
       ],
       "id": 3
-    },
-    {
-      "postingPeriod": {
-        "startDate": "2026-11-30T16:00:00.000Z",
-        "endDate": "2026-12-30T16:00:00.000Z"
-      },
-      "name": "Internship",
-      "mobile": "98235982",
-      "email": "senior4@mohh.com.sg",
-      "MCR": "M45678E",
-      "noSession": "30 Session",
-      "remarks": "Meeting",
-      "callDates": [
-        "04 December 2024",
-        "17 December 2024",
-        "18 December 2024"
-      ],
-      "leaveDates": [
-        "09 December 2024",
-        "16 December 2024",
-        "23 December 2024"
-      ],
-      "id": 4
     }
   ],
   "clinicSchedule": [
@@ -175,6 +148,15 @@
       "MO Rm": "Triage",
       "Remarks": "",
       "id": 2
+    }
+  ],
+  "drList": [
+    {
+      "name": "Dr 1",
+      "mobile": "87126102",
+      "email": "doctor1@mohh.com.sg",
+      "remarks": "Activity",
+      "id": 1
     }
   ]
 }

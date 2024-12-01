@@ -21,17 +21,9 @@ const sidebarMenu: SidebarMenu[] = [
     id: "registerSR",
     type: "link",
     path: "/seniorResidentForm",
-    label: "Register SR",
+    label: "Register Senior Resident",
     icons: "/assets/images/sidebar/addUser.png",
     active: ["/seniorResidentForm"],
-  },
-  {
-    id: "scheduleSR",
-    type: "link",
-    path: "/scheduleSR",
-    label: "Schedule SR",
-    icons: "/assets/images/sidebar/rescheduling.png",
-    active: ["/scheduleSR"],
   },
   {
     id: "srList",
@@ -42,6 +34,15 @@ const sidebarMenu: SidebarMenu[] = [
     active: ["/srList"],
   },
   // {
+  //   id: "scheduleSR",
+  //   type: "link",
+  //   path: "/scheduleSR",
+  //   label: "Schedule SR",
+  //   icons: "/assets/images/sidebar/rescheduling.png",
+  //   active: ["/scheduleSR"],
+  // },
+
+  // {
   //   id: "clinicSchedule",
   //   type: "link",
   //   path: "/clinicSchedule",
@@ -50,45 +51,28 @@ const sidebarMenu: SidebarMenu[] = [
   //   active: ["/clinicSchedule"],
   // },
   {
-    id: "roomForm",
+    id: "masterData",
     type: "link",
-    path: "/roomForm",
-    label: "Register Room",
+    label: "Master Data",
     icons: "/assets/images/sidebar/database.png",
-    active: ["/roomForm"],
+    active: ["/roomForm", "/approvedDoctor"],
+    subMenu: [
+      {
+        id: "roomForm",
+        type: "link",
+        path: "/roomForm",
+        label: "Register Room",
+        active: ["/roomForm"],
+      },
+      {
+        id: "approvedDoctor",
+        type: "link",
+        path: "/approvedDoctor",
+        label: "Register Overseeing Doctor",
+        active: ["/approvedDoctor"],
+      },
+    ],
   },
-  {
-    id: "approvedDoctor",
-    type: "link",
-    path: "/approvedDoctor",
-    label: "Approved Doctor List",
-    icons: "/assets/images/sidebar/database.png",
-    active: ["/approvedDoctor"],
-  },
-
-  // {
-  //   id: "masterData",
-  //   type: "link",
-  //   label: "Master Data",
-  //   icons: "/assets/images/sidebar/database.png",
-  //   // active: ["/roomForm", "/approvedDoctor"],
-  //   subMenu: [
-  //     {
-  //       id: "roomForm",
-  //       type: "link",
-  //       path: "/roomForm",
-  //       label: "Register Room",
-  //       active: ["/roomForm"],
-  //     },
-  //     {
-  //       id: "approvedDoctor",
-  //       type: "link",
-  //       path: "/approvedDoctor",
-  //       label: "Approved Doctor List",
-  //       active: ["/approvedDoctor"],
-  //     },
-  //   ],
-  // },
 ];
 
 export default sidebarMenu;
