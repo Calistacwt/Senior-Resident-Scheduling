@@ -44,9 +44,10 @@ const Calendar: React.FC<CalendarProps> = ({
     return callDates.includes(formattedNextDay);
   };
 
-  const isLeaveDay = (date: Date): boolean => {
-    const formattedDate = format(date, "dd MMMM yyyy");
-    return leaveDates.includes(formattedDate);
+  const isLeaveDay = (date: Date, session: string): boolean => {
+    const formattedDate = format(date, "yyyy-MM-dd");
+    const formattedLeaveDate = `${formattedDate} ${session}`;
+    return leaveDates.includes(formattedLeaveDate);
   };
 
   const prevMonth = () => {
@@ -103,6 +104,11 @@ const Calendar: React.FC<CalendarProps> = ({
       // Find matching schedules for the current day
       const scheduleForDay = scheduleData.filter(
         (schedule) => schedule.date === dateFormatted,
+      );
+
+      const isPostCallDate = isPostCall(day);
+      const leaveSessions = ["AM", "PM", "FULLDAY"].filter((session) =>
+        isLeaveDay(day, session),
       );
 
       return (
@@ -172,19 +178,19 @@ const Calendar: React.FC<CalendarProps> = ({
               )}
             </div>
 
-            {/* Check if it’s a Post Call day */}
-            {isPostCall(day) && (
-              <div className="ml-4 text-xs text-red-500 font-semibold">
-                Post Call
-              </div>
-            )}
+            {/* Post Call or Leave Info */}
+            <div className="ml-4 text-xs">
+              {leaveSessions.length > 0 ? (
+                leaveSessions.map((session) => (
+                  <p key={session} className="text-blue-500 font-semibold">
+                    On-Leave ({session})
+                  </p>
+                ))
+              ) : isPostCallDate ? (
+                <p className="text-red-500 font-semibold">Post Call</p>
+              ) : null}
+            </div>
 
-            {/* Check if its On-Leave */}
-            {isLeaveDay(day) && (
-              <div className="ml-4 text-xs text-blue-500 font-semibold">
-                On-Leave
-              </div>
-            )}
           </div>
         </div>
       );
@@ -365,7 +371,6 @@ const Calendar: React.FC<CalendarProps> = ({
               </div>
             );
           })}
-
           {/* End of Card Detail  */}
         </div>
       )}

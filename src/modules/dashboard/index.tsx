@@ -33,7 +33,6 @@ const Dashboard = () => {
 
       setSRData(latestSR);
       setCallDates(latestSR.callDates);
-
       setLeaveDates(latestSR.leaveDates);
     };
     fetchSRData();
