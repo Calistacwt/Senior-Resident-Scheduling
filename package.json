@@ -4,14 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node-binary\\node node_modules\\vite\\bin\\vite.js",
-    "server": "node-binary\\node node_modules\\json-server\\lib\\cli\\bin.js --watch db.json --port 4000",
+    "dev": "vite",
+    "server": "json-server --watch db.json --port 4000",
     "start": "concurrently \"npm:dev\" \"npm:server\"",
-    "build": "node-binary\\node node_modules\\vite\\bin\\vite.js build",
-    "lint": "node-binar\\/node node_modules\\eslint/bin\\eslint.js .",
-    "preview": "node-binary\\node node_modules\\vite/bin\\vite.js preview",
-    "format": "node-binary\\node node_modules\\prettier\\bin-prettier.js -c src",
-    "format:fix": "node-binary\\node node_modules\\prettier\\bin-prettier.js -w src"
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "format": "prettier -c src",
+    "format:fix": "prettier -w src"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
