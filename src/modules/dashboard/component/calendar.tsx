@@ -190,7 +190,6 @@ const Calendar: React.FC<CalendarProps> = ({
                 <p className="text-red-500 font-semibold">Post Call</p>
               ) : null}
             </div>
-
           </div>
         </div>
       );

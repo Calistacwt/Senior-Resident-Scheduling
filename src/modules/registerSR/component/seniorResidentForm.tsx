@@ -54,21 +54,19 @@ const SeniorResidentForm = ({
     setCallDates(dates); // Update state with selected dates
   };
 
-  // Function to handle leave date selection along with AM/PM
   const handleLeaveDatesChange = (dates: any) => {
     const updatedDates = dates.map((date: any) => ({
       date: date.format("YYYY-MM-DD"),
-      session: "FULLDAY", // Default AM for new dates
+      session: "FULLDAY",
     }));
-    setLeaveDates(updatedDates); // Update the state with the selected dates
+    setLeaveDates(updatedDates);
   };
 
-  // Function to handle AM/PM change for a specific date
-  const handleAmPmChange = (date: string, session: string) => {
+  const handleSessionChange = (date: string, session: string) => {
     setLeaveDates((prevState: any) =>
       prevState.map((item: any) =>
-        item.date === date ? { ...item, session } : item,
-      ),
+        item.date === date ? { ...item, session } : item
+      )
     );
   };
 
@@ -201,7 +199,10 @@ const SeniorResidentForm = ({
               plugins={[<DatePanel />]}
             />
           </div>
+        </div>
 
+
+        <div className="flex justify-between items-center space-x-4 flex-1">
           <div className="flex flex-col flex-1 ">
             <label className="text-xs font-medium text-form-label mb-2">
               Leaves
@@ -218,27 +219,26 @@ const SeniorResidentForm = ({
             />
           </div>
 
-          <div className="text-2xs">
-            <div className="flex flex-col space-y-2 mt-1">
-              {leaveDates.map((item: any) => (
-                <div key={item.date} className="flex items-center space-x-2">
-                  <span>{item.date}</span>
-                  <select
-                    value={item.amPm}
-                    onChange={(e) =>
-                      handleAmPmChange(item.date, e.target.value)
-                    }
-                    className="text-2xs border border-form-label rounded-md p-1"
-                  >
-                    <option value="FULLDAY">FULLDAY</option>
-                    <option value="AM">AM</option>
-                    <option value="PM">PM</option>
-                  </select>
-                </div>
-              ))}
-            </div>
+          <div className="flex flex-col space-y-2 mt-1">
+            {leaveDates.map((item: any) => (
+              <div key={item.date} className="flex items-center space-x-2">
+                <span className="font-semibold text-2xs text-black">
+                  {item.date}
+                </span>
+                <select
+                  value={item.amPm}
+                  onChange={(e) => handleSessionChange(item.date, e.target.value)}
+                  className="text-2xs  rounded-md p-1 border-form-label border"
+                >
+                  <option value="FULLDAY">FULLDAY</option>
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
+            ))}
           </div>
         </div>
+
 
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
