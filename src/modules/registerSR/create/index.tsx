@@ -28,7 +28,11 @@ const RegisterSR = () => {
     e.preventDefault();
     try {
       const formattedCallDates = callDates.map((date) => formatDate(date));
-      const formattedLeaveDates = leaveDates.map((date) => formatDate(date));
+
+      // Combine date and AM/PM into a single string
+      const formattedLeaveDates = leaveDates.map(
+        (item: any) => `${item.date} ${item.session}`,
+      );
 
       await registerSRInfo({
         ...formData,

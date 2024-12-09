@@ -8,6 +8,7 @@ export const formatDate = (date: Date): string => {
   }).format(date);
 };
 
+// Card
 export const formattedDate = (dateString: string): string => {
   const [day, month, year] = dateString.split("-").map(Number);
 

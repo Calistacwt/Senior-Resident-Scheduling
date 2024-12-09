@@ -20,7 +20,7 @@
     },
     {
       "id": 3,
-      "date": "26-11-2024",
+      "date": "31-12-2024",
       "dcdScreener": "Dr Ellen Tay",
       "activity": "Observe DP4",
       "room": "Rm 18",
@@ -29,7 +29,7 @@
     },
     {
       "id": 4,
-      "date": "25-11-2024",
+      "date": "24-12-2024",
       "dcdScreener": "Dr Argarwal",
       "activity": "Observe DP4",
       "room": "Rm 16",
@@ -38,7 +38,7 @@
     },
     {
       "id": 5,
-      "date": "07-11-2024",
+      "date": "18-12-2024",
       "dcdScreener": "Dr Ellen Tay",
       "activity": "Observe DP4",
       "room": "Rm 18",
@@ -69,61 +69,33 @@
         "24 December 2024"
       ],
       "id": 1
+    },
+    {
+      "postingPeriod": {
+        "startDate": "2025-11-30T16:00:00.000Z",
+        "endDate": "2025-12-30T16:00:00.000Z"
+      },
+      "name": "Senior 10",
+      "mobile": "98235982",
+      "email": "senior10@mohh.com.sg",
+      "MCR": "M45678E",
+      "noSession": "30 Session",
+      "remarks": "Meeting",
+      "callDates": [
+        "11 December 2024",
+        "16 December 2024",
+        "25 December 2024"
+      ],
+      "leaveDates": [
+        "05 December 2024",
+        "10 December 2024",
+        "13 December 2024"
+      ],
+      "id": 2
     }
   ],
   "clinicSchedule": [
-    {
-      "Day": "Monday 01/07/24",
-      "Session": "AM",
-      "Rm 13": "",
-      "Rm 14": "",
-      "Rm 15": "Kenneth (Dr Agarwal pt) (Make-up)",
-      "Rm 16": "Vidya (DSNC)",
-      "Rm 17": "Rashmi (NC)",
-      "Rm 18": "Ngiam (DSNC)",
-      "Rm 19": "Deepti (FP)",
-      "Clinic G Rm 2": "",
-      "Clinic G Rm 3": "",
-      "Clinic G Rm 4": "Yeo CL (FP)",
-      "TPC/TVC": "",
-      "TPC/TVC_1": "",
-      "TPC/TVC_2": "",
-      "__EMPTY": "",
-      "Punggol": "Anitha (ASD NC)",
-      "SKH": "Giselle (NC & FP)",
-      "NC": "",
-      "DS": "",
-      "Rm 25": "Triage",
-      "MO Rm": "Triage",
-      "Remarks": "",
-      "id": 1
-    },
-    {
-      "Day": "",
-      "Session": "PM",
-      "Rm 13": "",
-      "Rm 14": " Sandra (LB NC)",
-      "Rm 15": "Ho LY (FP)",
-      "Rm 16": "Kwan Rui (DSNC)",
-      "Rm 17": "Rashmi (FP)",
-      "Rm 18": "Ngiam (NC)",
-      "Rm 19": "Kenneth (DSNC)",
-      "Clinic G Rm 2": "Chitra (FP) ",
-      "Clinic G Rm 3": "Vidya (FP)",
-      "Clinic G Rm 4": "Yeo CL (FP)",
-      "TPC/TVC": "Christelle (TVC)",
-      "TPC/TVC_1": "",
-      "TPC/TVC_2": "",
-      "__EMPTY": "",
-      "Punggol": "Anitha (FP)",
-      "SKH": "Giselle (NC & FP)",
-      "NC": "",
-      "DS": "",
-      "Rm 25": "Triage",
-      "MO Rm": "Triage",
-      "Remarks": "",
-      "id": 2
-    }
+
   ],
   "seniorDoctorList": [
     {

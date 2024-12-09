@@ -55,7 +55,19 @@ const SeniorResidentForm = ({
   };
 
   const handleLeaveDatesChange = (dates: any) => {
-    setLeaveDates(dates); // Update state with selected dates
+    const updatedDates = dates.map((date: any) => ({
+      date: date.format("YYYY-MM-DD"),
+      session: "FULLDAY",
+    }));
+    setLeaveDates(updatedDates);
+  };
+
+  const handleSessionChange = (date: string, session: string) => {
+    setLeaveDates((prevState: any) =>
+      prevState.map((item: any) =>
+        item.date === date ? { ...item, session } : item
+      )
+    );
   };
 
   const handleBack = async () => {
@@ -187,14 +199,17 @@ const SeniorResidentForm = ({
               plugins={[<DatePanel />]}
             />
           </div>
+        </div>
 
-          <div className="flex flex-col flex-1">
+
+        <div className="flex justify-between items-center space-x-4 flex-1">
+          <div className="flex flex-col flex-1 ">
             <label className="text-xs font-medium text-form-label mb-2">
               Leaves
             </label>
 
             <DatePicker
-              value={leaveDates}
+              value={leaveDates.map((item: any) => item.date)}
               onChange={handleLeaveDatesChange}
               multiple
               sort
@@ -203,7 +218,27 @@ const SeniorResidentForm = ({
               plugins={[<DatePanel />]}
             />
           </div>
+
+          <div className="flex flex-col space-y-2 mt-1">
+            {leaveDates.map((item: any) => (
+              <div key={item.date} className="flex items-center space-x-2">
+                <span className="font-semibold text-2xs text-black">
+                  {item.date}
+                </span>
+                <select
+                  value={item.amPm}
+                  onChange={(e) => handleSessionChange(item.date, e.target.value)}
+                  className="text-2xs  rounded-md p-1 border-form-label border"
+                >
+                  <option value="FULLDAY">FULLDAY</option>
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </select>
+              </div>
+            ))}
+          </div>
         </div>
+
 
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
@@ -215,7 +250,7 @@ const SeniorResidentForm = ({
             value={formData.noSession}
             onChange={handleInputChange}
             placeholder="No. of sessions"
-            className="border border-form-label rounded-md w-full  p-2 placeholder-form-placeholder placeholder:text-2xs  "
+            className="border border-form-label rounded-md w-full text-xs  p-2 placeholder-form-placeholder placeholder:text-2xs  "
           />
         </div>
 
@@ -227,7 +262,7 @@ const SeniorResidentForm = ({
             name="remarks"
             value={formData.remarks}
             onChange={handleInputChange}
-            className="border border-form-label rounded-md w-full text-xs p-3 py-5  "
+            className="border border-form-label rounded-md w-full p-3 py-5 placeholder:text-2xs text-xs  "
           />
         </div>
 
