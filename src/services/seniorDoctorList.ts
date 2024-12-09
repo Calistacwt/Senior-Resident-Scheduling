@@ -40,3 +40,11 @@ export const sortSeniorDoctorDataDESC = async () => {
   );
   return response.data;
 };
+
+export const updateSeniorDoctorInfo = async (
+  id: number,
+  data: seniorDoctorList,
+): Promise<seniorDoctorList> => {
+  const response = await axios.put(`${BASE_URL}${SENIOR_DOCTOR}/${id}`, data);
+  return response.data;
+};

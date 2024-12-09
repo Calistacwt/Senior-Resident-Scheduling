@@ -14,6 +14,7 @@ const SeniorDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
   return (
     <div className="w-full">
       <form className="space-y-4" onSubmit={handleSubmit}>

@@ -70,7 +70,6 @@
       ],
       "id": 1
     }
-  
   ],
   "clinicSchedule": [
     {
@@ -154,6 +153,22 @@
       "email": "drChitra@mohh.com.sg",
       "remarks": "Meeting",
       "id": 4
+    }
+  ],
+  "room": [
+    {
+      "type": "private",
+      "number": "14",
+      "floor": "11",
+      "activity": "ok",
+      "id": 1
+    },
+    {
+      "type": "ok",
+      "number": "14",
+      "floor": "11",
+      "activity": "ok",
+      "id": 2
     }
   ]
 }
