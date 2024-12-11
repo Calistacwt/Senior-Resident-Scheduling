@@ -3,6 +3,7 @@ import SeniorResidentForm from "../component/seniorResidentForm";
 import { useNavigate } from "@tanstack/react-router";
 import { formatDate } from "@/utils/formatter";
 import { registerSRInfo } from "@/services/registerSR";
+import { format } from "date-fns";
 
 const RegisterSR = () => {
   const navigate = useNavigate();
@@ -27,15 +28,23 @@ const RegisterSR = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const formattedCallDates = callDates.map((date) => formatDate(date));
-
+      const formattedCallDates = callDates.map((date) =>
+        format(new Date(date), "yyyy-MM-dd")
+      );
       // Combine date and AM/PM into a single string
       const formattedLeaveDates = leaveDates.map(
         (item: any) => `${item.date} ${item.session}`,
       );
 
+      // Format posting period dates
+      const formattedPostingPeriod = {
+        startDate: formatDate(new Date(formData.postingPeriod.startDate)),
+        endDate: formatDate(new Date(formData.postingPeriod.endDate)),
+      };
+
       await registerSRInfo({
         ...formData,
+        postingPeriod: formattedPostingPeriod,
         callDates: formattedCallDates,
         leaveDates: formattedLeaveDates,
         id: 0,

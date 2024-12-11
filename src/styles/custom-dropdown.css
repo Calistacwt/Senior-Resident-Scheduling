@@ -1,0 +1,5 @@
+button[data-testid="flowbite-dropdown-target"] {
+  border: 1px solid #a0acbd !important;
+  padding-top: 1px;
+  border-radius: 4px;
+}

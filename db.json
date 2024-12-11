@@ -2,7 +2,7 @@
   "srSchedule": [
     {
       "id": 1,
-      "date": "08-11-2024",
+      "date": "2024-11-08",
       "dcdScreener": "Dr Christelle",
       "activity": "Observe DP4",
       "room": "Rm 25",
@@ -11,25 +11,16 @@
     },
     {
       "id": 2,
-      "date": "08-11-2024",
-      "dcdScreener": "Dr Argarwal",
+      "date": "2024-12-25",
+      "dcdScreener": "Dr Ellen Tay",
       "activity": "Observe DP4",
-      "room": "Rm 16",
+      "room": "Rm 18",
       "srRoom": "Rm 10",
-      "session": "PM"
+      "session": "AM"
     },
     {
       "id": 3,
-      "date": "31-12-2024",
-      "dcdScreener": "Dr Ellen Tay",
-      "activity": "Observe DP4",
-      "room": "Rm 18",
-      "srRoom": "Rm 10",
-      "session": "AM"
-    },
-    {
-      "id": 4,
-      "date": "24-12-2024",
+      "date": "2024-12-09",
       "dcdScreener": "Dr Argarwal",
       "activity": "Observe DP4",
       "room": "Rm 16",
@@ -37,66 +28,46 @@
       "session": "PM"
     },
     {
+      "id": 4,
+      "date": "2024-12-09",
+      "dcdScreener": "Dr Argarwal",
+      "activity": "Observe DP4",
+      "room": "Rm 16",
+      "srRoom": "Rm 10",
+      "session": "AM"
+    },
+    {
       "id": 5,
-      "date": "18-12-2024",
+      "date": "2024-12-25",
       "dcdScreener": "Dr Ellen Tay",
       "activity": "Observe DP4",
       "room": "Rm 18",
       "srRoom": "Rm 10",
-      "session": "AM"
+      "session": "PM"
     }
   ],
   "srList": [
     {
       "postingPeriod": {
-        "startDate": "2024-11-30T16:00:00.000Z",
-        "endDate": "2024-12-30T16:00:00.000Z"
+        "startDate": "02 January 2025",
+        "endDate": "23 January 2025"
       },
-      "name": "Senior 4",
+      "name": "Senior 2",
       "mobile": "98235982",
-      "email": "senior4@mohh.com.sg",
-      "MCR": "M45678E",
-      "noSession": "30 Session",
-      "remarks": "Meeting",
+      "email": "senior1@mohh.com.sg",
+      "MCR": "M12345E",
+      "noSession": "30",
+      "remarks": "",
       "callDates": [
-        "04 December 2024",
-        "18 December 2024",
-        "25 December 2024"
+        "2024-12-12"
       ],
       "leaveDates": [
-        "10 December 2024",
-        "16 December 2024",
-        "24 December 2024"
+        "2024-12-18 FULLDAY"
       ],
-      "id": 1
-    },
-    {
-      "postingPeriod": {
-        "startDate": "2025-11-30T16:00:00.000Z",
-        "endDate": "2025-12-30T16:00:00.000Z"
-      },
-      "name": "Senior 10",
-      "mobile": "98235982",
-      "email": "senior10@mohh.com.sg",
-      "MCR": "M45678E",
-      "noSession": "30 Session",
-      "remarks": "Meeting",
-      "callDates": [
-        "11 December 2024",
-        "16 December 2024",
-        "25 December 2024"
-      ],
-      "leaveDates": [
-        "05 December 2024",
-        "10 December 2024",
-        "13 December 2024"
-      ],
-      "id": 2
+      "id": 6
     }
   ],
-  "clinicSchedule": [
-
-  ],
+  "clinicSchedule": [],
   "seniorDoctorList": [
     {
       "name": "Dr Agarwal",
