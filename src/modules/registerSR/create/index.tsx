@@ -34,8 +34,15 @@ const RegisterSR = () => {
         (item: any) => `${item.date} ${item.session}`,
       );
 
+      // Format posting period dates
+      const formattedPostingPeriod = {
+        startDate: formatDate(new Date(formData.postingPeriod.startDate)),
+        endDate: formatDate(new Date(formData.postingPeriod.endDate)),
+      };
+
       await registerSRInfo({
         ...formData,
+        postingPeriod: formattedPostingPeriod,
         callDates: formattedCallDates,
         leaveDates: formattedLeaveDates,
         id: 0,
