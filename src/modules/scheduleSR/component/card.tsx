@@ -1,5 +1,5 @@
 import { srSchedule } from "@/types/dashboard";
-import { formattedDate } from "@/utils/formatter";
+import { formatDate } from "@/utils/formatter";
 
 interface CardProps {
   scheduleData: srSchedule[];
@@ -8,7 +8,8 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ scheduleData }) => {
   const groupedSchedules = scheduleData.reduce(
     (acc, schedule) => {
-      const date = formattedDate(schedule.date);
+      const date = formatDate(new Date(schedule.date));
+
       if (!acc[date]) {
         acc[date] = [];
       }

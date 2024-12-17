@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import Calendar from "./component/calendar";
+
 import { getSRSchedule } from "@/services/dashboard";
 import { getSRData } from "@/services/srList";
+import Calendar from "./component/calendar";
 
 const Dashboard = () => {
   const [scheduleData, setScheduleData] = useState([]);
@@ -9,6 +10,8 @@ const Dashboard = () => {
 
   const [callDates, setCallDates] = useState<string[]>([]);
   const [leaveDates, setLeaveDates] = useState<string[]>([]);
+
+  const [_latestPostingPeriod, setLatestPostingPeriod] = useState<any>(null);
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -27,19 +30,19 @@ const Dashboard = () => {
       const latestSR = data.reduce((latest: any, current: any) => {
         const latestEndDate = new Date(latest.postingPeriod.endDate);
         const currentEndDate = new Date(current.postingPeriod.endDate);
-
         return currentEndDate > latestEndDate ? current : latest;
       });
 
       setSRData(latestSR);
       setCallDates(latestSR.callDates);
       setLeaveDates(latestSR.leaveDates);
+      setLatestPostingPeriod(latestSR.postingPeriod);
     };
     fetchSRData();
   }, []);
 
   return (
-    <div className="m-3">
+    <div className="m-3 mt-0">
       <div className="flex justify-between">
         <div className=" mb-3 space-y-1">
           <h1 className="font-bold text-xl">
@@ -64,11 +67,12 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div id="calendar-content">
+      <div>
         <Calendar
           scheduleData={scheduleData}
           callDates={callDates}
           leaveDates={leaveDates}
+          // latestPostingPeriod={latestPostingPeriod}
         />
       </div>
     </div>
