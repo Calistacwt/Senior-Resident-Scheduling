@@ -1,16 +1,15 @@
 import { useState } from "react";
 import SeniorResidentForm from "../component/seniorResidentForm";
 import { useNavigate } from "@tanstack/react-router";
-import { formatDate } from "@/utils/formatter";
 import { registerSRInfo } from "@/services/registerSR";
 import { format } from "date-fns";
+import { LeaveDate } from "@/types/srList";
 
 const RegisterSR = () => {
   const navigate = useNavigate();
   const [callDates, setCallDates] = useState([]);
-  const [leaveDates, setLeaveDates] = useState([]);
-  const [isRegisteredSuccessfully, setIsRegisteredSuccessfully] =
-    useState(false); // Success state
+  const [leaveDates, setLeaveDates] = useState<LeaveDate[]>([]);
+  const [isRegisteredSuccessfully, setIsRegisteredSuccessfully] = useState(false); // Success state
 
   const [formData, setFormData] = useState({
     postingPeriod: { startDate: "", endDate: "" },
@@ -21,25 +20,25 @@ const RegisterSR = () => {
     noSession: "",
     remarks: "",
     callDates: "",
-    leaveDates: "",
+    leaveDates: [],
   });
 
   // Handle Form Submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
       const formattedCallDates = callDates.map((date) =>
         format(new Date(date), "yyyy-MM-dd")
       );
-      // Combine date and AM/PM into a single string
-      const formattedLeaveDates = leaveDates.map(
-        (item: any) => `${item.date} ${item.session}`,
-      );
+
+      const formattedLeaveDates = leaveDates.map((item) => ({
+        date: format(new Date(item.date), "yyyy-MM-dd"),
+        session: item.session,
+      }));
 
       // Format posting period dates
       const formattedPostingPeriod = {
-        startDate: formatDate(new Date(formData.postingPeriod.startDate)),
-        endDate: formatDate(new Date(formData.postingPeriod.endDate)),
+        startDate: format(new Date(formData.postingPeriod.startDate), "yyyy-MM-dd"),
+        endDate: format(new Date(formData.postingPeriod.endDate), "yyyy-MM-dd"),
       };
 
       await registerSRInfo({
@@ -47,7 +46,7 @@ const RegisterSR = () => {
         postingPeriod: formattedPostingPeriod,
         callDates: formattedCallDates,
         leaveDates: formattedLeaveDates,
-        id: 0,
+        id: "",
       });
       setIsRegisteredSuccessfully(true);
       setTimeout(() => {
@@ -99,11 +98,10 @@ const RegisterSR = () => {
             <SeniorResidentForm
               formData={formData}
               setFormData={setFormData}
-              callDates={callDates}
               setCallDates={setCallDates}
-              leaveDates={leaveDates}
               setLeaveDates={setLeaveDates}
               handleSubmit={handleSubmit}
+              mode="register"
             />
           </div>
           {/* <div className="flex-1">

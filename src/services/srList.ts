@@ -1,6 +1,5 @@
 import {
   SR,
-  SR_DETAILS,
   SR_NAMESEARCH,
   SR_SORT_NAME_ASC,
   SR_SORT_NAME_DESC,
@@ -15,8 +14,8 @@ export const getSRData = async () => {
   return response.data;
 };
 
-export const getSRDataById = async (id: number) => {
-  const response = await axios.get(`${BASE_URL}${SR_DETAILS}${id}`);
+export const getSRDataById = async (id: string) => {
+  const response = await axios.get(`${BASE_URL}${SR}/${id}`);
   return response.data;
 };
 

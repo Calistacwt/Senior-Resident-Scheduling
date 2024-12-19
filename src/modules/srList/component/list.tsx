@@ -1,11 +1,24 @@
 import { srList } from "@/types/srList";
 import { formatDate } from "@/utils/formatter";
-
+import { useNavigate } from "@tanstack/react-router";
+import { Dropdown } from "flowbite-react";
+import "/src/styles/custom-dropdown.css";
+import { FaEdit, FaTrash } from "react-icons/fa";
 interface SRProps {
   SRData: srList[];
 }
 
 const List: React.FC<SRProps> = ({ SRData }) => {
+  const navigate = useNavigate();
+
+  const handleEdit = (srData: srList) => {
+    // console.log("Edit SR Data:", srData);
+    navigate({
+      to: `/seniorResidentForm/${srData.id}/edit`,
+      params: { id: srData.id },
+    });
+  };
+
   return (
     <div className=" bg-background  ">
       <table className="w-full bg-white mt-3">
@@ -27,9 +40,6 @@ const List: React.FC<SRProps> = ({ SRData }) => {
             <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
               EMAIL
             </th>
-            {/* <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
-              CALL DATES
-            </th> */}
             <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
               POSTING PERIOD
             </th>
@@ -69,10 +79,27 @@ const List: React.FC<SRProps> = ({ SRData }) => {
                   : "N/A"}
               </td>
 
-              <td className="p-4 font-medium  ">
-                <button className="bg-sidebar-active  text-white font-medium text-2xs p-2 rounded-md">
-                  Information
-                </button>
+              <td className="p-4 font-medium custom-dropdown-button">
+                <Dropdown
+                  label={
+                    <span className="text-2xs mr-2 text-white">Actions</span>
+                  }
+                  color="white"
+                  size="xs"
+                  className="text-white font-medium rounded-md transition-none"
+                >
+                  <Dropdown.Item
+                    onClick={() => handleEdit(SRData)}
+                    className="flex items-center"
+                  >
+                    <FaEdit className="mr-2 text-sm" />
+                    <span className="text-xs">Edit</span>
+                  </Dropdown.Item>
+                  <Dropdown.Item className="flex items-center">
+                    <FaTrash className="mr-2 text-xs" />
+                    <span className="text-xs">Delete</span>
+                  </Dropdown.Item>
+                </Dropdown>
               </td>
             </tr>
           ))}

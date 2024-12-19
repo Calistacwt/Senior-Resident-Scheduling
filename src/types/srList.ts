@@ -1,5 +1,5 @@
 export type srList = {
-  id: number;
+  id: string;
   name: string;
   mobile: string;
   email: string;
@@ -11,5 +11,12 @@ export type srList = {
     endDate: string;
   };
   callDates: string[];
-  leaveDates: string[];
+  // leaveDates: string[];
+  leaveDates: { date: string; session: string }[]; 
+};
+
+
+export type LeaveDate = {
+  date: string;
+  session: string;
 };
