@@ -3,3 +3,19 @@ button[data-testid="flowbite-dropdown-target"] {
   padding-top: 1px;
   border-radius: 4px;
 }
+
+.custom-dropdown-button > button[data-testid="flowbite-dropdown-target"]{
+  background-color: #1f6293;
+  padding: 4px;
+  border: none !important;
+}
+
+.custom-dropdown-button > button[data-testid="flowbite-dropdown-target"] svg{
+  color: white;
+
+}
+
+.session-dropdown-button > button[data-testid="flowbite-dropdown-target"]{
+  padding: 3px;
+  border-radius: 4px;
+}

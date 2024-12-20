@@ -11,13 +11,13 @@ import React, { useEffect, useRef, useState } from "react";
 import "/src/styles/custom-dropdown.css";
 import "/src/styles/custom-calendar.css";
 import { srSchedule } from "@/types/dashboard";
-import { isPostCall, isLeaveDay } from "@/utils/calendar";
+import { isPostCall } from "@/utils/calendar";
 import { Dropdown } from "flowbite-react";
-
+import { LeaveDate } from "@/types/srList";
 interface CalendarProps {
   scheduleData: srSchedule[];
   callDates: string[];
-  leaveDates: string[];
+  leaveDates: LeaveDate[];
 }
 
 const Calendar: React.FC<CalendarProps> = ({
@@ -28,12 +28,12 @@ const Calendar: React.FC<CalendarProps> = ({
   // Current Date & Year
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [currentYear, setCurrentYear] = useState<number>(
-    new Date().getFullYear(),
+    new Date().getFullYear()
   );
 
   // Current active month
   const [activeMonthIndex, setActiveMonthIndex] = useState<number>(
-    new Date().getMonth(),
+    new Date().getMonth()
   );
 
   // Track each month div elements
@@ -64,11 +64,11 @@ const Calendar: React.FC<CalendarProps> = ({
         const visibleEntry = entries.find((entry) => entry.isIntersecting);
         if (visibleEntry) {
           setActiveMonthIndex(
-            monthRefs.current.findIndex((ref) => ref === visibleEntry.target),
+            monthRefs.current.findIndex((ref) => ref === visibleEntry.target)
           );
         }
       },
-      { threshold: 0.5 },
+      { threshold: 0.5 }
     );
 
     // Observe all month elements
@@ -84,7 +84,7 @@ const Calendar: React.FC<CalendarProps> = ({
     // Find the target element or fallback to the month's container
     const targetElement =
       document.querySelector(
-        `[data-date="${format(startDate, "yyyy-MM-dd")}"]`,
+        `[data-date="${format(startDate, "yyyy-MM-dd")}"]`
       ) || monthRefs.current[currentMonthIndex];
 
     // Scroll if the target exists
@@ -116,7 +116,7 @@ const Calendar: React.FC<CalendarProps> = ({
       months.push(
         <div key={i} ref={(el) => (monthRefs.current[i] = el)} className="mb-4">
           {renderDates(monthDate, seenDates)}
-        </div>,
+        </div>
       );
       // Increment month for the next render
       monthDate = addMonths(monthDate, 1);
@@ -151,13 +151,15 @@ const Calendar: React.FC<CalendarProps> = ({
 
             // Get schedule for the date
             const scheduleForDay = scheduleData.filter(
-              (schedule) => schedule.date === dateFormatted,
+              (schedule) => schedule.date === dateFormatted
             );
 
-            const isPostCallDate = isPostCall(day, callDates);
-            const leaveSessions = ["AM", "PM", "FULLDAY"].filter((session) =>
-              isLeaveDay(day, session, leaveDates),
-            );
+            const isPostCallDate = isPostCall(day, callDates, leaveDates);
+
+            const leaveSessions = leaveDates
+              .filter((leave) => leave.date === dateFormatted)
+              .map((leave) => leave.session);
+
             return (
               <div
                 key={index}
@@ -175,7 +177,7 @@ const Calendar: React.FC<CalendarProps> = ({
                       <div className="space-y-2 mt-2">
                         {scheduleForDay
                           .sort((am, pm) =>
-                            am.session === "AM" && pm.session !== "AM" ? -1 : 1,
+                            am.session === "AM" && pm.session !== "AM" ? -1 : 1
                           )
                           .map((sessionData, index) => (
                             <div
@@ -239,7 +241,7 @@ const Calendar: React.FC<CalendarProps> = ({
   // Render navigation buttons for each month
   const renderMonthNavigation = () => {
     const months = Array.from({ length: 12 }, (_, i) =>
-      format(new Date(currentDate.getFullYear(), i, 1), "MMMM"),
+      format(new Date(currentDate.getFullYear(), i, 1), "MMMM")
     );
 
     const handleMonthChange = (selectedMonth: number) => {
@@ -273,7 +275,7 @@ const Calendar: React.FC<CalendarProps> = ({
   const renderYearNavigation = () => {
     const currentYearRange = Array.from(
       { length: 10 }, // Number of years you want to show before and after current year
-      (_, i) => currentYear - 5 + i,
+      (_, i) => currentYear - 5 + i
     );
 
     const handleYearChange = (selectedYear: number) => {

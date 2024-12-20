@@ -21,7 +21,7 @@ const sidebarMenu: SidebarMenu[] = [
     id: "registerSR",
     type: "link",
     path: "/seniorResidentForm",
-    label: "Register Senior Resident",
+    label: "Senior Resident Form",
     icons: "/assets/images/sidebar/addUser.png",
     active: ["/seniorResidentForm"],
   },

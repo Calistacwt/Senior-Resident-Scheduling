@@ -1,5 +1,5 @@
 import { formatDate } from "@/utils/formatter";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 /*--------- Date Range Picker --------- */
@@ -15,63 +15,99 @@ import "react-multi-date-picker";
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 import DatePicker from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
+import { format } from "date-fns";
+import { Dropdown } from "flowbite-react";
+import "/src/styles/custom-dropdown.css";
 
 const SeniorResidentForm = ({
   formData,
   setFormData,
   handleSubmit,
-  callDates,
+  handleUpdate,
   setCallDates,
-  leaveDates,
   setLeaveDates,
+  postingPeriod,
+  mode,
 }: any) => {
   const navigate = useNavigate();
 
-  const [postingPeriod, setPostingPeriod] = useState({
-    startDate: formData.postingPeriod.startDate
-      ? new Date(formData.postingPeriod.startDate)
+  const [isPostingPeriodOpen, setIsPostingPeriodOpen] = useState(false);
+
+  const [localPostingPeriod, setLocalPostingPeriod] = useState({
+    startDate: postingPeriod?.startDate
+      ? new Date(postingPeriod.startDate)
       : new Date(),
-    endDate: formData.postingPeriod.endDate
-      ? new Date(formData.postingPeriod.endDate)
+    endDate: postingPeriod?.endDate
+      ? new Date(postingPeriod.endDate)
       : new Date(),
     key: "selection",
   });
-  const [isPostingPeriodOpen, setIsPostingPeriodOpen] = useState(false);
+
+  const postingPeriodRef = useRef<HTMLDivElement | null>(null);
 
   const handleDateRangeChange = (ranges: any) => {
     const { startDate, endDate } = ranges.selection;
-    setPostingPeriod({ startDate, endDate, key: "selection" });
+  
+    // Format the dates to 'yyyy-MM-dd'
+    const formattedStartDate = format(startDate, "yyyy-MM-dd");
+    const formattedEndDate = format(endDate, "yyyy-MM-dd");
+  
+    setLocalPostingPeriod({ startDate, endDate, key: "selection" });
+  
     setFormData((prevData: any) => ({
       ...prevData,
       postingPeriod: {
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
       },
     }));
   };
-
+  
   const handleCallDatesChange = (dates: any) => {
-    setCallDates(dates); // Update state with selected dates
+    const formattedDates = dates.map((date: Date) =>
+      format(date, "yyyy-MM-dd")
+    );
+    setFormData((prevData: any) => ({
+      ...prevData,
+      callDates: formattedDates,
+    }));
+    setCallDates(dates);
   };
 
   const handleLeaveDatesChange = (dates: any) => {
-    const updatedDates = dates.map((date: any) => ({
-      date: date.format("YYYY-MM-DD"),
-      session: "FULLDAY",
+    // new array of leave dates, preserving the session for exisiting dates
+    const updatedDates = dates.map((date: Date) => {
+      // Check if the date already exists in the formData.leaveDates
+      const existingDate = formData.leaveDates.find(
+        (item: any) => item.date === format(date, "yyyy-MM-dd")
+      );
+      return existingDate
+        ? { ...existingDate } // Keep the existing session if the date is already in leaveDates
+        : { date: format(date, "yyyy-MM-dd"), session: "FULLDAY" };
+    });
+
+    setFormData((prevData: any) => ({
+      ...prevData,
+      leaveDates: updatedDates,
     }));
     setLeaveDates(updatedDates);
   };
 
   const handleSessionChange = (date: string, session: string) => {
-    setLeaveDates((prevState: any) =>
-      prevState.map((item: any) =>
-        item.date === date ? { ...item, session } : item
-      )
+    const updatedLeaveDates = formData.leaveDates.map((item: any) =>
+      item.date === date ? { ...item, session } : item
     );
+
+    setFormData((prevData: any) => ({
+      ...prevData,
+      leaveDates: updatedLeaveDates,
+    }));
+
+    setLeaveDates(updatedLeaveDates);
   };
 
   const handleBack = async () => {
-    navigate({ to: `/` });
+    navigate({ to: `/srList` });
   };
 
   // Handle form input changes
@@ -80,10 +116,47 @@ const SeniorResidentForm = ({
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (mode === "edit" && typeof handleUpdate === "function") {
+      handleUpdate(formData); // Update the SR data
+    } else if (mode === "register" && typeof handleSubmit === "function") {
+      handleSubmit(formData); // Register the SR data
+    }
+  };
+
+  useEffect(() => {
+    if (postingPeriod?.startDate && postingPeriod?.endDate) {
+      setLocalPostingPeriod({
+        startDate: new Date(postingPeriod.startDate),
+        endDate: new Date(postingPeriod.endDate),
+        key: "selection",
+      });
+    }
+  }, [postingPeriod]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: any) => {
+      if (
+        postingPeriodRef.current &&
+        !postingPeriodRef.current.contains(e.target)
+      ) {
+        setIsPostingPeriodOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="w-full">
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        <div className="space-y-2 mt-4">
+      <form className="space-y-4" onSubmit={handleFormSubmit}>
+        {/* Posting Period */}
+        <div className="space-y-2 mt-4" ref={postingPeriodRef}>
           <label className="text-xs font-medium text-form-label mb-2">
             Posting Period
           </label>
@@ -92,8 +165,8 @@ const SeniorResidentForm = ({
             onClick={() => setIsPostingPeriodOpen(true)}
             className="text-left w-full text-black text-xs border rounded-md border-form-label p-2"
           >
-            {postingPeriod.startDate && postingPeriod.endDate
-              ? `${formatDate(postingPeriod.startDate)} - ${formatDate(postingPeriod.endDate)}`
+            {localPostingPeriod.startDate && localPostingPeriod.endDate
+              ? `${formatDate(localPostingPeriod.startDate)} - ${formatDate(localPostingPeriod.endDate)}`
               : "Select Date Range"}
           </button>
 
@@ -103,17 +176,9 @@ const SeniorResidentForm = ({
                 editableDateInputs={true}
                 onChange={handleDateRangeChange}
                 moveRangeOnFirstSelection={false}
-                ranges={[postingPeriod]}
+                ranges={[localPostingPeriod]}
                 className="custom-calendar"
               />
-
-              <button
-                type="button"
-                className="mt-2 text-xs bg-gray-200 px-3 py-1 rounded-md"
-                onClick={() => setIsPostingPeriodOpen(false)}
-              >
-                Close
-              </button>
             </div>
           )}
         </div>
@@ -190,7 +255,7 @@ const SeniorResidentForm = ({
             </label>
 
             <DatePicker
-              value={callDates}
+              value={formData.callDates}
               onChange={handleCallDatesChange}
               multiple
               sort
@@ -201,15 +266,14 @@ const SeniorResidentForm = ({
           </div>
         </div>
 
-
-        <div className="flex justify-between items-center space-x-4 flex-1">
+        <div className="flex flex-col space-y-4">
           <div className="flex flex-col flex-1 ">
             <label className="text-xs font-medium text-form-label mb-2">
               Leaves
             </label>
 
             <DatePicker
-              value={leaveDates.map((item: any) => item.date)}
+              value={formData.leaveDates.map((item: any) => item.date)}
               onChange={handleLeaveDatesChange}
               multiple
               sort
@@ -219,26 +283,51 @@ const SeniorResidentForm = ({
             />
           </div>
 
-          <div className="flex flex-col space-y-2 mt-1">
-            {leaveDates.map((item: any) => (
-              <div key={item.date} className="flex items-center space-x-2">
+          <div className="flex space-x-3 mt-1 ">
+            {(Array.isArray(formData.leaveDates)
+              ? formData.leaveDates
+              : []
+            ).map((item: any) => (
+              <div
+                key={item.date}
+                className="flex items-center space-x-2 session-dropdown-button"
+              >
                 <span className="font-semibold text-2xs text-black">
                   {item.date}
                 </span>
-                <select
-                  value={item.amPm}
-                  onChange={(e) => handleSessionChange(item.date, e.target.value)}
-                  className="text-2xs  rounded-md p-1 border-form-label border"
+                <Dropdown
+                  label={
+                    <span className="text-2xs text-black">
+                      {item.session || "Select"}
+                    </span>
+                  }
+                  size="sm"
+                  color="gray" // arrow
+                  className="ml-2 text-2xs rounded-md border text-black border-form-label transition-none"
                 >
-                  <option value="FULLDAY">FULLDAY</option>
-                  <option value="AM">AM</option>
-                  <option value="PM">PM</option>
-                </select>
+                  <Dropdown.Item
+                    className="text-2xs"
+                    onClick={() => handleSessionChange(item.date, "FULLDAY")}
+                  >
+                    FULLDAY
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className="text-2xs"
+                    onClick={() => handleSessionChange(item.date, "AM")}
+                  >
+                    AM
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className="text-2xs"
+                    onClick={() => handleSessionChange(item.date, "PM")}
+                  >
+                    PM
+                  </Dropdown.Item>
+                </Dropdown>
               </div>
             ))}
           </div>
         </div>
-
 
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
