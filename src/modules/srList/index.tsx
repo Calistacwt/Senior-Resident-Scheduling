@@ -7,19 +7,12 @@ import {
 } from "@/services/srList";
 import Searchbar from "./component/searchbar";
 import List from "./component/list";
+import { deleteSRInfo } from "@/services/registerSR";
+import { srList } from "@/types/srList";
 
-const srList = () => {
-  const [SRData, setSRData] = useState([]);
+const SeniorResidentList = () => {
+  const [SRData, setSRData] = useState<srList[]>([]);
   const [isAscending, setIsAscending] = useState(true);
-
-  useEffect(() => {
-    const fetchSRData = async () => {
-      const data = await getSRData();
-      setSRData(data);
-    };
-
-    fetchSRData();
-  }, []);
 
   const handleSearch = async (value: string) => {
     try {
@@ -51,6 +44,27 @@ const srList = () => {
     setSRData(data);
   };
 
+  const handleDelete = async (id: string) => {
+    try {
+      // Call the delete function from your API service
+      await deleteSRInfo(id);
+
+      // Remove the deleted SR from the state
+      setSRData(SRData.filter((srData) => srData.id !== id));
+    } catch (error) {
+      console.error("Error deleting SR data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchSRData = async () => {
+      const data = await getSRData();
+      setSRData(data);
+    };
+
+    fetchSRData();
+  }, []);
+
   return (
     <div className="m-2">
       <div>
@@ -72,10 +86,10 @@ const srList = () => {
       </div>
 
       <div>
-        <List SRData={SRData} />
+        <List SRData={SRData} onDelete={handleDelete} />
       </div>
     </div>
   );
 };
 
-export default srList;
+export default SeniorResidentList;

@@ -6,9 +6,10 @@ import "/src/styles/custom-dropdown.css";
 import { FaEdit, FaTrash } from "react-icons/fa";
 interface SRProps {
   SRData: srList[];
+  onDelete: (id: string) => void;
 }
 
-const List: React.FC<SRProps> = ({ SRData }) => {
+const List: React.FC<SRProps> = ({ SRData ,onDelete}) => {
   const navigate = useNavigate();
 
   const handleEdit = (srData: srList) => {
@@ -95,7 +96,7 @@ const List: React.FC<SRProps> = ({ SRData }) => {
                     <FaEdit className="mr-2 text-sm" />
                     <span className="text-xs">Edit</span>
                   </Dropdown.Item>
-                  <Dropdown.Item className="flex items-center">
+                  <Dropdown.Item  onClick={() => onDelete(SRData.id)} className="flex items-center">
                     <FaTrash className="mr-2 text-xs" />
                     <span className="text-xs">Delete</span>
                   </Dropdown.Item>
