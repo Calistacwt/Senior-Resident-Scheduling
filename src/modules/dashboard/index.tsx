@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { getSRSchedule } from "@/services/dashboard";
 import { getSRData } from "@/services/srList";
 import Calendar from "./component/calendar";
+import { LeaveDate } from "@/types/srList";
 
 const Dashboard = () => {
   const [scheduleData, setScheduleData] = useState([]);
   const [_SRData, setSRData] = useState([]);
 
   const [callDates, setCallDates] = useState<string[]>([]);
-  const [leaveDates, setLeaveDates] = useState<string[]>([]);
+  const [leaveDates, setLeaveDates] = useState<LeaveDate[]>([]);
 
   const [_latestPostingPeriod, setLatestPostingPeriod] = useState<any>(null);
 

@@ -255,6 +255,7 @@ const Calendar: React.FC<CalendarProps> = ({
           label={<span className="text-2xs">{months[activeMonthIndex]}</span>}
           color="gray"
           size="xs"
+          className="transition-none"
         >
           <div className="max-h-40 overflow-y-auto">
             {months.map((month, index) => (
@@ -290,6 +291,7 @@ const Calendar: React.FC<CalendarProps> = ({
           label={<span className="text-2xs">{currentYear}</span>}
           color="gray"
           size="xs"
+          className="transition-none"
         >
           <div className="max-h-40 overflow-y-auto">
             {currentYearRange.map((year) => (
