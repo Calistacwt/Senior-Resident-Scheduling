@@ -5,7 +5,6 @@ import { srList } from "@/types/srList";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { updateSRInfo } from "@/services/registerSR";
 
-
 const UpdateSRInfo = () => {
   const navigate = useNavigate();
   const [isUpdatedSuccessfully, setIsUpdatedSuccessfully] = useState(false); // Success state

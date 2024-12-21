@@ -12,11 +12,9 @@ const SidebarNavigation: FC = () => {
       {/* Sidebar Logo */}
       <Sidebar.Logo
         href="/"
-        img={
-          "/assets/images/KKHLogo_transparent.svg"
-        }
+        img={"/assets/images/KKHLogo_transparent.svg"}
         imgAlt="KKH Logo"
-        className="cursor-pointer transition-all duration-300 mb-4 mt-3 ml-1 w-36 "   
+        className="cursor-pointer transition-all duration-300 mb-4 mt-3 ml-1 w-36 "
       />
 
       {/* Sidebar Items */}
@@ -30,7 +28,7 @@ const SidebarNavigation: FC = () => {
               <Sidebar.ItemGroup key={item.id}>
                 <Sidebar.Collapse
                   label={item.label}
-                  className="text-2xs"
+                  className="text-2xs mb-2"
                   icon={() =>
                     item.icons && (
                       <img
@@ -48,10 +46,9 @@ const SidebarNavigation: FC = () => {
                       onClick={() => {
                         router.navigate({ to: subItem.path || "/" });
                       }}
-                      
                       className={`text-2xs${
                         subItem.active?.includes(pathname)
-                          ? "font-bold border border-sidebar-active "
+                          ? "font-bold border border-sidebar-active text-2xs "
                           : ""
                       }`}
                     >
@@ -69,7 +66,7 @@ const SidebarNavigation: FC = () => {
               <Sidebar.Item
                 href={item.path}
                 icon={() =>
-                   item.icons && (
+                  item.icons && (
                     <img
                       src={item.icons}
                       alt={item.label}
@@ -83,7 +80,7 @@ const SidebarNavigation: FC = () => {
                 }}
                 className={`text-2xs transition-all duration-200 ease-in-out ${isActive ? "font-bold border border-sidebar-active " : ""}`}
               >
-                { item.label}
+                {item.label}
               </Sidebar.Item>
             </Sidebar.ItemGroup>
           );

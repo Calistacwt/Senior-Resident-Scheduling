@@ -47,13 +47,13 @@ const SeniorResidentForm = ({
 
   const handleDateRangeChange = (ranges: any) => {
     const { startDate, endDate } = ranges.selection;
-  
+
     // Format the dates to 'yyyy-MM-dd'
     const formattedStartDate = format(startDate, "yyyy-MM-dd");
     const formattedEndDate = format(endDate, "yyyy-MM-dd");
-  
+
     setLocalPostingPeriod({ startDate, endDate, key: "selection" });
-  
+
     setFormData((prevData: any) => ({
       ...prevData,
       postingPeriod: {
@@ -62,10 +62,10 @@ const SeniorResidentForm = ({
       },
     }));
   };
-  
+
   const handleCallDatesChange = (dates: any) => {
     const formattedDates = dates.map((date: Date) =>
-      format(date, "yyyy-MM-dd")
+      format(date, "yyyy-MM-dd"),
     );
     setFormData((prevData: any) => ({
       ...prevData,
@@ -79,7 +79,7 @@ const SeniorResidentForm = ({
     const updatedDates = dates.map((date: Date) => {
       // Check if the date already exists in the formData.leaveDates
       const existingDate = formData.leaveDates.find(
-        (item: any) => item.date === format(date, "yyyy-MM-dd")
+        (item: any) => item.date === format(date, "yyyy-MM-dd"),
       );
       return existingDate
         ? { ...existingDate } // Keep the existing session if the date is already in leaveDates
@@ -95,7 +95,7 @@ const SeniorResidentForm = ({
 
   const handleSessionChange = (date: string, session: string) => {
     const updatedLeaveDates = formData.leaveDates.map((item: any) =>
-      item.date === date ? { ...item, session } : item
+      item.date === date ? { ...item, session } : item,
     );
 
     setFormData((prevData: any) => ({
@@ -306,19 +306,19 @@ const SeniorResidentForm = ({
                   className="ml-2 text-2xs rounded-md border text-black border-form-label transition-none"
                 >
                   <Dropdown.Item
-                    className="text-2xs"
+                    className="text-2xs p-2 hover:bg-gray-200"
                     onClick={() => handleSessionChange(item.date, "FULLDAY")}
                   >
                     FULLDAY
                   </Dropdown.Item>
                   <Dropdown.Item
-                    className="text-2xs"
+                    className="text-2xs p-2 hover:bg-gray-200"
                     onClick={() => handleSessionChange(item.date, "AM")}
                   >
                     AM
                   </Dropdown.Item>
                   <Dropdown.Item
-                    className="text-2xs"
+                    className="text-2xs p-2 hover:bg-gray-200"
                     onClick={() => handleSessionChange(item.date, "PM")}
                   >
                     PM

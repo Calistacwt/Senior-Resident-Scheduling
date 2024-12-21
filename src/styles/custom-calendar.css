@@ -51,3 +51,11 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.calendar-dropdown-button > button[data-testid="flowbite-dropdown-target"] {
+  padding: 2px;
+}
+
+.calendar-dropdown-button > button[data-testid="flowbite-dropdown-target"] svg {
+  margin-top: 4px;
+}

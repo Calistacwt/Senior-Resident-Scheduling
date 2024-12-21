@@ -17,7 +17,6 @@ export const updateSRInfo = async (
   return response.data;
 };
 
-
 export const deleteSRInfo = async (id: string): Promise<void> => {
   await axios.delete(`${BASE_URL}${SR}/${id}`);
 };

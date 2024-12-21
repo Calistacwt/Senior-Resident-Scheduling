@@ -4,18 +4,17 @@ button[data-testid="flowbite-dropdown-target"] {
   border-radius: 4px;
 }
 
-.custom-dropdown-button > button[data-testid="flowbite-dropdown-target"]{
+.custom-dropdown-button > button[data-testid="flowbite-dropdown-target"] {
   background-color: #1f6293;
-  padding: 4px;
+  padding: 6px !important;
   border: none !important;
 }
 
-.custom-dropdown-button > button[data-testid="flowbite-dropdown-target"] svg{
-  color: white;
-
+.custom-dropdown-button > button[data-testid="flowbite-dropdown-target"] svg {
+  color: white !important;
 }
 
-.session-dropdown-button > button[data-testid="flowbite-dropdown-target"]{
+.session-dropdown-button > button[data-testid="flowbite-dropdown-target"] {
   padding: 3px;
   border-radius: 4px;
 }

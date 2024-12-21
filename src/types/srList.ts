@@ -12,9 +12,8 @@ export type srList = {
   };
   callDates: string[];
   // leaveDates: string[];
-  leaveDates: { date: string; session: string }[]; 
+  leaveDates: { date: string; session: string }[];
 };
-
 
 export type LeaveDate = {
   date: string;

@@ -9,7 +9,8 @@ const RegisterSR = () => {
   const navigate = useNavigate();
   const [callDates, setCallDates] = useState([]);
   const [leaveDates, setLeaveDates] = useState<LeaveDate[]>([]);
-  const [isRegisteredSuccessfully, setIsRegisteredSuccessfully] = useState(false); // Success state
+  const [isRegisteredSuccessfully, setIsRegisteredSuccessfully] =
+    useState(false); // Success state
 
   const [formData, setFormData] = useState({
     postingPeriod: { startDate: "", endDate: "" },
@@ -27,7 +28,7 @@ const RegisterSR = () => {
   const handleSubmit = async () => {
     try {
       const formattedCallDates = callDates.map((date) =>
-        format(new Date(date), "yyyy-MM-dd")
+        format(new Date(date), "yyyy-MM-dd"),
       );
 
       const formattedLeaveDates = leaveDates.map((item) => ({
@@ -37,7 +38,10 @@ const RegisterSR = () => {
 
       // Format posting period dates
       const formattedPostingPeriod = {
-        startDate: format(new Date(formData.postingPeriod.startDate), "yyyy-MM-dd"),
+        startDate: format(
+          new Date(formData.postingPeriod.startDate),
+          "yyyy-MM-dd",
+        ),
         endDate: format(new Date(formData.postingPeriod.endDate), "yyyy-MM-dd"),
       };
 

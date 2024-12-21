@@ -9,7 +9,7 @@ interface SRProps {
   onDelete: (id: string) => void;
 }
 
-const List: React.FC<SRProps> = ({ SRData ,onDelete}) => {
+const List: React.FC<SRProps> = ({ SRData, onDelete }) => {
   const navigate = useNavigate();
 
   const handleEdit = (srData: srList) => {
@@ -91,14 +91,18 @@ const List: React.FC<SRProps> = ({ SRData ,onDelete}) => {
                 >
                   <Dropdown.Item
                     onClick={() => handleEdit(SRData)}
-                    className="flex items-center"
+                    className="flex items-center p-2  hover:bg-gray-200"
                   >
-                    <FaEdit className="mr-2 text-sm" />
-                    <span className="text-xs">Edit</span>
+                    <FaEdit className="mr-2 text-sm text-gray-500" />
+                    <span className="text-xs text-black">Edit</span>
                   </Dropdown.Item>
-                  <Dropdown.Item  onClick={() => onDelete(SRData.id)} className="flex items-center">
-                    <FaTrash className="mr-2 text-xs" />
-                    <span className="text-xs">Delete</span>
+
+                  <Dropdown.Item
+                    onClick={() => onDelete(SRData.id)}
+                    className="flex items-center p-2  hover:bg-gray-200"
+                  >
+                    <FaTrash className="mr-2 text-xs text-gray-500" />
+                    <span className="text-xs text-black">Delete</span>
                   </Dropdown.Item>
                 </Dropdown>
               </td>
