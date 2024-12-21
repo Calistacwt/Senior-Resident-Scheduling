@@ -59,3 +59,7 @@
 .calendar-dropdown-button > button[data-testid="flowbite-dropdown-target"] svg {
   margin-top: 4px;
 }
+
+.calendar-dropdown-item {
+  color: black !important;
+}

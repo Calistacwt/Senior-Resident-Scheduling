@@ -252,7 +252,9 @@ const Calendar: React.FC<CalendarProps> = ({
       <div className="relative inline-block calendar-dropdown-button ">
         <Dropdown
           label={
-            <span className="text-2xs p-1">{months[activeMonthIndex]}</span>
+            <span className="text-2xs p-1 text-black">
+              {months[activeMonthIndex]}
+            </span>
           }
           color="gray"
           size="xs"
@@ -263,7 +265,7 @@ const Calendar: React.FC<CalendarProps> = ({
               <Dropdown.Item
                 key={index}
                 onClick={() => handleMonthChange(index)}
-                className="cursor-pointer text-2xs hover:bg-gray-200 p-2"
+                className="cursor-pointer text-2xs hover:bg-gray-200 p-2 calendar-dropdown-item"
               >
                 {month}
               </Dropdown.Item>
@@ -289,7 +291,7 @@ const Calendar: React.FC<CalendarProps> = ({
     return (
       <div className="flex items-center calendar-dropdown-button">
         <Dropdown
-          label={<span className="text-2xs p-1">{currentYear}</span>}
+          label={<span className="text-2xs p-1 text-black">{currentYear}</span>}
           color="gray"
           size="xs"
           className="transition-none"
@@ -299,7 +301,7 @@ const Calendar: React.FC<CalendarProps> = ({
               <Dropdown.Item
                 key={year}
                 onClick={() => handleYearChange(year)}
-                className="cursor-pointer text-2xs hover:bg-gray-200 p-2"
+                className="cursor-pointer text-2xs hover:bg-gray-200 p-2 calendar-dropdown-item"
               >
                 {year}
               </Dropdown.Item>

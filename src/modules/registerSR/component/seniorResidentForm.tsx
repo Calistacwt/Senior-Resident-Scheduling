@@ -306,19 +306,19 @@ const SeniorResidentForm = ({
                   className="ml-2 text-2xs rounded-md border text-black border-form-label transition-none"
                 >
                   <Dropdown.Item
-                    className="text-2xs p-2 hover:bg-gray-200"
+                    className="text-2xs p-2 hover:bg-gray-200 custom-dropdown-item"
                     onClick={() => handleSessionChange(item.date, "FULLDAY")}
                   >
                     FULLDAY
                   </Dropdown.Item>
                   <Dropdown.Item
-                    className="text-2xs p-2 hover:bg-gray-200"
+                    className="text-2xs p-2 hover:bg-gray-200 custom-dropdown-item"
                     onClick={() => handleSessionChange(item.date, "AM")}
                   >
                     AM
                   </Dropdown.Item>
                   <Dropdown.Item
-                    className="text-2xs p-2 hover:bg-gray-200"
+                    className="text-2xs p-2 hover:bg-gray-200 custom-dropdown-item"
                     onClick={() => handleSessionChange(item.date, "PM")}
                   >
                     PM
