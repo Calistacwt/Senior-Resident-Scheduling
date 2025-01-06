@@ -18,3 +18,7 @@ button[data-testid="flowbite-dropdown-target"] {
   padding: 3px;
   border-radius: 4px;
 }
+
+.custom-dropdown-item {
+  color: black;
+}

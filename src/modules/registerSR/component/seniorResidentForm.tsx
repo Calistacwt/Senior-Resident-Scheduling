@@ -43,6 +43,8 @@ const SeniorResidentForm = ({
     key: "selection",
   });
 
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
   const postingPeriodRef = useRef<HTMLDivElement | null>(null);
 
   const handleDateRangeChange = (ranges: any) => {
@@ -65,7 +67,7 @@ const SeniorResidentForm = ({
 
   const handleCallDatesChange = (dates: any) => {
     const formattedDates = dates.map((date: Date) =>
-      format(date, "yyyy-MM-dd"),
+      format(date, "yyyy-MM-dd")
     );
     setFormData((prevData: any) => ({
       ...prevData,
@@ -79,7 +81,7 @@ const SeniorResidentForm = ({
     const updatedDates = dates.map((date: Date) => {
       // Check if the date already exists in the formData.leaveDates
       const existingDate = formData.leaveDates.find(
-        (item: any) => item.date === format(date, "yyyy-MM-dd"),
+        (item: any) => item.date === format(date, "yyyy-MM-dd")
       );
       return existingDate
         ? { ...existingDate } // Keep the existing session if the date is already in leaveDates
@@ -95,7 +97,7 @@ const SeniorResidentForm = ({
 
   const handleSessionChange = (date: string, session: string) => {
     const updatedLeaveDates = formData.leaveDates.map((item: any) =>
-      item.date === date ? { ...item, session } : item,
+      item.date === date ? { ...item, session } : item
     );
 
     setFormData((prevData: any) => ({
@@ -152,13 +154,28 @@ const SeniorResidentForm = ({
     };
   }, []);
 
+  useEffect(() => {
+    const allFieldsFilled =
+      formData.name &&
+      formData.MCR &&
+      formData.mobile &&
+      formData.email &&
+      formData.noSession &&
+      formData.callDates.length > 0 &&
+      formData.leaveDates.length > 0 &&
+      localPostingPeriod.startDate &&
+      localPostingPeriod.endDate;
+
+    setIsSubmitDisabled(!allFieldsFilled);
+  }, [formData, localPostingPeriod]);
+
   return (
     <div className="w-full">
       <form className="space-y-4" onSubmit={handleFormSubmit}>
         {/* Posting Period */}
         <div className="space-y-2 mt-4" ref={postingPeriodRef}>
           <label className="text-xs font-medium text-form-label mb-2">
-            Posting Period
+            Posting Period <span className="text-red-500 text-xs">*</span>
           </label>
           <button
             type="button"
@@ -194,7 +211,7 @@ const SeniorResidentForm = ({
 
           <div className="flex flex-col space-y-2 w-full">
             <label className="text-xs font-medium text-form-label">
-              Senior Resident
+              Senior Resident <span className="text-red-500 text-xs">*</span>
             </label>
 
             <input
@@ -210,10 +227,11 @@ const SeniorResidentForm = ({
 
         <div className="flex justify-between items-center">
           <div className="flex flex-col flex-1 mr-3 space-y-2">
-            <label className="text-xs font-medium text-form-label">MCR</label>
+            <label className="text-xs font-medium text-form-label">MCR <span className="text-red-500 text-xs">*</span></label>
             <input
               type="text"
               name="MCR"
+              required
               value={formData.MCR}
               onChange={handleInputChange}
               placeholder="Enter MCR"
@@ -223,7 +241,7 @@ const SeniorResidentForm = ({
 
           <div className="flex flex-col flex-1 space-y-2 ">
             <label className="text-xs font-medium text-form-label">
-              Mobile
+              Mobile <span className="text-red-500 text-xs">*</span>
             </label>
             <input
               type="text"
@@ -237,7 +255,7 @@ const SeniorResidentForm = ({
         </div>
 
         <div className="space-y-2 mt-4">
-          <label className="text-xs font-medium text-form-label">Email</label>
+          <label className="text-xs font-medium text-form-label">Email <span className="text-red-500 text-xs">*</span></label>
           <input
             type="text"
             placeholder="Enter Email"
@@ -251,7 +269,7 @@ const SeniorResidentForm = ({
         <div className="flex justify-between items-center space-x-4">
           <div className="flex flex-col flex-1">
             <label className="text-xs font-medium text-form-label mb-2">
-              Call Dates
+              Call Dates <span className="text-red-500 text-xs">*</span>
             </label>
 
             <DatePicker
@@ -269,7 +287,7 @@ const SeniorResidentForm = ({
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col flex-1 ">
             <label className="text-xs font-medium text-form-label mb-2">
-              Leaves
+              Leaves <span className="text-red-500 text-xs">*</span>
             </label>
 
             <DatePicker
@@ -306,19 +324,19 @@ const SeniorResidentForm = ({
                   className="ml-2 text-2xs rounded-md border text-black border-form-label transition-none"
                 >
                   <Dropdown.Item
-                    className="text-2xs p-2 hover:bg-gray-200"
+                    className="text-2xs p-2 hover:bg-gray-200 custom-dropdown-item"
                     onClick={() => handleSessionChange(item.date, "FULLDAY")}
                   >
                     FULLDAY
                   </Dropdown.Item>
                   <Dropdown.Item
-                    className="text-2xs p-2 hover:bg-gray-200"
+                    className="text-2xs p-2 hover:bg-gray-200 custom-dropdown-item"
                     onClick={() => handleSessionChange(item.date, "AM")}
                   >
                     AM
                   </Dropdown.Item>
                   <Dropdown.Item
-                    className="text-2xs p-2 hover:bg-gray-200"
+                    className="text-2xs p-2 hover:bg-gray-200 custom-dropdown-item"
                     onClick={() => handleSessionChange(item.date, "PM")}
                   >
                     PM
@@ -331,7 +349,7 @@ const SeniorResidentForm = ({
 
         <div className="space-y-2 mt-4">
           <label className="text-xs font-medium text-form-label">
-            No. of DCD sessions after deducting leaves and workshop
+            No. of DCD sessions after deducting leaves and workshop <span className="text-red-500 text-xs">*</span>
           </label>
           <input
             type="text"
@@ -366,7 +384,12 @@ const SeniorResidentForm = ({
 
           <button
             type="submit"
-            className="bg-sidebar-active  text-white font-medium text-xs p-2 rounded-md"
+            className={`${
+              isSubmitDisabled
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-sidebar-active"
+            } text-white font-medium text-xs p-2 rounded-md`}
+            disabled={isSubmitDisabled}
           >
             Submit
           </button>

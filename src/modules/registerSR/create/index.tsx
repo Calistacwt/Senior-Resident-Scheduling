@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SeniorResidentForm from "../component/seniorResidentForm";
 import { useNavigate } from "@tanstack/react-router";
 import { registerSRInfo } from "@/services/registerSR";
@@ -11,6 +11,8 @@ const RegisterSR = () => {
   const [leaveDates, setLeaveDates] = useState<LeaveDate[]>([]);
   const [isRegisteredSuccessfully, setIsRegisteredSuccessfully] =
     useState(false); // Success state
+  const [isRegisteredFailed, setIsRegisteredFailed] = useState(false); // Failed state
+  const [fadeOutFailed, setFadeOutFailed] = useState(false); // State to trigger fade-out effect
 
   const [formData, setFormData] = useState({
     postingPeriod: { startDate: "", endDate: "" },
@@ -28,7 +30,7 @@ const RegisterSR = () => {
   const handleSubmit = async () => {
     try {
       const formattedCallDates = callDates.map((date) =>
-        format(new Date(date), "yyyy-MM-dd"),
+        format(new Date(date), "yyyy-MM-dd")
       );
 
       const formattedLeaveDates = leaveDates.map((item) => ({
@@ -40,7 +42,7 @@ const RegisterSR = () => {
       const formattedPostingPeriod = {
         startDate: format(
           new Date(formData.postingPeriod.startDate),
-          "yyyy-MM-dd",
+          "yyyy-MM-dd"
         ),
         endDate: format(new Date(formData.postingPeriod.endDate), "yyyy-MM-dd"),
       };
@@ -58,8 +60,28 @@ const RegisterSR = () => {
       }, 1500);
     } catch (error) {
       console.error("Registration failed", error);
+      setIsRegisteredFailed(true);
+
+      setFadeOutFailed(false);
+
+      setTimeout(() => {
+        setFadeOutFailed(true);
+      }, 500);
+
+      setTimeout(() => {
+        navigate({ to: `/seniorResidentForm/` });
+      }, 1500);
     }
   };
+
+    useEffect(() => {
+      if (fadeOutFailed) {
+        setTimeout(() => {
+          setIsRegisteredFailed(false);
+        }, 1500);
+      }
+    }, [fadeOutFailed]);
+  
 
   return (
     <div className="m-2">
@@ -84,6 +106,18 @@ const RegisterSR = () => {
                 />
               </div>
               <div>Registration Successful!</div>
+            </div>
+          )}
+          {isRegisteredFailed && (
+            <div className="bg-badge-error font-semibold text-xs text-badge-errorText p-2 rounded-md mb-4 flex  items-center space-x-2">
+              <div>
+                <img
+                  src="/assets/images/error.png"
+                  alt="Error Icon"
+                  className="w-3 rounded-full"
+                />
+              </div>
+              <div>Registration Failed!</div>
             </div>
           )}
         </div>
