@@ -9,8 +9,9 @@ import Searchbar from "./component/searchbar";
 import List from "./component/list";
 import { deleteSRInfo } from "@/services/registerSR";
 import { srList } from "@/types/srList";
-import { Modal, Button } from "flowbite-react";
+import { Modal, Button, Pagination } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import "/src/styles/custom-pagination.css";
 
 const SeniorResidentList = () => {
   const [SRData, setSRData] = useState<srList[]>([]);
@@ -18,14 +19,28 @@ const SeniorResidentList = () => {
   const [openModal, setOpenModal] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
+    // Pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const [filteredData, setFilteredData] = useState([]);
+    const dataPerPage = 10;
+    const onPageChange = (page: number) => setCurrentPage(page); // Paginate the filtered data
+    const startIndex = (currentPage - 1) * dataPerPage;
+    const currentData = filteredData.slice(startIndex, startIndex + dataPerPage);
+   
+    // Calculate total pages
+    const totalPages = Math.ceil(filteredData.length / dataPerPage);
+
   const handleSearch = async (value: string) => {
     try {
+      let data;
       if (value.trim() === "") {
-        const data = await getSRData();
+        data = await getSRData();
         setSRData(data);
       } else {
-        const data = await searchSRData(value);
+        data = await searchSRData(value);
         setSRData(data);
+        setFilteredData(data);
+        setCurrentPage(1);
       }
     } catch (error) {
       console.error("Error searching SR data:", error);
@@ -71,6 +86,7 @@ const SeniorResidentList = () => {
     const fetchSRData = async () => {
       const data = await getSRData();
       setSRData(data);
+      setFilteredData(data);
     };
 
     fetchSRData();
@@ -95,7 +111,14 @@ const SeniorResidentList = () => {
         />
       </div>
       <div>
-        <List SRData={SRData} onDelete={confirmDelete} />
+        <List SRData={currentData} onDelete={confirmDelete} />
+      </div>
+      <div className="flex justify-center mt-4">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
       </div>
       <div>
         <Modal
