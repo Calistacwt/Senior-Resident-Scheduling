@@ -19,16 +19,16 @@ const SeniorResidentList = () => {
   const [openModal, setOpenModal] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-    // Pagination
-    const [currentPage, setCurrentPage] = useState(1);
-    const [filteredData, setFilteredData] = useState([]);
-    const dataPerPage = 10;
-    const onPageChange = (page: number) => setCurrentPage(page); // Paginate the filtered data
-    const startIndex = (currentPage - 1) * dataPerPage;
-    const currentData = filteredData.slice(startIndex, startIndex + dataPerPage);
-   
-    // Calculate total pages
-    const totalPages = Math.ceil(filteredData.length / dataPerPage);
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredData, setFilteredData] = useState<srList[]>([]);
+  const dataPerPage = 10;
+  const onPageChange = (page: number) => setCurrentPage(page);
+  const startIndex = (currentPage - 1) * dataPerPage;
+  const currentData = filteredData.slice(startIndex, startIndex + dataPerPage);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredData.length / dataPerPage);
 
   const handleSearch = async (value: string) => {
     try {
@@ -69,16 +69,23 @@ const SeniorResidentList = () => {
   };
 
   const handleDelete = async () => {
-    try {
-      if (deleteId) {
+    if (deleteId) {
+      try {
         await deleteSRInfo(deleteId);
-        setSRData(SRData.filter((srData) => srData.id !== deleteId));
+
+        const updatedData = SRData.filter((srData) => srData.id !== deleteId);
+        setSRData(updatedData);
+        setFilteredData(updatedData);
+
+        if (updatedData.length % dataPerPage === 0 && currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+        }
+      } catch (error) {
+        console.error("Error deleting SR data:", error);
+      } finally {
         setDeleteId(null);
+        setOpenModal(false);
       }
-    } catch (error) {
-      console.error("Error deleting SR data:", error);
-    } finally {
-      setOpenModal(false);
     }
   };
 
