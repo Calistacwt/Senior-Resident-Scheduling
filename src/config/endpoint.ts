@@ -8,6 +8,9 @@ export const SR_SORT_NAME_DESC = "/srList?_sort=name&_order=DESC";
 
 export const SENIOR_DOCTOR = "/seniorDoctorList";
 export const SENIOR_DOCTOR_NAMESEARCH = "/seniorDoctorList?name_like=search";
+export const SENIOR_DOCTOR_UPDATE = "/seniorDoctorList/:id";
+export const SENIOR_DOCTOR_DELETE = "/seniorDoctorList/:id";
+
 export const SENIOR_DOCTOR_SORT_NAME_ASC =
   "/seniorDoctorList?_sort=name&_order=ASC";
 export const SENIOR_DOCTOR_SORT_NAME_DESC =

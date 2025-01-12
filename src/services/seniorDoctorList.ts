@@ -3,6 +3,8 @@ import {
   SENIOR_DOCTOR_NAMESEARCH,
   SENIOR_DOCTOR_SORT_NAME_ASC,
   SENIOR_DOCTOR_SORT_NAME_DESC,
+  SENIOR_DOCTOR_UPDATE,
+  SENIOR_DOCTOR_DELETE,
 } from "@/config/endpoint";
 import { seniorDoctorList } from "@/types/seniorDoctorList";
 
@@ -45,6 +47,10 @@ export const updateSeniorDoctorInfo = async (
   id: number,
   data: seniorDoctorList,
 ): Promise<seniorDoctorList> => {
-  const response = await axios.put(`${BASE_URL}${SENIOR_DOCTOR}/${id}`, data);
+  const response = await axios.put(`${BASE_URL}${SENIOR_DOCTOR_UPDATE}/${id}`, data);
   return response.data;
+};
+
+export const deleteSeniorDoctor = async (id: number): Promise<void> => {
+  await axios.delete(`${BASE_URL}${SENIOR_DOCTOR_DELETE}/${id}`);
 };
