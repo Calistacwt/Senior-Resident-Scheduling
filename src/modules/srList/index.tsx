@@ -7,10 +7,11 @@ import {
 } from "@/services/srList";
 import Searchbar from "./component/searchbar";
 import List from "./component/list";
-import { deleteSRInfo } from "@/services/registerSR";
+import { deleteSRInfo, registerSRInfo } from "@/services/registerSR";
 import { srList } from "@/types/srList";
 import { Modal, Button } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import * as XLSX from "xlsx";
 
 const SeniorResidentList = () => {
   const [SRData, setSRData] = useState<srList[]>([]);
@@ -76,6 +77,129 @@ const SeniorResidentList = () => {
     fetchSRData();
   }, []);
 
+  interface ExcelRow {
+    "SR NAME": string;
+    "START DATE": string;
+    "END DATE": string;
+    MOBILE: string;
+    EMAIL: string;
+    MCR: string;
+    "NO SESSION": string;
+    REMARKS: string;
+    "CALL DATES": string;
+    "LEAVE DATES": string;
+  }
+  
+
+  const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = event.target.files?.[0];
+      if (!file) return;
+  
+      // Read the file into an array buffer
+      const data = await file.arrayBuffer();
+      const workbook = XLSX.read(data, { type: "array" });
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const jsonData: ExcelRow[] = XLSX.utils.sheet_to_json(worksheet); // Cast the data to ExcelRow[]
+  
+      console.log("Excel Data:", jsonData); // Log the raw data from the Excel sheet
+  
+      // Check if the columns are as expected
+      if (!jsonData.length || !jsonData[0]["SR NAME"] || !jsonData[0]["START DATE"]) {
+        throw new Error("Invalid Excel format. Missing required columns.");
+      }
+  
+      // Map Excel data to the new structure
+      const importedData = jsonData.map((entry) => ({
+        postingPeriod: {
+          startDate: formatExcelDate(entry["START DATE"]),
+          endDate: formatExcelDate(entry["END DATE"]),
+        },
+        name: entry["SR NAME"],
+        mobile: entry["MOBILE"],
+        email: entry["EMAIL"],
+        MCR: entry["MCR"],
+        noSession: entry["NO SESSION"] || "", // Default value if not provided
+        remarks: entry["REMARKS"] || "", // Default value if not provided
+        callDates: entry["CALL DATES"] ? entry["CALL DATES"].split(",") : [], // Assuming call dates are separated by commas
+        leaveDates: entry["LEAVE DATES"] ? parseLeaveDates(entry["LEAVE DATES"]) : [], // Parse leave dates if provided
+        id: "", // Auto-generated on the backend
+      }));
+  
+      console.log("Mapped Data:", importedData); // Log the mapped data
+  
+      // Process each entry as if it's being submitted via the form
+      for (const sr of importedData) {
+        await registerSRInfo({
+          ...sr,
+        });
+      }
+  
+      alert("Import successful!");
+    } catch (error) {
+      console.error("Error importing data:", error);
+      alert(`Failed to import data. Error: ${error}`);
+    }
+  };
+  
+  // Helper function to format Excel date strings
+  const formatExcelDate = (dateString: string): string => {
+    const [day, month, year] = dateString.split("/");
+    return new Date(Number(year), Number(month) - 1, Number(day)).toISOString();
+  };
+  
+  // Helper function to parse leave dates from the Excel data
+  const parseLeaveDates = (leaveDatesString: string): { date: string; session: string }[] => {
+    return leaveDatesString.split(",").map((leaveDate) => {
+      const [date, session] = leaveDate.split("-");
+      return { date, session };
+    });
+  };
+  
+  
+  
+  const handleExport = () => {
+    try {
+      // Format data to match the desired order and format for import
+      const formattedData = SRData.map((entry) => ({
+        "SR NAME": entry.name,
+        "START DATE": formatDate(entry.postingPeriod.startDate),
+        "END DATE": formatDate(entry.postingPeriod.endDate),
+        MOBILE: entry.mobile,
+        EMAIL: entry.email,
+        MCR: entry.MCR,
+        "NO SESSION": entry.noSession,
+        REMARKS: entry.remarks,
+        "CALL DATES": entry.callDates.join(","), // Join call dates into a string
+        "LEAVE DATES": formatLeaveDatesForExport(entry.leaveDates), // Format leave dates for export
+      }));
+  
+      // Create worksheet and workbook
+      const worksheet = XLSX.utils.json_to_sheet(formattedData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Senior Residents");
+  
+      // Write file
+      XLSX.writeFile(workbook, "SeniorResidents.xlsx");
+    } catch (error) {
+      console.error("Error exporting data:", error);
+    }
+  };
+  
+  // Helper function to format date into a string (DD/MM/YYYY)
+  const formatDate = (date: string): string => {
+    const options: Intl.DateTimeFormatOptions = { day: "2-digit", month: "2-digit", year: "numeric" };
+    return new Date(date).toLocaleDateString("en-GB", options);
+  };
+  
+  // Helper function to format leave dates into a string for export
+  const formatLeaveDatesForExport = (leaveDates: { date: string; session: string }[]): string => {
+    return leaveDates
+      .map((leaveDate) => `${leaveDate.date}-${leaveDate.session}`)
+      .join(",");
+  };
+  
+
   return (
     <div className="m-2">
       <div>
@@ -88,10 +212,12 @@ const SeniorResidentList = () => {
         </div>
       </div>
       <div>
-        <Searchbar
-          onSearch={handleSearch}
-          onFilterToggle={handleFilterToggle}
-          onClearSearch={handleClearSearch}
+      <Searchbar
+        onSearch={handleSearch}
+        onFilterToggle={handleFilterToggle}
+        onClearSearch={handleClearSearch}
+        onImport={handleImport}
+        onExport={handleExport}
         />
       </div>
       <div>

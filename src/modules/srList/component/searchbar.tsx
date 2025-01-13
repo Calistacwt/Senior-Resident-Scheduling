@@ -1,14 +1,17 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 export type SearchProps = {
   onSearch: (value: string) => void;
   onFilterToggle: () => void;
   onClearSearch: () => void;
+  onImport: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onExport: () => void;
 };
 
 const Searchbar = (props: SearchProps) => {
-  const { onSearch, onFilterToggle, onClearSearch } = props;
+  const { onSearch, onFilterToggle, onClearSearch, onImport, onExport } = props;
   const [value, setValue] = useState("Search");
+  const fileInputRef = useRef<HTMLInputElement>(null); // Reference to the hidden file input
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -18,6 +21,12 @@ const Searchbar = (props: SearchProps) => {
       onClearSearch();
     } else {
       onSearch(target.value);
+    }
+  };
+
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Trigger the file input click
     }
   };
 
@@ -47,14 +56,17 @@ const Searchbar = (props: SearchProps) => {
           >
             <img
               src="/assets/images/filter.png"
-              alt="Import Logo"
+              alt="Filter Logo"
               className="rounded-md cursor-pointer w-4"
             />
             <div>
               <p>Filter</p>
             </div>
           </button>
-          <button className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center">
+          <button
+            className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center"
+            onClick={handleImportClick} // Triggers the hidden file input
+          >
             <img
               src="/assets/images/import.png"
               alt="Import Logo"
@@ -64,7 +76,17 @@ const Searchbar = (props: SearchProps) => {
               <p>Import</p>
             </div>
           </button>
-          <button className="text-xs text-black rounded p-1.5 font-semibold border-form-border border flex space-x-2 justify-center items-center">
+          <input
+            type="file"
+            accept=".xlsx, .xls"
+            ref={fileInputRef} // Reference for the hidden input
+            style={{ display: "none" }} // Hide the file input
+            onChange={onImport} // Trigger the onImport handler
+          />
+          <button
+            className="text-xs text-black rounded p-1.5 font-semibold border-form-border border flex space-x-2 justify-center items-center"
+            onClick={onExport}
+          >
             <img
               src="/assets/images/export.svg"
               alt="Export Logo"
