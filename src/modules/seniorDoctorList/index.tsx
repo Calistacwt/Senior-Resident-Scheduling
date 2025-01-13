@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import {
+  deleteSeniorDoctorInfo,
   getSeniorDoctorData,
   searchSeniorDoctorData,
   sortSeniorDoctorDataASC,
   sortSeniorDoctorDataDESC,
-  updateSeniorDoctorInfo,
-  deleteSeniorDoctor,
 } from "@/services/seniorDoctorList";
 
 import List from "./component/list";
@@ -13,10 +12,8 @@ import Searchbar from "./component/searchbar";
 import { seniorDoctorList } from "@/types/seniorDoctorList";
 import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { useNavigate } from "@tanstack/react-router";
 
 const SrList = () => {
-  const navigate = useNavigate();
   const [seniorDoctorData, setSeniorDoctorData] = useState<seniorDoctorList[]>(
     []
   );
@@ -64,10 +61,6 @@ const SrList = () => {
     setSeniorDoctorData(data);
   };
 
-  const handleEdit = async (id: number) => {
-    // navigate(`/seniorDoctor/edit/${id}`);
-  };
-
   const confirmDelete = (id: number) => {
     setDeleteId(id);
     setOpenModal(true);
@@ -75,15 +68,17 @@ const SrList = () => {
 
   const handleDelete = async () => {
     try {
-      if (deleteId !== null) {
-        await deleteSeniorDoctor(deleteId);
+      if (deleteId) {
+        await deleteSeniorDoctorInfo(deleteId);
         setSeniorDoctorData(
-          seniorDoctorData.filter((doctor) => doctor.id !== deleteId)
+          seniorDoctorData.filter(
+            (seniorDoctorData) => seniorDoctorData.id !== deleteId
+          )
         );
         setDeleteId(null);
       }
     } catch (error) {
-      console.error("Error deleting Senior Doctor data:", error);
+      console.error("Error deleting SR data:", error);
     } finally {
       setOpenModal(false);
     }
@@ -110,11 +105,7 @@ const SrList = () => {
       </div>
 
       <div>
-        <List
-          seniorDoctorData={seniorDoctorData}
-          onEdit={handleEdit}
-          onDelete={confirmDelete}
-        />
+        <List seniorDoctorData={seniorDoctorData} onDelete={confirmDelete} />
       </div>
 
       <div>

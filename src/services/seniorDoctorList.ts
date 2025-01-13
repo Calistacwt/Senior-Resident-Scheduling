@@ -3,8 +3,6 @@ import {
   SENIOR_DOCTOR_NAMESEARCH,
   SENIOR_DOCTOR_SORT_NAME_ASC,
   SENIOR_DOCTOR_SORT_NAME_DESC,
-  SENIOR_DOCTOR_UPDATE,
-  SENIOR_DOCTOR_DELETE,
 } from "@/config/endpoint";
 import { seniorDoctorList } from "@/types/seniorDoctorList";
 
@@ -21,6 +19,12 @@ export const registerSeniorDoctorInfo = async (
 
 export const getSeniorDoctorData = async () => {
   const response = await axios.get(`${BASE_URL}${SENIOR_DOCTOR}`);
+  return response.data;
+};
+
+
+export const getSeniorDoctorDataById = async (id: string) => {
+  const response = await axios.get(`${BASE_URL}${SENIOR_DOCTOR}/${id}`);
   return response.data;
 };
 
@@ -47,10 +51,10 @@ export const updateSeniorDoctorInfo = async (
   id: number,
   data: seniorDoctorList,
 ): Promise<seniorDoctorList> => {
-  const response = await axios.put(`${BASE_URL}${SENIOR_DOCTOR_UPDATE}/${id}`, data);
+  const response = await axios.put(`${BASE_URL}${SENIOR_DOCTOR}/${id}`, data);
   return response.data;
 };
 
-export const deleteSeniorDoctor = async (id: number): Promise<void> => {
-  await axios.delete(`${BASE_URL}${SENIOR_DOCTOR_DELETE}/${id}`);
+export const deleteSeniorDoctorInfo = async (id: number): Promise<void> => {
+  await axios.delete(`${BASE_URL}${SENIOR_DOCTOR}/${id}`);
 };

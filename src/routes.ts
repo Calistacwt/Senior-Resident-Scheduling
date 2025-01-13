@@ -72,6 +72,12 @@ const seniorDoctorListRoute = createRoute({
   getParentRoute: () => rootRoute,
 });
 
+const updateSeniorDoctorroute = createRoute({
+  path: "/seniorDoctorForm/$id/edit",
+  component: lazyRouteComponent(() => import("@/modules/seniorDoctor/update")),
+  getParentRoute: () => rootRoute,
+});
+
 // Export Routes
 export default rootRoute.addChildren([
   dashboardRoute,
@@ -84,4 +90,5 @@ export default rootRoute.addChildren([
   seniorDoctorListRoute,
   updateSRroute,
   updatescheduleSRroute
+  updateSeniorDoctorroute
 ]);

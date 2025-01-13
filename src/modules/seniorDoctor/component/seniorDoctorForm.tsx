@@ -2,11 +2,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import "/src/styles/custom-calendar.css";
 import { useNavigate } from "@tanstack/react-router";
 
-const SeniorDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
+const SeniorDoctorForm = ({
+  formData,
+  setFormData,
+  handleSubmit,
+  handleUpdate,
+  mode,
+}: any) => {
   const navigate = useNavigate();
 
   const handleBack = async () => {
-    navigate({ to: `/` });
+    navigate({ to: `/seniorDoctorList` });
   };
 
   // Handle form input changes
@@ -15,13 +21,22 @@ const SeniorDoctorForm = ({ formData, setFormData, handleSubmit }: any) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (mode === "edit" && typeof handleUpdate === "function") {
+      handleUpdate(formData); // Update the Senior Doctor data
+    } else if (mode === "register" && typeof handleSubmit === "function") {
+      handleSubmit(formData); // Register the Senior Doctor data
+    }
+  };
+
   return (
     <div className="w-full">
-      <form className="space-y-4" onSubmit={handleSubmit}>
+      <form className="space-y-4" onSubmit={handleFormSubmit}>
         <div className="mt-4 flex items-center space-x-4">
           <div>
             <img
-              src="./assets/images/avatar.png"
+              src="/assets/images/avatar.png"
               alt="Senior Resident Icon"
               className="w-11 rounded-full"
             />
