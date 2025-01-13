@@ -1,87 +1,83 @@
 {
   "srSchedule": [
     {
-      "id": 1,
-      "date": "2024-11-08",
-      "dcdScreener": "Dr Christelle",
-      "activity": "Observe DP4",
+      "id": 6,
+      "date": "2025-01-07",
+      "dcdScreener": "Associate Psychologist",
+      "activity": "Observation",
       "room": "Rm 25",
-      "srRoom": "Rm 17",
+      "srRoom": "",
       "session": "AM"
     },
     {
-      "id": 2,
-      "date": "2024-12-25",
-      "dcdScreener": "Dr Ellen Tay",
-      "activity": "Observe DP4",
-      "room": "Rm 18",
-      "srRoom": "Rm 10",
-      "session": "AM"
-    },
-    {
-      "id": 3,
-      "date": "2024-12-09",
-      "dcdScreener": "Dr Argarwal",
-      "activity": "Observe DP4",
-      "room": "Rm 16",
-      "srRoom": "Rm 10",
+      "id": 7,
+      "date": "2025-01-07",
+      "dcdScreener": "Associate Psychologist",
+      "activity": "Observation",
+      "room": "Rm 25",
+      "srRoom": "",
       "session": "PM"
     },
     {
+      "id": 3,
+      "date": "2025-01-08",
+      "dcdScreener": "Dr Vidya",
+      "activity": "Testing",
+      "session": "AM",
+      "room": "Rm 14",
+      "srRoom": ""
+    },
+    {
+      "id": 2,
+      "date": "2025-01-08",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Testing",
+      "session": "PM",
+      "room": "Rm 14",
+      "srRoom": ""
+    },
+    {
       "id": 4,
-      "date": "2024-12-09",
-      "dcdScreener": "Dr Argarwal",
-      "activity": "Observe DP4",
-      "room": "Rm 16",
-      "srRoom": "Rm 10",
+      "date": "2025-01-09",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Testing",
+      "room": "Rm 14",
+      "srRoom": "",
       "session": "AM"
     },
     {
-      "id": 5,
-      "date": "2024-12-25",
-      "dcdScreener": "Dr Ellen Tay",
+      "id": 1,
+      "date": "2025-01-06",
+      "dcdScreener": "Dr Rashmi",
+      "activity": "Observe triage clinic",
+      "room": "Rm 17",
+      "srRoom": "",
+      "session": "AM"
+    },
+    {
+      "id": 8,
+      "date": "2025-01-09",
+      "dcdScreener": "Associate Psychologist",
       "activity": "Observe DP4",
-      "room": "Rm 18",
-      "srRoom": "Rm 10",
+      "room": "Rm 25",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 5,
+      "date": "2025-01-06",
+      "dcdScreener": "Associate Psychologist",
+      "activity": "Observe DP4",
+      "room": "Rm 25",
+      "srRoom": "",
       "session": "PM"
     }
   ],
   "srList": [
     {
       "postingPeriod": {
-        "startDate": "2024-12-01T00:00:00.000Z",
-        "endDate": "2024-12-17T00:00:00.000Z"
-      },
-      "name": "Senior 1",
-      "mobile": "98235982",
-      "email": "senior1@mohh.com.sg",
-      "MCR": "M12345E",
-      "noSession": "30",
-      "remarks": "Observe",
-      "callDates": [
-        "2024-12-11",
-        "2024-12-19"
-      ],
-      "leaveDates": [
-        {
-          "date": "2024-12-16",
-          "session": "PM"
-        },
-        {
-          "date": "2024-12-19",
-          "session": "FULLDAY"
-        },
-        {
-          "date": "2024-12-23",
-          "session": "AM"
-        }
-      ],
-      "id": "jBFdUJU"
-    },
-    {
-      "postingPeriod": {
-        "startDate": "2025-01-01T00:00:00.000Z",
-        "endDate": "2025-01-08T00:00:00.000Z"
+        "startDate": "2025-01-22T00:00:00.000Z",
+        "endDate": "2025-02-22T00:00:00.000Z"
       },
       "name": "Senior 10",
       "mobile": "98235982",
@@ -90,7 +86,8 @@
       "noSession": "30",
       "remarks": "",
       "callDates": [
-        "2024-12-17"
+        "2025-01-16",
+        "2025-01-23"
       ],
       "leaveDates": [
         {
@@ -99,13 +96,303 @@
         },
         {
           "date": "2025-01-21",
-          "session": "FULLDAY"
+          "session": "AM"
         }
       ],
       "id": "Wn1XdRx"
     }
   ],
   "clinicSchedule": [
+    {
+      "Day": "Monday",
+      "Date": "2025-01-06",
+      "Session": "AM",
+      "Rm 13": "",
+      "Rm 14": "",
+      "Rm 15": "Kenneth (Dr Agarwal pt) (Make-up)",
+      "Rm 16": "Vidya (DSNC)",
+      "Rm 17": "Rashmi (NC)",
+      "Rm 18": "Ngiam (DSNC)",
+      "__EMPTY": "",
+      "Rm 19": "Deepti (FP)",
+      "Clinic G Rm 2": "",
+      "Clinic G Rm 3": "",
+      "Clinic G Rm 4": "Yeo CL (FP)",
+      "__EMPTY_1": "",
+      "TPC/TVC": "",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "Anitha (ASD NC)",
+      "SKH": "Giselle (NC & FP)",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 1
+    },
+    {
+      "Day": "Monday",
+      "Date": "2025-01-06",
+      "Session": "PM",
+      "Rm 13": "",
+      "Rm 14": " Sandra (LB NC)",
+      "Rm 15": "Ho LY (FP)",
+      "Rm 16": "Kwan Rui (DSNC)",
+      "Rm 17": "Rashmi (FP)",
+      "Rm 18": "Ngiam (NC)",
+      "__EMPTY": "",
+      "Rm 19": "Kenneth (DSNC)",
+      "Clinic G Rm 2": "Chitra (FP) ",
+      "Clinic G Rm 3": "Vidya (FP)",
+      "Clinic G Rm 4": "Yeo CL (FP)",
+      "__EMPTY_1": "",
+      "TPC/TVC": "Christelle (TVC)",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "Anitha (FP)",
+      "SKH": "Giselle (NC & FP)",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 2
+    },
+    {
+      "Day": "Tuesday",
+      "Date": "2025-01-07",
+      "Session": "AM",
+      "Rm 13": "Ellen Tay (FP)",
+      "Rm 14": "Sandra (DSNC)",
+      "Rm 15": "Kenneth (TPC)",
+      "Rm 16": "Ngiam (DSNC)",
+      "Rm 17": "Deepti (DSNC)",
+      "Rm 18": "",
+      "__EMPTY": "",
+      "Rm 19": "Yeo CL (LB-FP)",
+      "Clinic G Rm 2": "Rashmi (FP)",
+      "Clinic G Rm 3": "Anitha (DSNC)",
+      "Clinic G Rm 4": "Chitra ASD NC",
+      "__EMPTY_1": "",
+      "TPC/TVC": "SH Chan (FP)",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "Christelle (LB NC & FP) ",
+      "SKH": "Vidya (NC & ASD NC) ",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 3
+    },
+    {
+      "Day": "Tuesday",
+      "Date": "2025-01-07",
+      "Session": "PM",
+      "Rm 13": "",
+      "Rm 14": "Kwan Rui (FP) ",
+      "Rm 15": "Kenneth (DSNC) ",
+      "Rm 16": "Ngiam (TVC+NC)",
+      "Rm 17": "Deepti (FP)",
+      "Rm 18": "",
+      "__EMPTY": "",
+      "Rm 19": "",
+      "Clinic G Rm 2": "Shilpee (FP)",
+      "Clinic G Rm 3": "Anitha (FP) ",
+      "Clinic G Rm 4": "",
+      "__EMPTY_1": "",
+      "TPC/TVC": "Padmini (FP)",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "Christelle (ASD NC & FP) ",
+      "SKH": "Vidya (NC & FP)",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 4
+    },
+    {
+      "Day": "Wednesday",
+      "Date": "2025-01-08",
+      "Session": "AM",
+      "Rm 13": "Shilpee (TVC)",
+      "Rm 14": "Christelle (NC)",
+      "Rm 15": "Vidya (FP)",
+      "Rm 16": "Kwan Rui (DSNC)",
+      "Rm 17": "Padmini (ASD NC)",
+      "Rm 18": "Kenneth (DSNC)",
+      "__EMPTY": "",
+      "Rm 19": "Anitha (FP)",
+      "Clinic G Rm 2": "Selina Ho (FP)",
+      "Clinic G Rm 3": "Sandra (FP)",
+      "Clinic G Rm 4": "Mae Wong (FP)",
+      "__EMPTY_1": "",
+      "TPC/TVC": "",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "Chitra (NC & FP)",
+      "SKH": "SH Chan (NC & FP)  ",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 5
+    },
+    {
+      "Day": "Wednesday",
+      "Date": "2025-01-08",
+      "Session": "PM",
+      "Rm 13": "",
+      "Rm 14": "Vidya (NC)",
+      "Rm 15": "Giselle (FP)",
+      "Rm 16": "",
+      "Rm 17": "Daisy (NC)  ",
+      "Rm 18": "",
+      "__EMPTY": "",
+      "Rm 19": "",
+      "Clinic G Rm 2": "Selina Ho (FP)",
+      "Clinic G Rm 3": "Rashmi (FP)",
+      "Clinic G Rm 4": "Mae Wong (FP)",
+      "__EMPTY_1": "",
+      "TPC/TVC": "Ellen Tay (TVC) Make-up ",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "Sandra (TVC)",
+      "__EMPTY_2": "",
+      "Punggol": "Chitra (1st, 2nd, 3rd & 5th NC & FP) (4th TVC) ",
+      "SKH": "SH Chan (NC & FP)  ",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 6
+    },
+    {
+      "Day": "Thursday",
+      "Date": "2025-01-09",
+      "Session": "AM",
+      "Rm 13": "Ellen (FP) ",
+      "Rm 14": "Christelle (NC)",
+      "Rm 15": "",
+      "Rm 16": "",
+      "Rm 17": "Chitra (DSNC)",
+      "Rm 18": "Giselle (DSNC)",
+      "__EMPTY": "",
+      "Rm 19": "Varsha (NC)",
+      "Clinic G Rm 2": "Padmini (FP)",
+      "Clinic G Rm 3": "Kenneth (ASD NC)",
+      "Clinic G Rm 4": "Kwan Rui (FP)",
+      "__EMPTY_1": "",
+      "TPC/TVC": "Sandra make-up (TVC)",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "Shilpee (NC & FP)",
+      "SKH": "",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 7
+    },
+    {
+      "Day": "Thursday",
+      "Date": "2025-01-09",
+      "Session": "PM",
+      "Rm 13": "NO MAKE-UP CLINIC (DEPT MTG)",
+      "Rm 14": "",
+      "Rm 15": "",
+      "Rm 16": "",
+      "Rm 17": "",
+      "Rm 18": "",
+      "__EMPTY": "",
+      "Rm 19": "",
+      "Clinic G Rm 2": "",
+      "Clinic G Rm 3": "",
+      "Clinic G Rm 4": "",
+      "__EMPTY_1": "",
+      "TPC/TVC": "",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "",
+      "SKH": "",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 8
+    },
+    {
+      "Day": "Friday",
+      "Date": "2025-01-10",
+      "Session": "AM",
+      "Rm 13": "SH Chan (DSNC)  ",
+      "Rm 14": "",
+      "Rm 15": "",
+      "Rm 16": "Anitha (DSNC)",
+      "Rm 17": "Kwan Rui (DSNC)",
+      "Rm 18": "",
+      "__EMPTY": "",
+      "Rm 19": "Chitra (TVC+FP)",
+      "Clinic G Rm 2": "Padmini (ASD NC)",
+      "Clinic G Rm 3": "",
+      "Clinic G Rm 4": "Vidya (FP)",
+      "__EMPTY_1": "",
+      "TPC/TVC": "",
+      "TPC/TVC_1": "Christelle (TVC)",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "Rashmi (ASD NC & FP)",
+      "SKH": "Kenneth (NC & FP)",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 9
+    },
+    {
+      "Day": "Friday",
+      "Date": "2025-01-10",
+      "Session": "PM",
+      "Rm 13": "",
+      "Rm 14": "P Agarwal (FP)",
+      "Rm 15": "",
+      "Rm 16": "",
+      "Rm 17": "Daisy (FP)",
+      "Rm 18": "",
+      "__EMPTY": "",
+      "Rm 19": "Chitra (NC)",
+      "Clinic G Rm 2": " Padmini (FP)",
+      "Clinic G Rm 3": "Giselle (FP) ",
+      "Clinic G Rm 4": "",
+      "__EMPTY_1": "",
+      "TPC/TVC": "Sandra (TVC",
+      "TPC/TVC_1": "",
+      "TPC/TVC_2": "",
+      "__EMPTY_2": "",
+      "Punggol": "Rashmi (LB NC & FP)",
+      "SKH": "Kenneth (LB NC & FP)",
+      "NC": "",
+      "DS": "",
+      "Rm 25": "Triage",
+      "MO Rm": "Triage",
+      "Remarks": "",
+      "id": 10
+    }
   ],
   "seniorDoctorList": [
     {
@@ -198,12 +485,95 @@
       "email": "DrGiselle@mohh.com.sg",
       "remarks": "",
       "id": 13
+    },
+    {
+      "name": "Dr SH Chan",
+      "mobile": "98235982",
+      "email": "DrSHChan@mohh.com.sg",
+      "remarks": "",
+      "id": 14
     }
   ],
   "room": [
     {
-      "roomNumber": "Rm 01",
+      "roomNumber": "Rm 13",
       "id": 1
+    },
+    {
+      "roomNumber": "TPC/TVC",
+      "id": 2
+    },
+    {
+      "roomNumber": "TPC/TVC",
+      "id": 3
+    },
+    {
+      "roomNumber": "TPC/TVC",
+      "id": 4
+    },
+    {
+      "roomNumber": "Punggol",
+      "id": 5
+    },
+    {
+      "roomNumber": "Rm 14",
+      "id": 6
+    },
+    {
+      "roomNumber": "SKH",
+      "id": 7
+    },
+    {
+      "roomNumber": "NC",
+      "id": 8
+    },
+    {
+      "roomNumber": "DS",
+      "id": 9
+    },
+    {
+      "roomNumber": "Rm 25",
+      "id": 10
+    },
+    {
+      "roomNumber": "Rm 15",
+      "id": 11
+    },
+    {
+      "roomNumber": "MO Rm",
+      "id": 12
+    },
+    {
+      "roomNumber": "Remarks",
+      "id": 13
+    },
+    {
+      "roomNumber": "Rm 16",
+      "id": 14
+    },
+    {
+      "roomNumber": "Rm 17",
+      "id": 15
+    },
+    {
+      "roomNumber": "Rm 18",
+      "id": 16
+    },
+    {
+      "roomNumber": "Rm 19",
+      "id": 17
+    },
+    {
+      "roomNumber": "Clinic G Rm 2",
+      "id": 18
+    },
+    {
+      "roomNumber": "Clinic G Rm 3",
+      "id": 19
+    },
+    {
+      "roomNumber": "Clinic G Rm 4",
+      "id": 20
     }
   ]
 }
