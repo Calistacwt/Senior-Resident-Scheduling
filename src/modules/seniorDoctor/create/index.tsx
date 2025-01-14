@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import ApprovedDoctorForm from "../component/seniorDoctorForm";
+import SeniorDoctorForm from "../component/seniorDoctorForm";
 import { useState } from "react";
 import { registerSeniorDoctorInfo } from "@/services/seniorDoctorList";
 
@@ -17,8 +17,6 @@ const RegisterApprovedDoctor = () => {
 
   // Handle Form Submission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
     try {
       await registerSeniorDoctorInfo({
         ...formData,
@@ -70,10 +68,11 @@ const RegisterApprovedDoctor = () => {
 
         <div>
           <div>
-            <ApprovedDoctorForm
+            <SeniorDoctorForm
               formData={formData}
               setFormData={setFormData}
               handleSubmit={handleSubmit}
+              mode="register"
             />
           </div>
         </div>

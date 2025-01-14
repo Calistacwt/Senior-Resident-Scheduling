@@ -22,6 +22,12 @@ export const getSeniorDoctorData = async () => {
   return response.data;
 };
 
+
+export const getSeniorDoctorDataById = async (id: string) => {
+  const response = await axios.get(`${BASE_URL}${SENIOR_DOCTOR}/${id}`);
+  return response.data;
+};
+
 export const searchSeniorDoctorData = async (name: String) => {
   const response = await axios.get(
     `${BASE_URL}${SENIOR_DOCTOR_NAMESEARCH.replace("search", String(name))}`,
@@ -47,4 +53,8 @@ export const updateSeniorDoctorInfo = async (
 ): Promise<seniorDoctorList> => {
   const response = await axios.put(`${BASE_URL}${SENIOR_DOCTOR}/${id}`, data);
   return response.data;
+};
+
+export const deleteSeniorDoctorInfo = async (id: number): Promise<void> => {
+  await axios.delete(`${BASE_URL}${SENIOR_DOCTOR}/${id}`);
 };
