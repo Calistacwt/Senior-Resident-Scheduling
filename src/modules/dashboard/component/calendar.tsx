@@ -1,4 +1,3 @@
-// external library
 import {
   addMonths,
   eachDayOfInterval,
@@ -9,21 +8,11 @@ import {
   startOfWeek,
 } from "date-fns";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
-
-// external UI component and icons
-import { Dropdown } from "flowbite-react";
-
-// types
-import { srSchedule } from "@/types/dashboard";
-import { LeaveDate } from "@/types/srList";
-
-// utils
-import { isPostCall } from "@/utils/calendar";
-
-// styles
 import "/src/styles/custom-calendar.css";
-
+import { srSchedule } from "@/types/dashboard";
+import { isPostCall } from "@/utils/calendar";
+import { Dropdown } from "flowbite-react";
+import { LeaveDate } from "@/types/srList";
 interface CalendarProps {
   scheduleData: srSchedule[];
   callDates: string[];
@@ -35,30 +24,19 @@ const Calendar: React.FC<CalendarProps> = ({
   callDates,
   leaveDates,
 }) => {
-  const navigate = useNavigate();
-
   // Current Date & Year
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [currentYear, setCurrentYear] = useState<number>(
-    new Date().getFullYear()
+    new Date().getFullYear(),
   );
 
   // Current active month
   const [activeMonthIndex, setActiveMonthIndex] = useState<number>(
-    new Date().getMonth()
+    new Date().getMonth(),
   );
 
   // Track each month div elements
   const monthRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-
-    const handleEdit = (srScheduleData: srSchedule) => {
-    navigate({
-      to: `/scheduleSR/${srScheduleData.id}/edit`,
-      params: { id: srScheduleData.id },
-    });
-  };
-
 
   // Navigating between months
   const scrollToMonth = (monthIndex: number) => {
@@ -85,11 +63,11 @@ const Calendar: React.FC<CalendarProps> = ({
         const visibleEntry = entries.find((entry) => entry.isIntersecting);
         if (visibleEntry) {
           setActiveMonthIndex(
-            monthRefs.current.findIndex((ref) => ref === visibleEntry.target)
+            monthRefs.current.findIndex((ref) => ref === visibleEntry.target),
           );
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     // Observe all month elements
@@ -100,12 +78,12 @@ const Calendar: React.FC<CalendarProps> = ({
 
   useEffect(() => {
     const currentMonthIndex = currentDate.getMonth();
-    const startDate = startOfWeek(startOfMonth(currentDate));
+    const startDate = startOfWeek(startOfMonth(currentDate)); // Combined logic
 
     // Find the target element or fallback to the month's container
     const targetElement =
       document.querySelector(
-        `[data-date="${format(startDate, "yyyy-MM-dd")}"]`
+        `[data-date="${format(startDate, "yyyy-MM-dd")}"]`,
       ) || monthRefs.current[currentMonthIndex];
 
     // Scroll if the target exists
@@ -137,7 +115,7 @@ const Calendar: React.FC<CalendarProps> = ({
       months.push(
         <div key={i} ref={(el) => (monthRefs.current[i] = el)} className="mb-4">
           {renderDates(monthDate, seenDates)}
-        </div>
+        </div>,
       );
       // Increment month for the next render
       monthDate = addMonths(monthDate, 1);
@@ -172,7 +150,7 @@ const Calendar: React.FC<CalendarProps> = ({
 
             // Get schedule for the date
             const scheduleForDay = scheduleData.filter(
-              (schedule) => schedule.date === dateFormatted
+              (schedule) => schedule.date === dateFormatted,
             );
 
             const isPostCallDate = isPostCall(day, callDates, leaveDates);
@@ -198,38 +176,36 @@ const Calendar: React.FC<CalendarProps> = ({
                       <div className="space-y-2 mt-2">
                         {scheduleForDay
                           .sort((am, pm) =>
-                            am.session === "AM" && pm.session !== "AM" ? -1 : 1
+                            am.session === "AM" && pm.session !== "AM" ? -1 : 1,
                           )
                           .map((sessionData, index) => (
                             <div
                               key={index}
-                              className={`m-2 p-1.5 pl-3 mt-0 text-dashboard-text-text rounded-md flex flex-col lg:flex-row justify-between  ${
+                              className={`m-2 p-1.5 pl-3 mt-0 text-dashboard-text-text rounded-md flex flex-col lg:flex-row justify-between ${
                                 sessionData.session === "AM"
-                                  ? "bg-dashboard-AM hover:bg-[#cdf8df]"
-                                  : "bg-dashboard-PM hover:bg-[#d4d4f9]"
+                                  ? "bg-dashboard-AM"
+                                  : "bg-dashboard-PM"
                               }`}
-                              onClick={() => handleEdit(sessionData)}
+                              onClick={() => console.log(sessionData)} // Log schedule information on click
                             >
                               <div className="flex flex-col ">
                                 <p className="font-semibold text-2xs">
                                   {sessionData.dcdScreener}
                                 </p>
 
-                                <p className="text-3xs font-light xl:flex hidden">
+                                <p className="text-2xs font-light xl:flex hidden">
                                   {sessionData.activity}
                                 </p>
                               </div>
 
                               <div className="hidden xl:flex">
-                                <div className="bg-dashboard-room text-3xs rounded-md font-normal text-white flex items-center justify-center self-start lg:self-center p-1 lg:mr-3 lg:mb-0">
+                                <div className="bg-dashboard-room text-2xs rounded-md font-normal text-white flex items-center justify-center self-start lg:self-center p-1 lg:mr-3 lg:mb-0">
                                   {sessionData.room}
                                 </div>
 
-                                {sessionData.srRoom && (
-                                  <div className="bg-dashboard-active rounded-md text-3xs font-normal text-white flex items-center justify-center self-start lg:self-center p-1 lg:mr-4">
-                                    {sessionData.srRoom}
-                                  </div>
-                                )}
+                                <div className="bg-dashboard-active rounded-md text-2xs font-normal text-white flex items-center justify-center self-start lg:self-center p-1 lg:mr-4">
+                                  {sessionData.srRoom}
+                                </div>
                               </div>
                             </div>
                           ))}
@@ -264,7 +240,7 @@ const Calendar: React.FC<CalendarProps> = ({
   // Render navigation buttons for each month
   const renderMonthNavigation = () => {
     const months = Array.from({ length: 12 }, (_, i) =>
-      format(new Date(currentDate.getFullYear(), i, 1), "MMMM")
+      format(new Date(currentDate.getFullYear(), i, 1), "MMMM"),
     );
 
     const handleMonthChange = (selectedMonth: number) => {
@@ -303,7 +279,7 @@ const Calendar: React.FC<CalendarProps> = ({
   const renderYearNavigation = () => {
     const currentYearRange = Array.from(
       { length: 10 }, // Number of years you want to show before and after current year
-      (_, i) => currentYear - 5 + i
+      (_, i) => currentYear - 5 + i,
     );
 
     const handleYearChange = (selectedYear: number) => {

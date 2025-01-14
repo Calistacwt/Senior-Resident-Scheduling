@@ -1,6 +1,5 @@
 export type clinicSchedule = {
-  id?: string;
-  Day?: string;
-  Date?: string;
-  Session?: string;
+  date?: string;
+  AM?: string;
+  PM?: string;
 };

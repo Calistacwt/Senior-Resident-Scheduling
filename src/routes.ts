@@ -32,13 +32,7 @@ const updateSRroute = createRoute({
 
 const scheduleSRroute = createRoute({
   path: "/scheduleSR",
-  component: lazyRouteComponent(() => import("@/modules/scheduleSR/create")),
-  getParentRoute: () => rootRoute,
-});
-
-const updatescheduleSRroute = createRoute({
-  path: "/scheduleSR/$id/edit",
-  component: lazyRouteComponent(() => import("@/modules/scheduleSR/update")),
+  component: lazyRouteComponent(() => import("@/modules/scheduleSR")),
   getParentRoute: () => rootRoute,
 });
 
@@ -83,5 +77,4 @@ export default rootRoute.addChildren([
   clinicScheduleRoute,
   seniorDoctorListRoute,
   updateSRroute,
-  updatescheduleSRroute
 ]);
