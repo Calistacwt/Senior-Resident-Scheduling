@@ -89,6 +89,6 @@ export default rootRoute.addChildren([
   clinicScheduleRoute,
   seniorDoctorListRoute,
   updateSRroute,
-  updatescheduleSRroute
+  updatescheduleSRroute,
   updateSeniorDoctorroute
 ]);

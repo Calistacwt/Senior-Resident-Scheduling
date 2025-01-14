@@ -13,31 +13,42 @@ import { seniorDoctorList } from "@/types/seniorDoctorList";
 import { Button, Modal } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
-const SrList = () => {
+import { Pagination } from "flowbite-react";
+import "/src/styles/custom-pagination.css";
+
+const SeniorDoctorList = () => {
   const [seniorDoctorData, setSeniorDoctorData] = useState<seniorDoctorList[]>(
     []
   );
   const [isAscending, setIsAscending] = useState(true);
+
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [openModal, setOpenModal] = useState(false);
 
-  useEffect(() => {
-    const fetchSRData = async () => {
-      const data = await getSeniorDoctorData();
-      setSeniorDoctorData(data);
-    };
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredData, setFilteredData] = useState([]);
+  const dataPerPage = 10;
+  const onPageChange = (page: number) => setCurrentPage(page); // Paginate the filtered data
+  const startIndex = (currentPage - 1) * dataPerPage;
+  const currentData = filteredData.slice(startIndex, startIndex + dataPerPage);
 
-    fetchSRData();
-  }, []);
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredData.length / dataPerPage);
 
   const handleSearch = async (value: string) => {
     try {
       if (value.trim() === "") {
         const data = await getSeniorDoctorData();
         setSeniorDoctorData(data);
+        setFilteredData(data);
+        setCurrentPage(1);
       } else {
         const data = await searchSeniorDoctorData(value);
         setSeniorDoctorData(data);
+        setSeniorDoctorData(data);
+        setFilteredData(data);
+        setCurrentPage(1);
       }
     } catch (error) {
       console.error("Error searching Senior Doctor data:", error);
@@ -59,6 +70,8 @@ const SrList = () => {
   const handleClearSearch = async () => {
     const data = await getSeniorDoctorData();
     setSeniorDoctorData(data);
+    setFilteredData(data);
+    setCurrentPage(1);
   };
 
   const confirmDelete = (id: number) => {
@@ -84,6 +97,16 @@ const SrList = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchSRData = async () => {
+      const data = await getSeniorDoctorData();
+      setSeniorDoctorData(data);
+      setFilteredData(data);
+    };
+
+    fetchSRData();
+  }, []);
+
   return (
     <div className="m-2">
       <div>
@@ -105,7 +128,15 @@ const SrList = () => {
       </div>
 
       <div>
-        <List seniorDoctorData={seniorDoctorData} onDelete={confirmDelete} />
+        <List seniorDoctorData={currentData} onDelete={confirmDelete} />
+      </div>
+
+      <div className="flex justify-center mt-4">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
       </div>
 
       <div>
@@ -156,4 +187,4 @@ const SrList = () => {
   );
 };
 
-export default SrList;
+export default SeniorDoctorList;
