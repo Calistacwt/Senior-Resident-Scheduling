@@ -1,9 +1,19 @@
-import { srList } from "@/types/srList";
-import { formatDate } from "@/utils/formatter";
+// external library
 import { useNavigate } from "@tanstack/react-router";
+
+// external UI component and icons
 import { Dropdown } from "flowbite-react";
-import "/src/styles/custom-dropdown.css";
 import { FaEdit, FaTrash } from "react-icons/fa";
+
+// types
+import { srList } from "@/types/srList";
+
+// utils
+import { formatDate } from "@/utils/formatter";
+
+// styles
+import "/src/styles/custom-dropdown.css";
+
 interface SRProps {
   SRData: srList[];
   onDelete: (id: string) => void;
@@ -13,12 +23,22 @@ const List: React.FC<SRProps> = ({ SRData, onDelete }) => {
   const navigate = useNavigate();
 
   const handleEdit = (srData: srList) => {
-    // console.log("Edit SR Data:", srData);
     navigate({
       to: `/seniorResidentForm/${srData.id}/edit`,
       params: { id: srData.id },
     });
   };
+
+  const sortedSRData = [...SRData].sort((latest, oldest) => {
+    const endDateA = latest.postingPeriod?.endDate
+      ? new Date(latest.postingPeriod.endDate).getTime()
+      : 0;
+    const endDateB = oldest.postingPeriod?.endDate
+      ? new Date(oldest.postingPeriod.endDate).getTime()
+      : 0;
+
+    return endDateB - endDateA;
+  });
 
   return (
     <div className=" bg-background  ">
@@ -51,7 +71,7 @@ const List: React.FC<SRProps> = ({ SRData, onDelete }) => {
         </thead>
 
         <tbody className="w-full border-y border-outline bg-white rounded-2xl">
-          {SRData.map((SRData, index) => (
+          {sortedSRData.map((SRData, index) => (
             <tr key={index} className="border-b border-dashboard-border">
               <td className="p-4  font-medium text-2xs xl:text-xs ">
                 {SRData.id}

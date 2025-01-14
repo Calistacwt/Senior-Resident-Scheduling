@@ -6,7 +6,7 @@ button[data-testid="flowbite-dropdown-target"] {
 
 .custom-dropdown-button > button[data-testid="flowbite-dropdown-target"] {
   background-color: #1f6293;
-  padding: 6px !important;
+  padding: 8px !important;
   border: none !important;
 }
 
@@ -21,4 +21,9 @@ button[data-testid="flowbite-dropdown-target"] {
 
 .custom-dropdown-item {
   color: black;
+}
+
+.schedule-dropdown-button > button[data-testid="flowbite-dropdown-target"] {
+  padding: 7px;
+  border-radius: 4px;
 }

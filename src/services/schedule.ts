@@ -5,7 +5,7 @@ import axios from "axios";
 const BASE_URL = "http://localhost:4000";
 
 export const clinicScheduleInfo = async (
-  row: clinicSchedule,
+  row: clinicSchedule
 ): Promise<void> => {
   await axios.post(`${BASE_URL}${CLINIC_SCHEDULE}`, row, {
     headers: {
@@ -15,16 +15,19 @@ export const clinicScheduleInfo = async (
 };
 
 export const fetchClinicSchedule = async (): Promise<clinicSchedule[]> => {
-  try {
-    const response = await axios.get(`${BASE_URL}${CLINIC_SCHEDULE}`);
-    if (response.status === 200) {
-      return response.data; // Return the data fetched from the server
-    } else {
-      console.error("Failed to fetch schedule from the server");
-      return [];
-    }
-  } catch (error) {
-    console.error("Error fetching schedule data:", error);
-    return [];
-  }
+  const response = await axios.get(`${BASE_URL}${CLINIC_SCHEDULE}`);
+  return response.data;
+};
+
+export const deleteAllClinicSchedules = async (): Promise<void> => {
+  const schedules = await fetchClinicSchedule();
+  const deletePromises = schedules.map((schedule) =>
+    axios.delete(`${BASE_URL}${CLINIC_SCHEDULE}/${schedule.id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  );
+
+  await Promise.all(deletePromises);
 };
