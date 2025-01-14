@@ -92,6 +92,8 @@ const SeniorResidentList = () => {
   const handleClearSearch = async () => {
     const data = await getSRData();
     setSRData(data);
+    setFilteredData(data);
+    setCurrentPage(1);
   };
 
   // handle information deletion
