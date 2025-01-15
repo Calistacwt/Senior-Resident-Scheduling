@@ -171,6 +171,21 @@ const SeniorDoctorList = () => {
     }
   }, [fadeOutFailed, fadeOutSuccess]);
 
+  useEffect(() => {
+    const fetchSeniorDoctorData = async () => {
+      const data = await getSeniorDoctorData();
+  
+      // Sort the data by ID in descending order (latest first)
+      const sortedData = data.sort((a:any, b:any) => b.id - a.id);
+  
+      setSeniorDoctorData(sortedData);
+      setFilteredData(sortedData);
+    };
+  
+    fetchSeniorDoctorData();
+  }, []);
+  
+
   return (
     <div className="m-2">
       <div>
