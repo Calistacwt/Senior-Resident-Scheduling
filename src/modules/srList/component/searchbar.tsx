@@ -1,17 +1,25 @@
+import {
+  getSRData,
+  importSRInfo
+} from "@/services/srList";
+import { srList } from "@/types/srList";
 import { ChangeEvent, useRef, useState } from "react";
+import * as XLSX from "xlsx";
 
 export type SearchProps = {
   onSearch: (value: string) => void;
   onFilterToggle: () => void;
   onClearSearch: () => void;
-  onImport: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onExport: () => void;
+  srData: srList[]; 
 };
 
 const Searchbar = (props: SearchProps) => {
-  const { onSearch, onFilterToggle, onClearSearch, onImport, onExport } = props;
+  const { onSearch, onFilterToggle, onClearSearch, srData } = props;
   const [value, setValue] = useState("Search");
-  const fileInputRef = useRef<HTMLInputElement>(null); // Reference to the hidden file input
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [_fetchedData, setFetchedData] = useState<srList[]>([]);
+  const [_importedData, setImportedData] = useState<srList[]>([]);
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -24,11 +32,62 @@ const Searchbar = (props: SearchProps) => {
     }
   };
 
-  const handleImportClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click(); // Trigger the file input click
-    }
+  const handleExport = () => {
+    const ws = XLSX.utils.json_to_sheet(srData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Senior Residents");
+
+    XLSX.writeFile(wb, "Senior_Residents_List.xlsx");
   };
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  }
+
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      alert("Please select a file!");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = async (event) => {
+      const data = event.target?.result;
+      if (data) {
+        const workbook = XLSX.read(data, {type: "binary"});
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+        try {
+          const srData = XLSX.utils.sheet_to_json<srList>(
+            sheet,
+            {
+              defval: "",
+            }
+          );
+
+          for (const row of srData) {
+            try {
+              await importSRInfo(row);
+            } catch (error) {
+              console.error("Error uploading clinic schedule row:", error);
+              break;
+            }
+          }
+
+          const updatedScheduleData = await getSRData();
+          setFetchedData(updatedScheduleData);
+          setImportedData(srData);
+          window.location.reload();
+        } catch (error) {
+          console.error("Error processing the file:", error);
+          alert("An error occured while importing data. Please try again.")
+        }
+      }
+    };
+    reader.readAsBinaryString(file);
+  }
 
   return (
     <div className="w-full flex items-center text-sidebar bg-white p-3 rounded-lg">
@@ -65,7 +124,7 @@ const Searchbar = (props: SearchProps) => {
           </button>
           <button
             className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center"
-            onClick={handleImportClick} // Triggers the hidden file input
+            onClick={handleButtonClick}
           >
             <img
               src="/assets/images/import.png"
@@ -79,13 +138,13 @@ const Searchbar = (props: SearchProps) => {
           <input
             type="file"
             accept=".xlsx, .xls"
-            ref={fileInputRef} // Reference for the hidden input
-            style={{ display: "none" }} // Hide the file input
-            onChange={onImport} // Trigger the onImport handler
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleImport}
           />
           <button
             className="text-xs text-black rounded p-1.5 font-semibold border-form-border border flex space-x-2 justify-center items-center"
-            onClick={onExport}
+            onClick={handleExport}
           >
             <img
               src="/assets/images/export.svg"
