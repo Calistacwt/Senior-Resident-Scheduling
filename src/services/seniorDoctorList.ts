@@ -58,3 +58,13 @@ export const updateSeniorDoctorInfo = async (
 export const deleteSeniorDoctorInfo = async (id: number): Promise<void> => {
   await axios.delete(`${BASE_URL}${SENIOR_DOCTOR}/${id}`);
 };
+
+export const importSeniorDoctorInfo = async (
+  row: seniorDoctorList
+): Promise<void> => {
+  await axios.post(`${BASE_URL}${SENIOR_DOCTOR}`, row, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};

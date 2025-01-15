@@ -19,6 +19,9 @@ const List: React.FC<SeniorDoctorProps> = ({ seniorDoctorData, onDelete }) => {
     });
   };
 
+  const sortedSRData = [...seniorDoctorData].sort((a, b) => b.id - a.id);
+
+
   return (
     <div className="bg-background">
       <table className="w-full bg-white mt-3">
@@ -46,7 +49,7 @@ const List: React.FC<SeniorDoctorProps> = ({ seniorDoctorData, onDelete }) => {
         </thead>
 
         <tbody className="w-full border-y border-outline bg-white rounded-2xl">
-          {seniorDoctorData.map((doctor) => (
+          {sortedSRData.map((doctor) => (
             <tr key={doctor.id} className="border-b border-dashboard-border">
               <td className="p-4 font-medium text-2xs xl:text-xs">
                 {doctor.id}

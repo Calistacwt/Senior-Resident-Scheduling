@@ -1,16 +1,26 @@
-import { ChangeEvent, useState } from "react";
+import {
+  getSeniorDoctorData,
+  importSeniorDoctorInfo,
+} from "@/services/seniorDoctorList";
+import { seniorDoctorList } from "@/types/seniorDoctorList";
+import { ChangeEvent, useRef, useState } from "react";
 import * as XLSX from "xlsx";
 
 export type SearchProps = {
   onSearch: (value: string) => void;
   onFilterToggle: () => void;
   onClearSearch: () => void;
-  seniorDoctorData: any[];
+  seniorDoctorData: seniorDoctorList[];
 };
 
 const Searchbar = (props: SearchProps) => {
   const { onSearch, onFilterToggle, onClearSearch, seniorDoctorData } = props;
+
   const [value, setValue] = useState("Search");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [_fetchedData, setFetchedData] = useState<seniorDoctorList[]>([]);
+  const [_importedData, setImportedData] = useState<seniorDoctorList[]>([]);
 
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -32,6 +42,61 @@ const Searchbar = (props: SearchProps) => {
 
     // Generate the Excel file and trigger download
     XLSX.writeFile(wb, "Senior_Doctors_List.xlsx");
+  };
+
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+
+  // Handle file import
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      alert("Please select a file!");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = async (event) => {
+      const data = event.target?.result;
+      if (data) {
+        const workbook = XLSX.read(data, { type: "binary" });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+        try {
+          // extract senior doctor
+          const seniorDoctorData = XLSX.utils.sheet_to_json<seniorDoctorList>(
+            sheet,
+            {
+              defval: "",
+            }
+          );
+
+          // save senior doctor data
+          for (const row of seniorDoctorData) {
+            try {
+              await importSeniorDoctorInfo(row);
+            } catch (error) {
+              console.error("Error uploading clinic schedule row:", error);
+              break;
+            }
+          }
+
+          // Refresh data after processing
+          const updatedScheduleData = await getSeniorDoctorData();
+          setFetchedData(updatedScheduleData);
+          setImportedData(seniorDoctorData);
+          window.location.reload();
+        } catch (error) {
+          console.error("Error processing the file:", error);
+          alert("An error occurred while importing data. Please try again.");
+        }
+      }
+    };
+    reader.readAsBinaryString(file);
   };
 
   return (
@@ -67,16 +132,27 @@ const Searchbar = (props: SearchProps) => {
               <p>Filter</p>
             </div>
           </button>
-          <button className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center  hover:bg-sidebar-active hover:bg-opacity-30">
-            <img
-              src="/assets/images/import.png"
-              alt="Import Logo"
-              className="rounded-md cursor-pointer w-4"
+          <div>
+            <button onClick={handleButtonClick} className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center  hover:bg-sidebar-active hover:bg-opacity-30">
+              <img
+                src="/assets/images/import.png"
+                alt="Import Logo"
+                className="rounded-md cursor-pointer w-4"
+              />
+              <div>
+                <p>Import</p>
+              </div>
+            </button>
+
+            {/* Hidden file input */}
+            <input
+              ref={fileInputRef}
+              className="hidden"
+              type="file"
+              onChange={handleImport}
             />
-            <div>
-              <p>Import</p>
-            </div>
-          </button>
+          </div>
+
           <button
             onClick={handleExport}
             className="text-xs text-black rounded p-1.5 font-semibold border-form-border border flex space-x-2 justify-center items-center hover:bg-sidebar-active hover:bg-opacity-30"
