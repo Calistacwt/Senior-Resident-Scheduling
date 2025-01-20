@@ -33,12 +33,26 @@ const Searchbar = (props: SearchProps) => {
   };
 
   const handleExport = () => {
-    const ws = XLSX.utils.json_to_sheet(srData);
+    const serializedData = srData.map((item) => ({
+      ...item,
+      postingPeriod: item.postingPeriod
+        ? `${item.postingPeriod.startDate} to ${item.postingPeriod.endDate}`
+        : "",
+      callDates: item.callDates?.join(", ") || "",
+      leaveDates: item.leaveDates
+        ? item.leaveDates
+            .map((leave) => `${leave.date} (${leave.session})`)
+            .join("; ")
+        : "",
+    }));
+  
+    const ws = XLSX.utils.json_to_sheet(serializedData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Senior Residents");
-
+  
     XLSX.writeFile(wb, "Senior_Residents_List.xlsx");
   };
+  
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
@@ -50,23 +64,39 @@ const Searchbar = (props: SearchProps) => {
       alert("Please select a file!");
       return;
     }
-
+  
     const reader = new FileReader();
-
+  
     reader.onload = async (event) => {
       const data = event.target?.result;
       if (data) {
-        const workbook = XLSX.read(data, {type: "binary"});
+        const workbook = XLSX.read(data, { type: "binary" });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
+  
         try {
-          const srData = XLSX.utils.sheet_to_json<srList>(
-            sheet,
-            {
-              defval: "",
-            }
-          );
-
+          const rawData = XLSX.utils.sheet_to_json<any>(sheet, { defval: "" });
+  
+          // Deserialize data
+          const srData = rawData.map((item: any) => ({
+            ...item,
+            postingPeriod: item.postingPeriod
+              ? {
+                  startDate: item.postingPeriod.split(" to ")[0],
+                  endDate: item.postingPeriod.split(" to ")[1],
+                }
+              : null,
+            callDates: item.callDates
+              ? item.callDates.split(", ").map((date: string) => date.trim())
+              : [],
+            leaveDates: item.leaveDates
+              ? item.leaveDates.split("; ").map((leave: string) => {
+                  const [date, session] = leave.split(" (");
+                  return { date: date.trim(), session: session.replace(")", "").trim() };
+                })
+              : [],
+          }));
+  
+          // Upload data
           for (const row of srData) {
             try {
               await importSRInfo(row);
@@ -75,19 +105,22 @@ const Searchbar = (props: SearchProps) => {
               break;
             }
           }
-
+  
+          // Fetch updated data
           const updatedScheduleData = await getSRData();
           setFetchedData(updatedScheduleData);
           setImportedData(srData);
           window.location.reload();
         } catch (error) {
           console.error("Error processing the file:", error);
-          alert("An error occured while importing data. Please try again.")
+          alert("An error occurred while importing data. Please try again.");
         }
       }
     };
     reader.readAsBinaryString(file);
-  }
+  };
+  
+
 
   return (
     <div className="w-full flex items-center text-sidebar bg-white p-3 rounded-lg">
