@@ -4,6 +4,7 @@ import {
   SR_SORT_NAME_ASC,
   SR_SORT_NAME_DESC,
 } from "@/config/endpoint";
+import { srList } from "@/types/srList";
 
 import axios from "axios";
 
@@ -34,4 +35,14 @@ export const sortSRDataASC = async () => {
 export const sortSRDataDESC = async () => {
   const response = await axios.get(`${BASE_URL}${SR_SORT_NAME_DESC}`);
   return response.data;
+};
+
+export const importSRInfo = async (
+  row: srList
+): Promise<void> => {
+  await axios.post(`${BASE_URL}${SR}`, row, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };

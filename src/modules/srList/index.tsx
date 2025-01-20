@@ -20,7 +20,7 @@ import {
   sortSRDataASC,
   sortSRDataDESC,
 } from "@/services/srList";
-import { deleteSRInfo } from "@/services/registerSR";
+import { deleteSRInfo} from "@/services/registerSR";
 
 // styles
 import "/src/styles/custom-pagination.css";
@@ -216,10 +216,11 @@ const SeniorResidentList = () => {
         </div>
       </div>
       <div>
-        <Searchbar
-          onSearch={handleSearch}
-          onFilterToggle={handleFilterToggle}
-          onClearSearch={handleClearSearch}
+      <Searchbar
+        onSearch={handleSearch}
+        onFilterToggle={handleFilterToggle}
+        onClearSearch={handleClearSearch}
+        srData={SRData}
         />
       </div>
       <div>
