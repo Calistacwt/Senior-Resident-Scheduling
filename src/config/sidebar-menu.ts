@@ -65,6 +65,13 @@ const sidebarMenu: SidebarMenu[] = [
         active: ["/roomForm"],
       },
       {
+        id: "roomList",
+        type: "link",
+        path: "/roomList",
+        label: "Room List",
+        active: ["/roomList"],
+      },
+      {
         id: "approvedDoctor",
         type: "link",
         path: "/seniorDoctorForm",
