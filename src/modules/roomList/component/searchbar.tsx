@@ -99,7 +99,6 @@ const Searchbar = (props: SearchProps) => {
     reader.readAsBinaryString(file);
   };
 
-  //TODO: fix flexbox sizing
   return (
     <div className="w-full flex items-center text-sidebar bg-white p-3 rounded-lg">
       <div className="flex w-full space-x-2">
