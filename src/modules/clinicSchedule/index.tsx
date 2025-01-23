@@ -2,39 +2,34 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as XLSX from "xlsx";
 import { useNavigate } from "@tanstack/react-router";
-import axios from "axios";
-
-// external UI component and icons
-import { Button, Modal } from "flowbite-react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 // types
 import { clinicSchedule } from "@/types/schedule";
+import { srList } from "@/types/srList";
 
 // services
 import { getSeniorDoctorData } from "@/services/seniorDoctorList";
-import {
-  clinicScheduleInfo,
-  deleteAllClinicSchedules,
-  fetchClinicSchedule,
-} from "@/services/schedule";
-import { createSRSchedule } from "@/services/dashboard";
+import { fetchClinicSchedule } from "@/services/schedule";
+import { createSRSchedule, getSRSchedule } from "@/services/dashboard";
+import { getSRData } from "@/services/srList";
+import { isPostCall } from "@/utils/calendar";
+
+import { getRoomData, registerRoom } from "@/services/room";
 
 const ClinicSchedule: React.FC = () => {
   const navigate = useNavigate();
 
   const [fetchedData, setFetchedData] = useState<clinicSchedule[]>([]);
-  const [_importedData, setImportedData] = useState<clinicSchedule[]>([]);
+  const [importedData, setImportedData] = useState<clinicSchedule[]>([]);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // New states for modal and settings
+  // state for modal and settings
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
 
   // state to track success and failed badges
-  const [isDeletedSuccessfully, setIsDeletedSuccessfully] = useState(false);
-  const [isDeletedFailed, setIsDeletedFailed] = useState(false);
+  const [isUploadSuccessfully, setIsUploadSuccessfully] = useState(false);
+  const [isUploadFailed, setIsUploadFailed] = useState(false);
 
   // badge fade out
   const [fadeOutSuccess, setFadeOutSuccess] = useState(false);
@@ -45,17 +40,131 @@ const ClinicSchedule: React.FC = () => {
     useState("Observe DP4");
   const [triageScreeningCount, setTriageScreeningCount] = useState(4);
 
-  // new case clinics
-  const [activity, setActivity] = useState("Observe triage clinic");
+  // new case clinics observation
+  const [newCaseClinicActivity, setNewCaseClinicActivity] = useState(
+    "Observe triage clinic"
+  );
   const [scheduleCount, setScheduleCount] = useState(4);
 
-  // triage screening by associate psychologist
-  const triageScreeningObservation = async (availableSlots: any[]) => {
-    availableSlots
-      .slice(0, triageScreeningCount)
-      .forEach(async (slot, index) => {
+  // run triage new case clinic
+  const [runTriageClinicactivity, setRunTriageClinicactivity] =
+    useState("Run triage NC");
+  const [runTriageClinicCount, setRunTriageClinicCount] = useState(0);
+
+  // new case clinic observation
+  const newCaseClinicObservation = async (
+    availableDates: any[],
+    srData: any[],
+    scheduleCount: number
+  ) => {
+    // exclude those unavailable on leave dates, call dates or post-call days
+    const filteredSlots = availableDates.filter(
+      (availableDates) =>
+        !srData.some(
+          (sr) =>
+            sr.leaveDates.some(
+              (leave: any) =>
+                leave.date === availableDates.date &&
+                (leave.session === "FULLDAY" ||
+                  leave.session === availableDates.session)
+            ) ||
+            isPostCall(
+              new Date(availableDates.date),
+              sr.callDates,
+              sr.leaveDates
+            )
+        )
+    );
+
+    // track session to avoid duplication of NC doctor per session
+    const assignedSessions = new Set();
+    let assignedCount = 0;
+
+    await Promise.all(
+      filteredSlots.map((doctor, index) => {
+        // stop assigning if the scheduleCount is reached
+        if (assignedCount >= scheduleCount) {
+          return Promise.resolve();
+        }
+
+        // check if the session has already been assigned
+        const sessionKey = `${doctor.date}-${doctor.session}`;
+        if (assignedSessions.has(sessionKey)) {
+          return Promise.resolve();
+        }
+
+        // mark this session as assigned
+        assignedSessions.add(sessionKey);
+        assignedCount++;
+
+        // assign new case clinic observation
         const newSchedule = {
-          id: index + 5,
+          id: index + 20,
+          date: doctor.date,
+          dcdScreener: doctor.doctor,
+          activity: newCaseClinicActivity,
+          room: doctor.room,
+          srRoom: "",
+          session: doctor.session,
+        };
+
+        return createSRSchedule(newSchedule)
+          .then(() =>
+            console.log("Schedule successfully inserted into the database.")
+          )
+          .catch((error) => console.error("Error inserting schedule:", error));
+      })
+    );
+  };
+
+  // triage screening
+  const triageScreeningObservation = async (
+    availableDates: any[],
+    srData: srList[],
+    newCaseAssignedDoctors: any[],
+    triageScreeningCount: number 
+  ) => {
+    // exclude those unavailable on leave dates, call dates, or post-call days
+    const filteredSlots = availableDates.filter(
+      (availableSlot) =>
+        !srData.some(
+          (sr) =>
+            sr.leaveDates.some(
+              (leave: any) =>
+                leave.date === availableSlot.date &&
+                (leave.session === "FULLDAY" ||
+                  leave.session === availableSlot.session)
+            ) ||
+            isPostCall(
+              new Date(availableSlot.date),
+              sr.callDates,
+              sr.leaveDates
+            )
+        )
+    );
+
+    // track session to avoid duplication of NC doctor per session
+    let assignedCount = 0;
+
+    // Iterate through filtered slots
+    for (const [index, slot] of filteredSlots.entries()) {
+      // Stop assigning once the triageScreeningCount is reached
+      if (assignedCount >= triageScreeningCount) {
+        break;
+      }
+
+      // Check if there's an NC doctor for the session
+      const hasNCDoctor = newCaseAssignedDoctors.some(
+        (doc) => doc.date === slot.date && doc.session === slot.session
+      );
+
+      // Allow assignment if there is no NC doctor or if newCaseClinicObservation has finished assigning
+      if (
+        !hasNCDoctor ||
+        newCaseAssignedDoctors.every((doc) => doc.isAssigned)
+      ) {
+        const newSchedule = {
+          id: index + 1,
           date: slot.date,
           dcdScreener: "Associate Psychologist",
           activity: triageScreeningactivity,
@@ -64,54 +173,117 @@ const ClinicSchedule: React.FC = () => {
           session: slot.session,
         };
 
-        console.log("Newly inserted DP4 Schedule:", newSchedule);
-
-        // Insert the new schedule into the SR Schedule database
         try {
-          await createSRSchedule(newSchedule); // API call to insert new schedule
+          await createSRSchedule(newSchedule);
           console.log("DP4 Schedule successfully inserted into the database.");
+          assignedCount++; // Increment the assigned count
         } catch (error) {
           console.error("Error inserting DP4 schedule:", error);
         }
-      });
+      }
+    }
   };
 
-  // o
+  // TODO: Assign SRroom to a available room
+  // run triage clinic
+  const runTriageClinic = async (
+    availableDates: any[],
+    srData: any[],
+    runTriageClinicCount: number
+  ) => {
+    // fetch existing SR schedule to check for date conflicts
+    const existingSRSchedule = await getSRSchedule();
+    const existingDates = existingSRSchedule.map(
+      (schedule: any) => new Date(schedule.date)
+    );
 
-  // observe new case clinic -- triage
-  const newCaseClinicObservation = async (doctors: any[]) => {
-    doctors.slice(0, scheduleCount).forEach(async (doctor, index) => {
-      const newSchedule = {
-        id: index + 1,
-        date: doctor.date,
-        dcdScreener: doctor.doctor,
-        activity,
-        room: doctor.room,
-        srRoom: "",
-        session: doctor.session,
-      };
+    // determine the latest scheduled date
+    const latestDate = new Date(
+      Math.max(...existingDates.map((date: any) => date.getTime()))
+    );
 
-      try {
-        await createSRSchedule(newSchedule);
-        console.log("Schedule successfully inserted into the database.");
-      } catch (error) {
-        console.error("Error inserting schedule:", error);
-      }
+    // exclude those unavailable on leave dates, call dates or post-call days
+    const filteredSlots = availableDates.filter((availableDates) => {
+      const doctorDate = new Date(availableDates.date);
+      return (
+        doctorDate > latestDate &&
+        !srData.some(
+          (sr) =>
+            sr.leaveDates.some(
+              (leave: any) =>
+                leave.date === availableDates.date &&
+                (leave.session === "FULLDAY" ||
+                  leave.session === availableDates.session)
+            ) ||
+            isPostCall(
+              new Date(availableDates.date),
+              sr.callDates,
+              sr.leaveDates
+            )
+        )
+      );
     });
+
+    // track session to avoid duplication of NC doctor per session
+    const assignedSessions = new Set();
+    let assignedCount = 0;
+
+    await Promise.all(
+      filteredSlots.map((doctor, index) => {
+        // stop assigning if the scheduleCount is reached
+        if (assignedCount >= runTriageClinicCount) {
+          return Promise.resolve();
+        }
+
+        // check if the session has already been assigned
+        const sessionKey = `${doctor.date}-${doctor.session}`;
+        if (assignedSessions.has(sessionKey)) {
+          return Promise.resolve();
+        }
+
+        // mark this session as assigned
+        assignedSessions.add(sessionKey);
+        assignedCount++;
+        // assign run new case clinic observation
+        const newSchedule = {
+          id: index + 30,
+          date: doctor.date,
+          dcdScreener: doctor.doctor,
+          activity: runTriageClinicactivity,
+          room: doctor.room,
+          srRoom: "",
+          session: doctor.session,
+        };
+
+        return createSRSchedule(newSchedule)
+          .then(() =>
+            console.log("Schedule successfully inserted into the database.")
+          )
+          .catch((error) => console.error("Error inserting schedule:", error));
+      })
+    );
   };
 
   const handleGenerateSchedule = async () => {
+    if (!importedData || importedData.length === 0) {
+      alert("No clinic schedule data available. Please upload a file first.");
+      return;
+    }
+
     setIsModalOpen(false);
 
-    const scheduleData = await fetchClinicSchedule();
+    const scheduleData = importedData;
+
+    const srData = await getSRData(); // Fetch senior resident data
+
     const seniorDoctorNames = new Set(
       (await getSeniorDoctorData()).map((doctor: any) =>
         doctor.name.replace(/^Dr\s/, "")
       )
     );
 
-    const matchingDoctors = [];
-    const availableSlots = [];
+    const matchingDoctors: any[] = [];
+    let availableSlots = [];
 
     for (const { Date, Session, ...scheduleItem } of scheduleData) {
       let hasNCDoctor = false;
@@ -134,20 +306,35 @@ const ClinicSchedule: React.FC = () => {
           }
         }
       }
-
-      if (!hasNCDoctor) availableSlots.push({ date: Date, session: Session });
+      availableSlots.push({ date: Date, session: Session });
     }
-    await newCaseClinicObservation(matchingDoctors);
+    try {
+      // Assign New Case Clinic Observations
+      await newCaseClinicObservation(matchingDoctors, srData, scheduleCount);
 
-    if (availableSlots.length > 0) {
-      console.log("Available slots for DP4 observation:", availableSlots);
-      await triageScreeningObservation(availableSlots);
-    } else {
-      console.log("No available slots for DP4 observation.");
+      // Assign Triage Screening Observation
+      await triageScreeningObservation(
+        availableSlots,
+        srData,
+        matchingDoctors,
+        triageScreeningCount
+      );
+
+      await runTriageClinic(
+        matchingDoctors, // Doctors with (NC)
+        srData, // Senior resident data
+        runTriageClinicCount // Number of clinics to run
+      );
+    } catch (error) {
+      console.error("Error while assigning observations:", error);
     }
-    navigate({ to: "/" });
+
+    setTimeout(() => {
+      navigate({ to: "/" });
+    }, 1500);
   };
 
+  // handle excel file upload
   const handleUploads = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) {
@@ -169,110 +356,55 @@ const ClinicSchedule: React.FC = () => {
         const newRoomNumbers = rawRoomNumbers.slice(3);
 
         try {
-          // Extract clinic schedule data
+          // Extract clinic schedule data from the Excel sheet
           const clinicData = XLSX.utils.sheet_to_json<clinicSchedule>(sheet, {
             defval: "",
           });
 
-          // Save clinic schedule
-          let clinicScheduleUploadSuccess = true;
-          for (const row of clinicData) {
+          // Fetch existing room data using the service
+          const existingRoomData = await getRoomData();
+          const existingRoomNumbers = existingRoomData.map(
+            (room: { roomNumber: string }) => room.roomNumber
+          );
+
+          // Identify new room
+          const roomsToAdd = newRoomNumbers.filter(
+            (room) => !existingRoomNumbers.includes(room)
+          );
+
+          // Add new rooms
+          for (const roomNumber of roomsToAdd) {
             try {
-              await clinicScheduleInfo(row);
+              await registerRoom({ roomNumber });
             } catch (error) {
-              console.error("Error uploading clinic schedule row:", error);
-              clinicScheduleUploadSuccess = false;
-              break;
+              console.error("Error adding room:", roomNumber, error);
             }
           }
 
-          if (clinicScheduleUploadSuccess) {
-            // Fetch existing room data only if the clinic schedule is successfully uploaded
-            const { data: existingRoomData } = await axios.get(
-              "http://localhost:4000/room"
-            );
-            const existingRoomNumbers = existingRoomData.map(
-              (room: { roomNumber: string }) => room.roomNumber
-            );
+          setImportedData(clinicData);
+          setFetchedData(clinicData);
 
-            // Identify new and removed rooms
-            const roomsToAdd = newRoomNumbers.filter(
-              (room) => !existingRoomNumbers.includes(room)
-            );
-            const roomsToRemove = existingRoomNumbers.filter(
-              (room: any) => !newRoomNumbers.includes(room)
-            );
+          // set success state
+          setIsUploadSuccessfully(true);
 
-            // Add new rooms
-            for (const roomNumber of roomsToAdd) {
-              try {
-                await axios.post("http://localhost:4000/room", { roomNumber });
-              } catch (error) {
-                console.error("Error adding room:", roomNumber, error);
-              }
-            }
-
-            // Remove old rooms
-            for (const roomNumber of roomsToRemove) {
-              try {
-                await axios.delete(`http://localhost:4000/room/${roomNumber}`);
-              } catch (error) {
-                console.error("Error removing room:", roomNumber, error);
-              }
-            }
-
-            // Refresh data after processing
-            const updatedScheduleData = await fetchClinicSchedule();
-            setFetchedData(updatedScheduleData);
-            setImportedData(clinicData);
-            alert("Clinic schedule and room data imported successfully!");
-          } else {
-            alert(
-              "Clinic schedule upload failed. No data was saved. Please check the file and try again."
-            );
-          }
+          // badge fade out
+          setFadeOutSuccess(false);
+          setTimeout(() => {
+            setFadeOutSuccess(true);
+          }, 500);
         } catch (error) {
-          console.error("Error processing the file:", error);
-          alert("An error occurred while importing data. Please try again.");
+          // set failed state
+          setIsUploadFailed(true);
+          // badge fade out
+          setFadeOutFailed(false);
+          setTimeout(() => {
+            setFadeOutFailed(true);
+          }, 500);
         }
       }
     };
 
     reader.readAsBinaryString(file);
-  };
-
-  const handleDeleteClinicSchedules = async () => {
-    try {
-      // API call the update function
-      await deleteAllClinicSchedules();
-
-      // set success state
-      setIsDeletedSuccessfully(true);
-
-      // badge fade out
-      setFadeOutSuccess(false);
-      setTimeout(() => {
-        setFadeOutSuccess(true);
-      }, 500);
-
-      // redirect page
-      setTimeout(() => {
-        navigate({ to: `/` });
-      }, 1500);
-    } catch (error) {
-      setIsDeletedFailed(true);
-
-      // badge fade out
-      setFadeOutFailed(false);
-      setTimeout(() => {
-        setFadeOutFailed(true);
-      }, 500);
-
-      // redirect page
-      setTimeout(() => {
-        navigate({ to: `/clinicSchedule` });
-      }, 1500);
-    }
   };
 
   const handleScheduleSetting = async () => {
@@ -297,13 +429,13 @@ const ClinicSchedule: React.FC = () => {
   useEffect(() => {
     if (fadeOutSuccess) {
       setTimeout(() => {
-        setIsDeletedSuccessfully(false);
+        setIsUploadSuccessfully(false);
       }, 1500);
     }
 
     if (fadeOutFailed) {
       setTimeout(() => {
-        setIsDeletedFailed(false);
+        setIsUploadFailed(false);
       }, 1500);
     }
   }, [fadeOutSuccess, fadeOutFailed]);
@@ -325,11 +457,7 @@ const ClinicSchedule: React.FC = () => {
           <div>
             <button
               className="text-xs text-black rounded p-1.5 font-semibold border-sidebar-border border flex space-x-2 justify-center items-center"
-              onClick={
-                fetchedData.length > 0
-                  ? handleDeleteClinicSchedules
-                  : handleButtonClick
-              }
+              onClick={handleButtonClick}
             >
               <img
                 src="/assets/images/export.svg"
@@ -367,8 +495,9 @@ const ClinicSchedule: React.FC = () => {
           </div>
         </div>
       </div>
+
       {/* sucess delete badge */}
-      {isDeletedSuccessfully && (
+      {isUploadSuccessfully && (
         <div className="bg-badge-am font-semibold text-xs text-badge-success p-2 rounded-md mb-4 flex  items-center space-x-2">
           <div>
             <img
@@ -377,12 +506,12 @@ const ClinicSchedule: React.FC = () => {
               className="w-3 rounded-full"
             />
           </div>
-          <div>Deleted Successfully!</div>
+          <div>Upload Successfully!</div>
         </div>
       )}
 
       {/* failed delete badge */}
-      {isDeletedFailed && (
+      {isUploadFailed && (
         <div className="bg-badge-error font-semibold text-xs text-badge-errorText p-2 rounded-md mb-4 flex  items-center space-x-2">
           <div>
             <img
@@ -391,74 +520,158 @@ const ClinicSchedule: React.FC = () => {
               className="w-3 rounded-full"
             />
           </div>
-          <div>Delete Failed!</div>
+          <div>Upload Failed!</div>
         </div>
       )}
 
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg space-y-4">
+          <div className="bg-white p-6 rounded-lg shadow-lg space-y-8">
             <h2 className="text-lg font-bold">Schedule Settings</h2>
 
             <div>
-              <p className="text-base font-semibold ">Observation Session</p>
+              <h1 className="text-base font-semibold mb-2">
+                Observation Session
+              </h1>
+
+              <div className="flex space-x-4">
+                {/* Triage Screening by Associate Psychologist */}
+                <div className="flex-col space-y-4">
+                  <div className="flex-col space-y-2 ">
+                    <p className="text-sm font-semibold underline ">
+                      Triage Screening
+                    </p>
+
+                    <label className="block text-xs font-medium">
+                      Activity
+                    </label>
+                    <input
+                      type="text"
+                      value={triageScreeningactivity}
+                      onChange={(e) =>
+                        setTriageScreeningactivity(e.target.value)
+                      }
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
+
+                  <div className="flex-col space-y-2 ">
+                    <label className="block text-xs font-medium">
+                      Number of Schedules
+                    </label>
+                    <input
+                      type="number"
+                      value={triageScreeningCount}
+                      onChange={(e) =>
+                        setTriageScreeningCount(Number(e.target.value))
+                      }
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
+                </div>
+
+                {/* New Case Clinic */}
+                <div className="flex-col space-y-4">
+                  <div className="flex-col space-y-2 ">
+                    <p className="text-sm font-semibold underline ">
+                      New Case Clinic
+                    </p>
+                    <label className="block text-xs font-medium">
+                      Activity
+                    </label>
+                    <input
+                      type="text"
+                      value={newCaseClinicActivity}
+                      onChange={(e) => setNewCaseClinicActivity(e.target.value)}
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
+
+                  <div className="flex-col space-y-2 ">
+                    <label className="block text-xs font-medium">
+                      Number of Schedules
+                    </label>
+                    <input
+                      type="number"
+                      value={scheduleCount}
+                      onChange={(e) => setScheduleCount(Number(e.target.value))}
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div>
-              <p className="text-sm font-semibold underline ">
-                New Case Clinic
-              </p>
-            </div>
+              <h1 className="text-base font-semibold mb-2">
+                NC clinics to run
+              </h1>
 
-            <div className="space-y-2">
-              <label className="block text-xs font-medium">Activity</label>
-              <input
-                type="text"
-                value={activity}
-                onChange={(e) => setActivity(e.target.value)}
-                className="border p-2 rounded w-full"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="block text-xs font-medium">
-                Number of Schedules
-              </label>
-              <input
-                type="number"
-                value={scheduleCount}
-                onChange={(e) => setScheduleCount(Number(e.target.value))}
-                className="border p-2 rounded w-full"
-              />
-            </div>
+              <div className="flex space-x-4">
+                {/* Run triage clinic */}
+                <div className="flex-col space-y-4">
+                  <div className="flex-col space-y-2 ">
+                    <p className="text-sm font-semibold underline ">
+                      Run triage NC
+                    </p>
 
-            <div>
-              <p className="text-sm font-semibold underline ">
-                Triage Screening
-              </p>
-            </div>
+                    <label className="block text-xs font-medium">
+                      Activity
+                    </label>
+                    <input
+                      type="text"
+                      value={runTriageClinicactivity}
+                      onChange={(e) =>
+                        setRunTriageClinicactivity(e.target.value)
+                      }
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
 
-            <div className="space-y-2">
-              <label className="block text-xs font-medium">Activity</label>
-              <input
-                type="text"
-                value={triageScreeningactivity}
-                onChange={(e) => setTriageScreeningactivity(e.target.value)}
-                className="border p-2 rounded w-full"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="block text-xs font-medium">
-                Number of Schedules
-              </label>
-              <input
-                type="number"
-                value={triageScreeningCount}
-                onChange={(e) =>
-                  setTriageScreeningCount(Number(e.target.value))
-                }
-                className="border p-2 rounded w-full"
-              />
+                  <div className="flex-col space-y-2 ">
+                    <label className="block text-xs font-medium">
+                      Number of Schedules
+                    </label>
+                    <input
+                      type="number"
+                      value={runTriageClinicCount}
+                      onChange={(e) =>
+                        setRunTriageClinicCount(Number(e.target.value))
+                      }
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex-col space-y-4">
+                  {/* Admin Days */}
+                  <div className="flex-col space-y-2 ">
+                    <p className="text-sm font-semibold underline ">Admin</p>
+                    <label className="block text-xs font-medium">
+                      Activity
+                    </label>
+                    <input
+                      type="text"
+                      // value={activity}
+                      // onChange={(e) => setActivity(e.target.value)}
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
+
+                  <div className="flex-col space-y-2 ">
+                    <label className="block text-xs font-medium">
+                      Number of Schedules
+                    </label>
+                    <input
+                      type="number"
+                      // value={scheduleCount}
+                      // onChange={(e) => setScheduleCount(Number(e.target.value))}
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="flex justify-end space-x-2">
@@ -478,47 +691,6 @@ const ClinicSchedule: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* delete session modal */}
-      <div>
-        <Modal
-          className="md:mx-48 xl:mx-[600px]"
-          show={openModal}
-          size="xs"
-          onClose={() => setOpenModal(false)}
-          popup
-        >
-          <Modal.Header />
-          <Modal.Body>
-            <div className="text-center ">
-              <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-red-500 dark:text-red-500" />
-              <h2 className="mb-2 text-sm font-semibold text-gray-700">
-                Delete Session
-              </h2>
-              <h6 className="mb-3 text-xs  text-gray-700">
-                Are you sure you want to delete this session information? <br />{" "}
-                This action cannot be undone.
-              </h6>
-              <div className="flex justify-center gap-4">
-                <Button color="failure" className="border-none">
-                  <span className="text-xs bg-sidebar-active rounded-md px-2 py-2">
-                    Confirm
-                  </span>
-                </Button>
-                <Button
-                  color="gray"
-                  onClick={() => setOpenModal(false)}
-                  className="border-none"
-                >
-                  <span className="text-xs text-black rounded-md bg-gray-300 px-2 py-2 ">
-                    Cancel
-                  </span>
-                </Button>
-              </div>
-            </div>
-          </Modal.Body>
-        </Modal>
-      </div>
 
       {/* Table */}
       <div className="flex justify-center items-center xl:max-w-[1500px] ">
