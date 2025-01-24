@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 // external UI component and icons
 import { Dropdown } from "flowbite-react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaRegEye, FaTrash } from "react-icons/fa";
 
 // types
 import { srList } from "@/types/srList";
@@ -25,6 +25,13 @@ const List: React.FC<SRProps> = ({ SRData, onDelete }) => {
   const handleEdit = (srData: srList) => {
     navigate({
       to: `/seniorResidentForm/${srData.id}/edit`,
+      params: { id: srData.id },
+    });
+  };
+
+  const handleDetails = (srData: srList) => {
+    navigate({
+      to: `/seniorResidentDetails/${srData.id}/detail`,
       params: { id: srData.id },
     });
   };
@@ -109,6 +116,14 @@ const List: React.FC<SRProps> = ({ SRData, onDelete }) => {
                   size="xs"
                   className="text-white font-medium rounded-md transition-none"
                 >
+                   <Dropdown.Item
+                    onClick={() => handleDetails(SRData)}
+                    className="flex items-center p-2  hover:bg-gray-200"
+                  >
+                    <FaRegEye className="mr-2 text-sm text-gray-500" />
+                    <span className="text-xs text-black">Details</span>
+                  </Dropdown.Item>
+
                   <Dropdown.Item
                     onClick={() => handleEdit(SRData)}
                     className="flex items-center p-2  hover:bg-gray-200"
