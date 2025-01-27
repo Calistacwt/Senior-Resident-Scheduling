@@ -10,6 +10,15 @@
       "session": "AM"
     },
     {
+      "id": 23,
+      "date": "2025-01-15",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Observe triage clinic",
+      "room": "Rm 14",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
       "id": 21,
       "date": "2025-01-15",
       "dcdScreener": "Dr Vidya",
@@ -26,15 +35,6 @@
       "room": "Rm 14",
       "srRoom": "",
       "session": "AM"
-    },
-    {
-      "id": 23,
-      "date": "2025-01-15",
-      "dcdScreener": "Dr Christelle",
-      "activity": "Observe triage clinic",
-      "room": "Rm 14",
-      "srRoom": "",
-      "session": "PM"
     },
     {
       "id": 1,
@@ -78,7 +78,7 @@
       "dcdScreener": "Dr Christelle",
       "activity": "Run triage NC",
       "room": "Rm 14",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "AM"
     },
     {
@@ -87,7 +87,7 @@
       "dcdScreener": "Dr SH Chan",
       "activity": "Run triage NC",
       "room": "Rm 13",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "AM"
     },
     {
@@ -96,7 +96,7 @@
       "dcdScreener": "Dr SH Chan",
       "activity": "Run triage NC",
       "room": "Rm 13",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "PM"
     },
     {
@@ -105,7 +105,7 @@
       "dcdScreener": "Dr Vidya",
       "activity": "Run triage NC",
       "room": "Rm 16",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "AM"
     },
     {
@@ -114,17 +114,8 @@
       "dcdScreener": "Dr Rashmi",
       "activity": "Run triage NC",
       "room": "Rm 17",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "PM"
-    },
-    {
-      "id": 40,
-      "date": "2025-01-28",
-      "dcdScreener": "Dr Ellen Tay",
-      "activity": "Run triage NC",
-      "room": "Rm 13",
-      "srRoom": "",
-      "session": "AM"
     },
     {
       "id": 41,
@@ -132,7 +123,7 @@
       "dcdScreener": "Dr Christelle",
       "activity": "Run triage NC",
       "room": "Rm 14",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "AM"
     },
     {
@@ -141,7 +132,7 @@
       "dcdScreener": "Dr SH Chan",
       "activity": "Run triage NC",
       "room": "Rm 13",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "AM"
     },
     {
@@ -150,8 +141,17 @@
       "dcdScreener": "Dr Chitra",
       "activity": "Run triage NC",
       "room": "Rm 19",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "PM"
+    },
+    {
+      "id": 40,
+      "date": "2025-01-28",
+      "dcdScreener": "Dr Ellen Tay",
+      "activity": "Run triage NC",
+      "room": "Rm 13",
+      "srRoom": "Rm 15",
+      "session": "AM"
     },
     {
       "id": 46,
@@ -159,7 +159,7 @@
       "dcdScreener": "Dr Vidya",
       "activity": "Run triage NC",
       "room": "Rm 16",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "AM"
     },
     {
@@ -168,7 +168,7 @@
       "dcdScreener": "Dr Kenneth",
       "activity": "Run triage NC",
       "room": "Rm 19",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "PM"
     },
     {
@@ -177,7 +177,7 @@
       "dcdScreener": "Dr Christelle",
       "activity": "Run triage NC",
       "room": "Rm 13",
-      "srRoom": "",
+      "srRoom": "Rm 15",
       "session": "AM"
     }
   ],

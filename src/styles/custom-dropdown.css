@@ -6,7 +6,7 @@ button[data-testid="flowbite-dropdown-target"] {
 
 .custom-dropdown-button > button[data-testid="flowbite-dropdown-target"] {
   background-color: #1f6293;
-  padding: 8px !important;
+  padding: 3px !important;
   border: none !important;
 }
 

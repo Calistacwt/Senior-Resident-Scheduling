@@ -12,7 +12,7 @@ const List: React.FC<SeniorDoctorProps> = ({ roomData, onDelete }) => {
 
   const sortedRoomData = [...roomData].sort((a, b) => b.id - a.id);
 
-  //TODO: fix flexbox sizing
+  
   return (
     <div className="bg-background">
       <table className="w-full bg-white mt-3">
@@ -22,7 +22,10 @@ const List: React.FC<SeniorDoctorProps> = ({ roomData, onDelete }) => {
               ID
             </th>
             <th className="gap-3 px-4 py-3 text-2xs font-semibold w-1/2 text-form-text">
-              Room Number
+              ROOM NUMBER
+            </th>
+            <th className="gap-3 px-4 py-3 text-2xs font-semibold w-1/2 text-form-text">
+              DETAILS
             </th>
           </tr>
         </thead>

@@ -49,7 +49,7 @@ const ClinicSchedule: React.FC = () => {
   // run triage new case clinic
   const [runTriageClinicactivity, setRunTriageClinicactivity] =
     useState("Run triage NC");
-  const [runTriageClinicCount, setRunTriageClinicCount] = useState(0);
+  const [runTriageClinicCount, setRunTriageClinicCount] = useState(12);
 
   // new case clinic observation
   const newCaseClinicObservation = async (
@@ -184,25 +184,24 @@ const ClinicSchedule: React.FC = () => {
     }
   };
 
-  // TODO: Assign SRroom to a available room
-  // run triage clinic
-  const runTriageClinic = async (
+  // run triage clinics
+  const runTriageClinics = async (
     availableDates: any[],
     srData: any[],
     runTriageClinicCount: number
   ) => {
-    // fetch existing SR schedule to check for date conflicts
+    // Fetch existing SR schedule to check for date conflicts
     const existingSRSchedule = await getSRSchedule();
     const existingDates = existingSRSchedule.map(
       (schedule: any) => new Date(schedule.date)
     );
-
-    // determine the latest scheduled date
+  
+    // Determine the latest scheduled date
     const latestDate = new Date(
       Math.max(...existingDates.map((date: any) => date.getTime()))
     );
-
-    // exclude those unavailable on leave dates, call dates or post-call days
+  
+    // Exclude those unavailable on leave dates, call dates, or post-call days
     const filteredSlots = availableDates.filter((availableDates) => {
       const doctorDate = new Date(availableDates.date);
       return (
@@ -223,38 +222,62 @@ const ClinicSchedule: React.FC = () => {
         )
       );
     });
-
-    // track session to avoid duplication of NC doctor per session
+  
+    // Track session to avoid duplication of NC doctor per session
     const assignedSessions = new Set();
     let assignedCount = 0;
-
+  
     await Promise.all(
       filteredSlots.map((doctor, index) => {
-        // stop assigning if the scheduleCount is reached
+        // Stop assigning if the scheduleCount is reached
         if (assignedCount >= runTriageClinicCount) {
           return Promise.resolve();
         }
-
-        // check if the session has already been assigned
+  
+        // Check if the session has already been assigned
         const sessionKey = `${doctor.date}-${doctor.session}`;
         if (assignedSessions.has(sessionKey)) {
           return Promise.resolve();
         }
-
-        // mark this session as assigned
+  
+        // Mark this session as assigned
         assignedSessions.add(sessionKey);
         assignedCount++;
-        // assign run new case clinic observation
+  
+        // Dynamically extract room numbers from the Excel data
+        const roomNumbers = importedData.reduce((rooms: string[], item: any) => {
+          if (item.Session === doctor.session && item.Date === doctor.date) {
+            Object.keys(item).forEach((key) => {
+              if (key.startsWith("Rm") && !rooms.includes(key)) {
+                rooms.push(key);
+              }
+            });
+          }
+          return rooms;
+        }, []);
+  
+        // Find available SR room in the same session
+        const assignedRooms = filteredSlots.map((slot) => slot.room);
+        const availableRoom = roomNumbers.find(
+          (room) => !assignedRooms.includes(room) && room !== doctor.room
+        );
+  
+        if (!availableRoom) {
+          console.error("No available room found for SR.");
+          return Promise.resolve();
+        }
+  
+        // Assign run new case clinic observation
         const newSchedule = {
           id: index + 30,
           date: doctor.date,
           dcdScreener: doctor.doctor,
           activity: runTriageClinicactivity,
           room: doctor.room,
-          srRoom: "",
+          srRoom: availableRoom, // Assign SR room
           session: doctor.session,
         };
-
+  
         return createSRSchedule(newSchedule)
           .then(() =>
             console.log("Schedule successfully inserted into the database.")
@@ -263,6 +286,7 @@ const ClinicSchedule: React.FC = () => {
       })
     );
   };
+  
 
   const handleGenerateSchedule = async () => {
     if (!importedData || importedData.length === 0) {
@@ -274,7 +298,8 @@ const ClinicSchedule: React.FC = () => {
 
     const scheduleData = importedData;
 
-    const srData = await getSRData(); // Fetch senior resident data
+    // fetch senior resident data
+    const srData = await getSRData(); 
 
     const seniorDoctorNames = new Set(
       (await getSeniorDoctorData()).map((doctor: any) =>
@@ -320,11 +345,12 @@ const ClinicSchedule: React.FC = () => {
         triageScreeningCount
       );
 
-      await runTriageClinic(
-        matchingDoctors, // Doctors with (NC)
-        srData, // Senior resident data
-        runTriageClinicCount // Number of clinics to run
+      await runTriageClinics(
+        matchingDoctors,
+        srData,
+        runTriageClinicCount
       );
+
     } catch (error) {
       console.error("Error while assigning observations:", error);
     }
