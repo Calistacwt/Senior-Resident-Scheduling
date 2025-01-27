@@ -17,8 +17,6 @@ import { srList } from "@/types/srList";
 import {
   getSRData,
   searchSRData,
-  sortSRDataASC,
-  sortSRDataDESC,
 } from "@/services/srList";
 import { deleteSRInfo} from "@/services/registerSR";
 
@@ -33,9 +31,6 @@ const SeniorResidentList = () => {
 
   // state to track the ID
   const [deleteId, setDeleteId] = useState<string | null>(null);
-
-  // state to toggle sorting order
-  const [isAscending, setIsAscending] = useState(true);
 
   // modal state
   const [openModal, setOpenModal] = useState(false);
@@ -73,18 +68,6 @@ const SeniorResidentList = () => {
       }
     } catch (error) {
       console.error("Error searching SR data:", error);
-    }
-  };
-
-  // sorts by name only
-  // TODO: change to filter by date
-  const handleFilterToggle = async () => {
-    try {
-      const data = isAscending ? await sortSRDataASC() : await sortSRDataDESC();
-      setSRData(data);
-      setIsAscending(!isAscending);
-    } catch (error) {
-      console.error("Error sorting SR data:", error);
     }
   };
 
@@ -218,7 +201,6 @@ const SeniorResidentList = () => {
       <div>
       <Searchbar
         onSearch={handleSearch}
-        onFilterToggle={handleFilterToggle}
         onClearSearch={handleClearSearch}
         srData={SRData}
         />

@@ -18,8 +18,6 @@ import {
   getRoomData,
   deleteRoomData,
   searchRoomData,
-  sortRoomDataASC,
-  sortRoomDataDESC,
 } from "@/services/room";
 
 // styles
@@ -32,9 +30,6 @@ const allroomsList = () => {
   const [roomData, setRoomData] = useState<roomList[]>(
     []
   );
-
-  // state to toggle sorting order
-  const [isAscending, setIsAscending] = useState(true);
 
   // state to track the ID
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -58,7 +53,7 @@ const allroomsList = () => {
   const startIndex = (currentPage - 1) * dataPerPage;
   const currentData = filteredData.slice(startIndex, startIndex + dataPerPage);
 
-  // Calculate total pages
+  // calculate total pages
   const totalPages = Math.ceil(filteredData.length / dataPerPage);
 
   const handleSearch = async (value: string) => {
@@ -75,18 +70,6 @@ const allroomsList = () => {
       }
     } catch (error) {
       console.error("Error searching Room data:", error);
-    }
-  };
-
-  const handleFilterToggle = async () => {
-    try {
-      const data = isAscending
-        ? await sortRoomDataASC()
-        : await sortRoomDataDESC();
-      setRoomData(data);
-      setIsAscending(!isAscending);
-    } catch (error) {
-      console.error("Error sorting Room data:", error);
     }
   };
 
@@ -175,7 +158,7 @@ const allroomsList = () => {
     const fetchRoomData = async () => {
       const data = await getRoomData();
   
-      // Sort the data by ID in descending order (latest first)
+      // sort the data by ID in descending order (latest first)
       const sortedData = data.sort((a:any, b:any) => b.id - a.id);
   
       setRoomData(sortedData);
@@ -192,7 +175,7 @@ const allroomsList = () => {
         <div className="mb-3">
           <div className="flex justify-between">
             <div>
-              <h1 className="font-bold text-xl">Rooms List</h1>
+              <h1 className="font-bold text-xl">Clinic Room List</h1>
               <h6 className="text-xs text-dashboard-text">
                 List of Rooms in KK Woman's and Children's Hospital
               </h6>
@@ -232,7 +215,6 @@ const allroomsList = () => {
       <div>
         <Searchbar
           onSearch={handleSearch}
-          onFilterToggle={handleFilterToggle}
           onClearSearch={handleClearSearch}
           roomData={roomData}
         />

@@ -122,7 +122,7 @@ const ClinicSchedule: React.FC = () => {
     availableDates: any[],
     srData: srList[],
     newCaseAssignedDoctors: any[],
-    triageScreeningCount: number 
+    triageScreeningCount: number
   ) => {
     // exclude those unavailable on leave dates, call dates, or post-call days
     const filteredSlots = availableDates.filter(
@@ -195,12 +195,12 @@ const ClinicSchedule: React.FC = () => {
     const existingDates = existingSRSchedule.map(
       (schedule: any) => new Date(schedule.date)
     );
-  
+
     // Determine the latest scheduled date
     const latestDate = new Date(
       Math.max(...existingDates.map((date: any) => date.getTime()))
     );
-  
+
     // Exclude those unavailable on leave dates, call dates, or post-call days
     const filteredSlots = availableDates.filter((availableDates) => {
       const doctorDate = new Date(availableDates.date);
@@ -222,51 +222,54 @@ const ClinicSchedule: React.FC = () => {
         )
       );
     });
-  
+
     // Track session to avoid duplication of NC doctor per session
     const assignedSessions = new Set();
     let assignedCount = 0;
-  
+
     await Promise.all(
       filteredSlots.map((doctor, index) => {
         // Stop assigning if the scheduleCount is reached
         if (assignedCount >= runTriageClinicCount) {
           return Promise.resolve();
         }
-  
+
         // Check if the session has already been assigned
         const sessionKey = `${doctor.date}-${doctor.session}`;
         if (assignedSessions.has(sessionKey)) {
           return Promise.resolve();
         }
-  
+
         // Mark this session as assigned
         assignedSessions.add(sessionKey);
         assignedCount++;
-  
+
         // Dynamically extract room numbers from the Excel data
-        const roomNumbers = importedData.reduce((rooms: string[], item: any) => {
-          if (item.Session === doctor.session && item.Date === doctor.date) {
-            Object.keys(item).forEach((key) => {
-              if (key.startsWith("Rm") && !rooms.includes(key)) {
-                rooms.push(key);
-              }
-            });
-          }
-          return rooms;
-        }, []);
-  
+        const roomNumbers = importedData.reduce(
+          (rooms: string[], item: any) => {
+            if (item.Session === doctor.session && item.Date === doctor.date) {
+              Object.keys(item).forEach((key) => {
+                if (key.startsWith("Rm") && !rooms.includes(key)) {
+                  rooms.push(key);
+                }
+              });
+            }
+            return rooms;
+          },
+          []
+        );
+
         // Find available SR room in the same session
         const assignedRooms = filteredSlots.map((slot) => slot.room);
         const availableRoom = roomNumbers.find(
           (room) => !assignedRooms.includes(room) && room !== doctor.room
         );
-  
+
         if (!availableRoom) {
           console.error("No available room found for SR.");
           return Promise.resolve();
         }
-  
+
         // Assign run new case clinic observation
         const newSchedule = {
           id: index + 30,
@@ -277,7 +280,7 @@ const ClinicSchedule: React.FC = () => {
           srRoom: availableRoom, // Assign SR room
           session: doctor.session,
         };
-  
+
         return createSRSchedule(newSchedule)
           .then(() =>
             console.log("Schedule successfully inserted into the database.")
@@ -286,7 +289,6 @@ const ClinicSchedule: React.FC = () => {
       })
     );
   };
-  
 
   const handleGenerateSchedule = async () => {
     if (!importedData || importedData.length === 0) {
@@ -299,7 +301,7 @@ const ClinicSchedule: React.FC = () => {
     const scheduleData = importedData;
 
     // fetch senior resident data
-    const srData = await getSRData(); 
+    const srData = await getSRData();
 
     const seniorDoctorNames = new Set(
       (await getSeniorDoctorData()).map((doctor: any) =>
@@ -345,12 +347,7 @@ const ClinicSchedule: React.FC = () => {
         triageScreeningCount
       );
 
-      await runTriageClinics(
-        matchingDoctors,
-        srData,
-        runTriageClinicCount
-      );
-
+      await runTriageClinics(matchingDoctors, srData, runTriageClinicCount);
     } catch (error) {
       console.error("Error while assigning observations:", error);
     }
@@ -721,7 +718,7 @@ const ClinicSchedule: React.FC = () => {
       {/* Table */}
       <div className="flex justify-center items-center xl:max-w-[1500px] ">
         <div className="overflow-x-auto overflow-y-auto bg-background rounded-lg max-w-2xl xl:max-w-full max-h-xl xl:max-h-[700px]">
-          {fetchedData.length > 0 && (
+          {fetchedData.length > 0 ? (
             <table className="whitespace-nowrap bg-white mt-3">
               <thead className="text-left bg-background border border-sidebar">
                 <tr className="border border-sidebar">
@@ -757,6 +754,12 @@ const ClinicSchedule: React.FC = () => {
                 ))}
               </tbody>
             </table>
+          ) : (
+            <div className="flex justify-center items-center h-[200px] text-center">
+              <p className="text-sm font-medium text-gray-500">
+                No data has been imported at this time.
+              </p>
+            </div>
           )}
         </div>
       </div>
