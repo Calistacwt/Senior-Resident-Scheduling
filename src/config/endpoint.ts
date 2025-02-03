@@ -17,6 +17,6 @@ export const SENIOR_DOCTOR_SORT_NAME_DESC =
 export const CLINIC_SCHEDULE = "/clinicSchedule";
 
 export const ROOM = "/room";
-export const ROOM_NAMESEARCH = "/room?name_like=search";
-export const ROOM_SORT_ASC = "/room?_sort=name&_order=ASC";
-export const ROOM_SORT_DESC = "/room?_sort=name&_order=DESC";
+export const ROOM_NAMESEARCH = "/room?roomNumber_like=search";
+export const ROOM_SORT_ASC = "/room?_sort=roomNumber&_order=ASC";
+export const ROOM_SORT_DESC = "/room?_sort=roomNumber&_order=DESC";
