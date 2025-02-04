@@ -11,8 +11,6 @@ import {
   deleteSeniorDoctorInfo,
   getSeniorDoctorData,
   searchSeniorDoctorData,
-  sortSeniorDoctorDataASC,
-  sortSeniorDoctorDataDESC,
 } from "@/services/seniorDoctorList";
 
 // component
@@ -32,9 +30,6 @@ const SeniorDoctorList = () => {
   const [seniorDoctorData, setSeniorDoctorData] = useState<seniorDoctorList[]>(
     []
   );
-
-  // state to toggle sorting order
-  const [isAscending, setIsAscending] = useState(true);
 
   // state to track the ID
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -78,17 +73,6 @@ const SeniorDoctorList = () => {
     }
   };
 
-  const handleFilterToggle = async () => {
-    try {
-      const data = isAscending
-        ? await sortSeniorDoctorDataASC()
-        : await sortSeniorDoctorDataDESC();
-      setSeniorDoctorData(data);
-      setIsAscending(!isAscending);
-    } catch (error) {
-      console.error("Error sorting Senior Doctor data:", error);
-    }
-  };
 
   const handleClearSearch = async () => {
     const data = await getSeniorDoctorData();
@@ -232,7 +216,6 @@ const SeniorDoctorList = () => {
       <div>
         <Searchbar
           onSearch={handleSearch}
-          onFilterToggle={handleFilterToggle}
           onClearSearch={handleClearSearch}
           seniorDoctorData={seniorDoctorData}
         />

@@ -8,13 +8,12 @@ import * as XLSX from "xlsx";
 
 export type SearchProps = {
   onSearch: (value: string) => void;
-  onFilterToggle: () => void;
   onClearSearch: () => void;
   srData: srList[]; 
 };
 
 const Searchbar = (props: SearchProps) => {
-  const { onSearch, onFilterToggle, onClearSearch, srData } = props;
+  const { onSearch, onClearSearch, srData } = props;
   const [value, setValue] = useState("Search");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -142,19 +141,6 @@ const Searchbar = (props: SearchProps) => {
           />
         </div>
         <div className="flex-shrink-0 flex justify-center items-center space-x-4">
-          <button
-            className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center"
-            onClick={onFilterToggle}
-          >
-            <img
-              src="/assets/images/filter.png"
-              alt="Filter Logo"
-              className="rounded-md cursor-pointer w-4"
-            />
-            <div>
-              <p>Filter</p>
-            </div>
-          </button>
           <button
             className="text-xs text-black rounded p-2 font-semibold border-form-border border flex space-x-2 justify-center items-center"
             onClick={handleButtonClick}

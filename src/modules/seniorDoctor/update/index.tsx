@@ -61,9 +61,9 @@ const UpdateSeniorDoctor = () => {
       <div className="mb-3 space-y-1">
         <div className="flex justify-between">
           <div>
-            <h1 className="font-bold text-xl">Senior Doctor Registration</h1>
+            <h1 className="font-bold text-xl">Senior Doctor Profile Update</h1>
             <h6 className="text-xs text-dashboard-text">
-              Registration of DCD Senior Doctors Information for NC Clinics and
+              Update of DCD Senior Doctors Information for NC Clinics and
               SR Supervision
             </h6>
           </div>
@@ -87,7 +87,7 @@ const UpdateSeniorDoctor = () => {
       <div className="bg-white p-8 rounded-xl mt-5">
         <div>
           <h3 className="font-bold text-md mb-3">
-            Register Overseeing Senior Doctor
+            Update Overseeing Senior Doctor
           </h3>
           <hr className="border-1 border-background-hr" />
         </div>

@@ -49,7 +49,6 @@ const sidebarMenu: SidebarMenu[] = [
     icons: "/assets/images/sidebar/list.png",
     active: ["/srList"],
   },
-
   {
     id: "masterData",
     type: "link",
@@ -58,24 +57,17 @@ const sidebarMenu: SidebarMenu[] = [
     active: ["/roomForm", "/seniorDoctorForm", "/seniorDoctorList"],
     subMenu: [
       {
-        id: "roomForm",
-        type: "link",
-        path: "/roomForm",
-        label: "Register Room",
-        active: ["/roomForm"],
-      },
-      {
         id: "roomList",
         type: "link",
         path: "/roomList",
-        label: "Room List",
+        label: "Clinic Room List",
         active: ["/roomList"],
       },
       {
         id: "approvedDoctor",
         type: "link",
         path: "/seniorDoctorForm",
-        label: "Register Overseeing Doctor",
+        label: "Register Senior Doctor",
         active: ["/seniorDoctorForm"],
       },
       {
