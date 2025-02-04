@@ -1,5 +1,8 @@
 // external library
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+
 
 // types
 import { LeaveDate } from "@/types/srList";
@@ -22,6 +25,23 @@ const Dashboard = () => {
 
   const [_latestPostingPeriod, setLatestPostingPeriod] = useState<any>(null);
   const [showStats, setShowStats] = useState(false);
+
+
+  const calendarRef = useRef<HTMLDivElement>(null);
+
+  const handleExportPDF = async () => {
+    if (!calendarRef.current) return;
+
+    const canvas = await html2canvas(calendarRef.current, { scale: 4 });
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("l", "mm", "a4");
+    const imgWidth = pdf.internal.pageSize.getWidth();
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    pdf.save("Calendar-Schedule.pdf");
+  };
+
 
   // statistics: session counts for each supervising doctor
   const doctorSessionStats = scheduleData.reduce(
@@ -97,7 +117,9 @@ const Dashboard = () => {
 
         <div className="flex space-x-4">
           <div>
-            <button className="text-xs text-black rounded p-1.5 font-semibold border-sidebar-border border flex space-x-2 justify-center items-center">
+            <button 
+            onClick={handleExportPDF}
+            className="text-xs text-black rounded p-1.5 font-semibold border-sidebar-border border flex space-x-2 justify-center items-center">
               <img
                 src="/assets/images/export.svg"
                 alt="Export Logo"
@@ -204,7 +226,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      <div>
+      <div ref={calendarRef}>
         <Calendar
           scheduleData={scheduleData}
           callDates={callDates}
@@ -212,6 +234,8 @@ const Dashboard = () => {
           // latestPostingPeriod={latestPostingPeriod}
         />
       </div>
+
+      
     </div>
   );
 };
