@@ -11,7 +11,10 @@ export const createSRSchedule = async (scheduleData: any) => {
 
 // update session for SR schedule by ID
 export const updateSRScheduleById = async (id: number, scheduleData: any) => {
-  const response = await axios.put(`${BASE_URL}${SCHEDULE}/${id}`, scheduleData);
+  const response = await axios.put(
+    `${BASE_URL}${SCHEDULE}/${id}`,
+    scheduleData
+  );
   return response.data;
 };
 
@@ -31,4 +34,18 @@ export const getSRScheduleById = async (id: number) => {
 export const deleteSRScheduleById = async (id: number) => {
   const response = await axios.delete(`${BASE_URL}${SCHEDULE}/${id}`);
   return response.data;
+};
+
+// delete all session
+export const deleteAllSRSchedules = async (): Promise<void> => {
+  const schedules = await getSRSchedule();
+  const deletePromises = schedules.map((schedule: { id: number }) =>
+    axios.delete(`${BASE_URL}${SCHEDULE}/${schedule.id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  );
+
+  await Promise.all(deletePromises);
 };

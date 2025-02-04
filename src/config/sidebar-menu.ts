@@ -49,7 +49,6 @@ const sidebarMenu: SidebarMenu[] = [
     icons: "/assets/images/sidebar/list.png",
     active: ["/srList"],
   },
-
   {
     id: "masterData",
     type: "link",
@@ -57,13 +56,6 @@ const sidebarMenu: SidebarMenu[] = [
     icons: "/assets/images/sidebar/database.png",
     active: ["/roomForm", "/seniorDoctorForm", "/seniorDoctorList"],
     subMenu: [
-      {
-        id: "roomForm",
-        type: "link",
-        path: "/roomForm",
-        label: "Register Room",
-        active: ["/roomForm"],
-      },
       {
         id: "roomList",
         type: "link",

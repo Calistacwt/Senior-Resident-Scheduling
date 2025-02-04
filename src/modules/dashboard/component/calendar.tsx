@@ -221,9 +221,12 @@ const Calendar: React.FC<CalendarProps> = ({
                               </div>
 
                               <div className="hidden xl:flex">
+
+                                {sessionData.room && (
                                 <div className="bg-dashboard-room text-3xs rounded-md font-normal text-white flex items-center justify-center self-start lg:self-center p-1 lg:mr-3 lg:mb-0">
                                   {sessionData.room}
                                 </div>
+                                )}
 
                                 {sessionData.srRoom && (
                                   <div className="bg-dashboard-active rounded-md text-3xs font-normal text-white flex items-center justify-center self-start lg:self-center p-1 lg:mr-4">

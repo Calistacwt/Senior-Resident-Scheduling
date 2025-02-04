@@ -1,235 +1,41 @@
 {
-  "srSchedule": [
-    {
-      "id": 20,
-      "date": "2025-01-14",
-      "dcdScreener": "Dr Ellen Tay",
-      "activity": "Observe triage clinic",
-      "room": "Rm 13",
-      "srRoom": "",
-      "session": "AM"
-    },
-    {
-      "id": 23,
-      "date": "2025-01-15",
-      "dcdScreener": "Dr Christelle",
-      "activity": "Observe triage clinic",
-      "room": "Rm 14",
-      "srRoom": "",
-      "session": "PM"
-    },
-    {
-      "id": 21,
-      "date": "2025-01-15",
-      "dcdScreener": "Dr Vidya",
-      "activity": "Observe triage clinic",
-      "room": "Rm 14",
-      "srRoom": "",
-      "session": "AM"
-    },
-    {
-      "id": 24,
-      "date": "2025-01-16",
-      "dcdScreener": "Dr Christelle",
-      "activity": "Observe triage clinic",
-      "room": "Rm 14",
-      "srRoom": "",
-      "session": "AM"
-    },
-    {
-      "id": 1,
-      "date": "2025-01-13",
-      "dcdScreener": "Associate Psychologist",
-      "activity": "Observe DP4",
-      "room": "Rm 25",
-      "srRoom": "",
-      "session": "PM"
-    },
-    {
-      "id": 3,
-      "date": "2025-01-14",
-      "dcdScreener": "Associate Psychologist",
-      "activity": "Observe DP4",
-      "room": "Rm 25",
-      "srRoom": "",
-      "session": "PM"
-    },
-    {
-      "id": 7,
-      "date": "2025-01-16",
-      "dcdScreener": "Associate Psychologist",
-      "activity": "Observe DP4",
-      "room": "Rm 25",
-      "srRoom": "",
-      "session": "PM"
-    },
-    {
-      "id": 10,
-      "date": "2025-01-21",
-      "dcdScreener": "Associate Psychologist",
-      "activity": "Observe DP4",
-      "room": "Rm 25",
-      "srRoom": "",
-      "session": "AM"
-    },
-    {
-      "id": 30,
-      "date": "2025-01-23",
-      "dcdScreener": "Dr Christelle",
-      "activity": "Run triage NC",
-      "room": "Rm 14",
-      "srRoom": "Rm 15",
-      "session": "AM"
-    },
-    {
-      "id": 33,
-      "date": "2025-01-24",
-      "dcdScreener": "Dr SH Chan",
-      "activity": "Run triage NC",
-      "room": "Rm 13",
-      "srRoom": "Rm 15",
-      "session": "AM"
-    },
-    {
-      "id": 35,
-      "date": "2025-01-24",
-      "dcdScreener": "Dr SH Chan",
-      "activity": "Run triage NC",
-      "room": "Rm 13",
-      "srRoom": "Rm 15",
-      "session": "PM"
-    },
-    {
-      "id": 37,
-      "date": "2025-01-27",
-      "dcdScreener": "Dr Vidya",
-      "activity": "Run triage NC",
-      "room": "Rm 16",
-      "srRoom": "Rm 15",
-      "session": "AM"
-    },
-    {
-      "id": 39,
-      "date": "2025-01-27",
-      "dcdScreener": "Dr Rashmi",
-      "activity": "Run triage NC",
-      "room": "Rm 17",
-      "srRoom": "Rm 15",
-      "session": "PM"
-    },
-    {
-      "id": 41,
-      "date": "2025-01-30",
-      "dcdScreener": "Dr Christelle",
-      "activity": "Run triage NC",
-      "room": "Rm 14",
-      "srRoom": "Rm 15",
-      "session": "AM"
-    },
-    {
-      "id": 44,
-      "date": "2025-01-31",
-      "dcdScreener": "Dr SH Chan",
-      "activity": "Run triage NC",
-      "room": "Rm 13",
-      "srRoom": "Rm 15",
-      "session": "AM"
-    },
-    {
-      "id": 45,
-      "date": "2025-01-31",
-      "dcdScreener": "Dr Chitra",
-      "activity": "Run triage NC",
-      "room": "Rm 19",
-      "srRoom": "Rm 15",
-      "session": "PM"
-    },
-    {
-      "id": 40,
-      "date": "2025-01-28",
-      "dcdScreener": "Dr Ellen Tay",
-      "activity": "Run triage NC",
-      "room": "Rm 13",
-      "srRoom": "Rm 15",
-      "session": "AM"
-    },
-    {
-      "id": 46,
-      "date": "2025-02-03",
-      "dcdScreener": "Dr Vidya",
-      "activity": "Run triage NC",
-      "room": "Rm 16",
-      "srRoom": "Rm 15",
-      "session": "AM"
-    },
-    {
-      "id": 48,
-      "date": "2025-02-03",
-      "dcdScreener": "Dr Kenneth",
-      "activity": "Run triage NC",
-      "room": "Rm 19",
-      "srRoom": "Rm 15",
-      "session": "PM"
-    },
-    {
-      "id": 49,
-      "date": "2025-02-05",
-      "dcdScreener": "Dr Christelle",
-      "activity": "Run triage NC",
-      "room": "Rm 13",
-      "srRoom": "Rm 15",
-      "session": "AM"
-    }
-  ],
+  "srSchedule": [],
   "srList": [
     {
       "postingPeriod": {
-        "startDate": "2025-01-22T00:00:00.000Z",
-        "endDate": "2025-02-22T00:00:00.000Z"
+        "startDate": "2025-02-03T00:00:00.000Z",
+        "endDate": "2025-03-07T00:00:00.000Z"
       },
-      "name": "Calista",
+      "name": "Senior 01",
       "mobile": "98235982",
-      "email": "senior3@mohh.com.sg",
-      "MCR": "M12345F",
+      "email": "senior01@mohh.com.sg",
+      "MCR": "M12345E",
       "noSession": "30",
       "remarks": "",
       "callDates": [
-        "2025-01-16",
-        "2025-01-28",
-        "2025-02-03",
-        "2025-02-05"
+        "2025-02-11",
+        "2025-02-19",
+        "2025-02-26"
       ],
       "leaveDates": [
         {
-          "date": "2025-01-06",
+          "date": "2025-02-17",
           "session": "FULLDAY"
         },
         {
-          "date": "2025-01-07",
+          "date": "2025-02-21",
           "session": "FULLDAY"
         },
         {
-          "date": "2025-01-08",
+          "date": "2025-02-27",
           "session": "FULLDAY"
         },
         {
-          "date": "2025-01-09",
-          "session": "FULLDAY"
-        },
-        {
-          "date": "2025-01-10",
-          "session": "FULLDAY"
-        },
-        {
-          "date": "2025-01-13",
-          "session": "AM"
-        },
-        {
-          "date": "2025-01-22",
+          "date": "2025-03-04",
           "session": "FULLDAY"
         }
       ],
-      "id": "Wn1XdRx"
+      "id": 1
     }
   ],
   "clinicSchedule": [],
@@ -409,10 +215,6 @@
     {
       "roomNumber": "MO Rm",
       "id": 19
-    },
-    {
-      "roomNumber": "Remarks",
-      "id": 20
     }
   ]
 }
