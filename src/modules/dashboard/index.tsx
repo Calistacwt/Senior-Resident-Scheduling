@@ -152,7 +152,7 @@ const Dashboard = () => {
       {/* Statistics Section */}
       {showStats && (
         <div
-          className={`transition-all duration-500 ease-in-out absolute w-52 left-0 top-28  ${
+          className={`transition-all duration-500 ease-in-out absolute w-52 left-0 top-20  ${
             showStats ? "opacity-100" : "max-h-0 opacity-0"
           }`}
         >
