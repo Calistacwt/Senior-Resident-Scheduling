@@ -28,9 +28,6 @@ const List: React.FC<SeniorDoctorProps> = ({ seniorDoctorData, onDelete }) => {
         <thead className="text-left bg-background">
           <tr>
             <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
-              ID
-            </th>
-            <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
               NAME
             </th>
             <th className="gap-3 px-4 py-3 text-2xs font-semibold text-form-text">
@@ -51,9 +48,6 @@ const List: React.FC<SeniorDoctorProps> = ({ seniorDoctorData, onDelete }) => {
         <tbody className="w-full border-y border-outline bg-white rounded-2xl">
           {sortedSRData.map((doctor) => (
             <tr key={doctor.id} className="border-b border-dashboard-border">
-              <td className="p-4 font-medium text-2xs xl:text-xs">
-                {doctor.id}
-              </td>
               <td className="p-4 font-medium text-2xs xl:text-xs">
                 {doctor.name}
               </td>

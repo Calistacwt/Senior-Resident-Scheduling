@@ -16,6 +16,7 @@ import { format } from "date-fns";
 import { srSchedule } from "@/types/dashboard";
 import { seniorDoctorList } from "@/types/seniorDoctorList";
 import { roomList } from "@/types/roomList";
+import { useEffect, useState } from "react";
 
 interface ScheduleSRFormProps {
   seniorDoctorData: seniorDoctorList[];
@@ -36,6 +37,8 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
   mode,
 }) => {
   const navigate = useNavigate();
+
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -74,6 +77,18 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
       handleSubmit(formData);
     }
   };
+
+  useEffect(() => {
+    const allFieldsFilled =
+      formData.date &&
+      formData.dcdScreener &&
+      formData.room &&
+      formData.session &&
+      formData.srRoom && 
+      formData.activity
+    setIsSubmitDisabled(!allFieldsFilled);
+  }, [formData]);
+
   return (
     <div className="w-full">
       <form className="space-y-4" onSubmit={handleFormSubmit}>
@@ -235,8 +250,13 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
           </button>
 
           <button
-            className="bg-sidebar-active  text-white font-medium text-xs p-2 rounded-md"
+            className={`${
+              isSubmitDisabled
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-sidebar-active"
+            } text-white font-medium text-xs p-2 rounded-md`}
             type="submit"
+            disabled={isSubmitDisabled}
           >
             Submit
           </button>

@@ -128,17 +128,6 @@ const allroomsList = () => {
     setOpenModal(true);
   };
 
-  // fetch all room information
-  useEffect(() => {
-    const fetchRoomData = async () => {
-      const data = await getRoomData();
-      setRoomData(data);
-      setFilteredData(data);
-    };
-
-    fetchRoomData();
-  }, []);
-
   // badge fade out
   useEffect(() => {
     if (fadeOutFailed) {
@@ -158,11 +147,9 @@ const allroomsList = () => {
     const fetchRoomData = async () => {
       const data = await getRoomData();
   
-      // sort the data by ID in descending order (latest first)
-      const sortedData = data.sort((a:any, b:any) => b.id - a.id);
-  
-      setRoomData(sortedData);
-      setFilteredData(sortedData);
+    
+      setRoomData(data);
+      setFilteredData(data);
     };
   
     fetchRoomData();

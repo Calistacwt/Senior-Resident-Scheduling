@@ -156,7 +156,7 @@ const Dashboard = () => {
             showStats ? "opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="bg-gray-100 p-4 rounded shadow ">
+          <div className="bg-gray-100 p-4 rounded shadow max-h-[700px] overflow-y-auto">
             <div className="flex items-center space-x-2 ">
               <img
                 src="/assets/images/button/statistics.png"

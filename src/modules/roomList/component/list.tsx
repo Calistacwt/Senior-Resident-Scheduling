@@ -10,17 +10,12 @@ interface SeniorDoctorProps {
 
 const List: React.FC<SeniorDoctorProps> = ({ roomData, onDelete }) => {
 
-  const sortedRoomData = [...roomData].sort((a, b) => b.id - a.id);
-
-  
   return (
     <div className="bg-background">
       <table className="w-full bg-white mt-3">
         <thead className="text-left bg-background">
           <tr>
-            <th className="gap-3 px-4 py-3 text-2xs font-semibold w-1/2 text-form-text">
-              ID
-            </th>
+          
             <th className="gap-3 px-4 py-3 text-2xs font-semibold w-1/2 text-form-text">
               ROOM NUMBER
             </th>
@@ -31,11 +26,9 @@ const List: React.FC<SeniorDoctorProps> = ({ roomData, onDelete }) => {
         </thead>
 
         <tbody className="w-full border-y border-outline bg-white rounded-2xl">
-          {sortedRoomData.map((room) => (
+          {roomData.map((room) => (
             <tr key={room.id} className="border-b border-dashboard-border">
-              <td className="p-4 font-medium text-2xs xl:text-xs">
-                {room.id}
-              </td>
+           
               <td className="p-4 font-medium text-2xs xl:text-xs">
                 {room.roomNumber}
               </td>
