@@ -1,5 +1,330 @@
 {
-  "srSchedule": [],
+  "srSchedule": [
+    {
+      "id": 20,
+      "date": "2025-02-03",
+      "dcdScreener": "Dr Rashmi",
+      "activity": "Observe triage clinic",
+      "room": "Rm 17",
+      "srRoom": "",
+      "session": "AM"
+    },
+    {
+      "id": 21,
+      "date": "2025-02-05",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Observe triage clinic",
+      "room": "Rm 14",
+      "srRoom": "",
+      "session": "AM"
+    },
+    {
+      "id": 22,
+      "date": "2025-02-05",
+      "dcdScreener": "Dr Vidya",
+      "activity": "Observe triage clinic",
+      "room": "Rm 14",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 23,
+      "date": "2025-02-06",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Observe triage clinic",
+      "room": "Rm 14",
+      "srRoom": "",
+      "session": "AM"
+    },
+    {
+      "id": 1,
+      "date": "2025-02-03",
+      "dcdScreener": "Associate Psychologist",
+      "activity": "Observe DP4",
+      "room": "Rm 25",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 2,
+      "date": "2025-02-04",
+      "dcdScreener": "Associate Psychologist",
+      "activity": "Observe DP4",
+      "room": "Rm 25",
+      "srRoom": "",
+      "session": "AM"
+    },
+    {
+      "id": 3,
+      "date": "2025-02-04",
+      "dcdScreener": "Associate Psychologist",
+      "activity": "Observe DP4",
+      "room": "Rm 25",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 4,
+      "date": "2025-02-06",
+      "dcdScreener": "Associate Psychologist",
+      "activity": "Observe DP4",
+      "room": "Rm 25",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 30,
+      "date": "2025-02-07",
+      "dcdScreener": "Dr Chitra",
+      "activity": "Run triage NC",
+      "room": "Rm 19",
+      "srRoom": "Rm 13",
+      "session": "PM"
+    },
+    {
+      "id": 31,
+      "date": "2025-02-10",
+      "dcdScreener": "Dr Vidya",
+      "activity": "Run triage NC",
+      "room": "Rm 16",
+      "srRoom": "Rm 13",
+      "session": "AM"
+    },
+    {
+      "id": 32,
+      "date": "2025-02-11",
+      "dcdScreener": "Dr Ellen Tay",
+      "activity": "Run triage NC",
+      "room": "Rm 13",
+      "srRoom": "Rm 14",
+      "session": "AM"
+    },
+    {
+      "id": 33,
+      "date": "2025-02-13",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Run triage NC",
+      "room": "Rm 14",
+      "srRoom": "Rm 15",
+      "session": "AM"
+    },
+    {
+      "id": 35,
+      "date": "2025-02-14",
+      "dcdScreener": "Dr Anitha",
+      "activity": "Run triage NC",
+      "room": "Rm 16",
+      "srRoom": "Rm 13",
+      "session": "AM"
+    },
+    {
+      "id": 37,
+      "date": "2025-02-18",
+      "dcdScreener": "Dr Kenneth",
+      "activity": "Run triage NC",
+      "room": "Rm 15",
+      "srRoom": "Rm 13",
+      "session": "PM"
+    },
+    {
+      "id": 38,
+      "date": "2025-02-19",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Run triage NC",
+      "room": "Rm 13",
+      "srRoom": "Rm 15",
+      "session": "AM"
+    },
+    {
+      "id": 36,
+      "date": "2025-02-14",
+      "dcdScreener": "Dr Chitra",
+      "activity": "Run triage NC",
+      "room": "Rm 19",
+      "srRoom": "Rm 13",
+      "session": "PM"
+    },
+    {
+      "id": 40,
+      "date": "2025-02-19",
+      "dcdScreener": "Dr Giselle",
+      "activity": "Run triage NC",
+      "room": "Rm 15",
+      "srRoom": "Rm 13",
+      "session": "PM"
+    },
+    {
+      "id": 41,
+      "date": "2025-02-24",
+      "dcdScreener": "Dr Vidya",
+      "activity": "Run triage NC",
+      "room": "Rm 16",
+      "srRoom": "Rm 14",
+      "session": "AM"
+    },
+    {
+      "id": 43,
+      "date": "2025-02-24",
+      "dcdScreener": "Dr Rashmi",
+      "activity": "Run triage NC",
+      "room": "Rm 17",
+      "srRoom": "Rm 13",
+      "session": "PM"
+    },
+    {
+      "id": 44,
+      "date": "2025-02-25",
+      "dcdScreener": "Dr Ellen Tay",
+      "activity": "Run triage NC",
+      "room": "Rm 13",
+      "srRoom": "Rm 14",
+      "session": "AM"
+    },
+    {
+      "id": 48,
+      "date": "2025-02-26",
+      "dcdScreener": "Dr Shilpee",
+      "activity": "Run triage NC",
+      "room": "Rm 13",
+      "srRoom": "Rm 14",
+      "session": "PM"
+    },
+    {
+      "id": 51,
+      "date": "2025-02-28",
+      "dcdScreener": "Dr Chitra",
+      "activity": "Run triage NC",
+      "room": "Rm 19",
+      "srRoom": "Rm 15",
+      "session": "PM"
+    },
+    {
+      "id": 52,
+      "date": "2025-03-03",
+      "dcdScreener": "Dr Vidya",
+      "activity": "Run triage NC",
+      "room": "Rm 16",
+      "srRoom": "Rm 13",
+      "session": "AM"
+    },
+    {
+      "id": 54,
+      "date": "2025-03-03",
+      "dcdScreener": "Dr Kenneth",
+      "activity": "Run triage NC",
+      "room": "Rm 19",
+      "srRoom": "Rm 13",
+      "session": "PM"
+    },
+    {
+      "id": 55,
+      "date": "2025-03-05",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Run triage NC",
+      "room": "Rm 13",
+      "srRoom": "Rm 15",
+      "session": "AM"
+    },
+    {
+      "id": 58,
+      "date": "2025-03-06",
+      "dcdScreener": "Dr Christelle",
+      "activity": "Run triage NC",
+      "room": "Rm 14",
+      "srRoom": "Rm 17",
+      "session": "AM"
+    },
+    {
+      "id": 59,
+      "date": "2025-03-07",
+      "dcdScreener": "Dr SH Chan",
+      "activity": "Run triage NC",
+      "room": "Rm 13",
+      "srRoom": "Rm 14",
+      "session": "AM"
+    },
+    {
+      "id": 61,
+      "date": "2025-03-07",
+      "dcdScreener": "Dr SH Chan",
+      "activity": "Run triage NC",
+      "room": "Rm 13",
+      "srRoom": "Rm 15",
+      "session": "PM"
+    },
+    {
+      "id": 800,
+      "date": "2025-02-07",
+      "dcdScreener": "Admin",
+      "activity": "Admin Day",
+      "room": "",
+      "srRoom": "",
+      "session": "AM"
+    },
+    {
+      "id": 801,
+      "date": "2025-02-10",
+      "dcdScreener": "Admin",
+      "activity": "Admin Day",
+      "room": "",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 802,
+      "date": "2025-02-11",
+      "dcdScreener": "Admin",
+      "activity": "Admin Day",
+      "room": "",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 803,
+      "date": "2025-02-13",
+      "dcdScreener": "Admin",
+      "activity": "Admin Day",
+      "room": "",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 804,
+      "date": "2025-02-18",
+      "dcdScreener": "Admin",
+      "activity": "Admin Day",
+      "room": "",
+      "srRoom": "",
+      "session": "AM"
+    },
+    {
+      "id": 805,
+      "date": "2025-02-25",
+      "dcdScreener": "Admin",
+      "activity": "Admin Day",
+      "room": "",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 806,
+      "date": "2025-03-05",
+      "dcdScreener": "Admin",
+      "activity": "Admin Day",
+      "room": "",
+      "srRoom": "",
+      "session": "PM"
+    },
+    {
+      "id": 807,
+      "date": "2025-03-06",
+      "dcdScreener": "Admin",
+      "activity": "Admin Day",
+      "room": "",
+      "srRoom": "",
+      "session": "PM"
+    }
+  ],
   "srList": [
     {
       "postingPeriod": {
@@ -27,8 +352,16 @@
           "session": "FULLDAY"
         },
         {
+          "date": "2025-02-26",
+          "session": "AM"
+        },
+        {
           "date": "2025-02-27",
           "session": "FULLDAY"
+        },
+        {
+          "date": "2025-02-28",
+          "session": "AM"
         },
         {
           "date": "2025-03-04",

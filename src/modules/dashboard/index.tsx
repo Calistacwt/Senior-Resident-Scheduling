@@ -172,7 +172,7 @@ const Dashboard = () => {
 
             <div className="mt-4">
               <div className="mt-2 space-y-2">
-                <h2 className="font-semibold text-2xs">Observation Session</h2>
+                <h2 className="font-semibold text-2xs">Activity</h2>
                 {Object.entries(activitySessionStats).map(
                   ([activity, count]) => (
                     <div

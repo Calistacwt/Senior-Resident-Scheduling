@@ -51,14 +51,12 @@ const Calendar: React.FC<CalendarProps> = ({
   // Track each month div elements
   const monthRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-
-    const handleEdit = (srScheduleData: srSchedule) => {
+  const handleEdit = (srScheduleData: srSchedule) => {
     navigate({
       to: `/scheduleSR/${srScheduleData.id}/edit`,
       params: { id: srScheduleData.id },
     });
   };
-
 
   // Navigating between months
   const scrollToMonth = (monthIndex: number) => {
@@ -221,11 +219,10 @@ const Calendar: React.FC<CalendarProps> = ({
                               </div>
 
                               <div className="hidden xl:flex">
-
                                 {sessionData.room && (
-                                <div className="bg-dashboard-room text-3xs rounded-md font-normal text-white flex items-center justify-center self-start lg:self-center p-1 lg:mr-3 lg:mb-0">
-                                  {sessionData.room}
-                                </div>
+                                  <div className="bg-dashboard-room text-3xs rounded-md font-normal text-white flex items-center justify-center self-start lg:self-center p-1 lg:mr-3 lg:mb-0">
+                                    {sessionData.room}
+                                  </div>
                                 )}
 
                                 {sessionData.srRoom && (
@@ -357,11 +354,31 @@ const Calendar: React.FC<CalendarProps> = ({
           </button>
         </div>
 
+
         <div className="flex space-x-3">
           {renderMonthNavigation()}
           {renderYearNavigation()}
         </div>
       </header>
+
+      <div className="flex space-x-3 mb-2">
+          <div className="font-semibold text-2xs flex justify-center items-center">
+            Legend:
+          </div>
+          <div className="bg-dashboard-AM rounded-lg px-2 py-1 font-medium text-2xs flex justify-center items-center">
+            AM
+          </div>
+          <div className="bg-dashboard-PM  rounded-lg px-2 py-1 font-medium text-2xs flex justify-center items-center">
+            PM
+          </div>
+          <div className="bg-dashboard-room rounded-lg px-2 py-1 font-medium text-2xs flex justify-center items-center text-white">
+            Room
+          </div>
+          <div className="bg-dashboard-active rounded-lg px-2 font-medium text-2xs flex justify-center items-center text-white">
+            SR Room
+          </div>
+        </div>
+
 
       <div className="grid grid-cols-7">{renderDaysOfWeek()}</div>
       <div className="overflow-y-auto w-full h-[710px] hide-scrollbar">

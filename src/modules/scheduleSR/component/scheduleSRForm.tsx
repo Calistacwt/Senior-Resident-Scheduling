@@ -77,17 +77,16 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
       handleSubmit(formData);
     }
   };
-
+ 
   useEffect(() => {
-    const allFieldsFilled =
-      formData.date &&
-      formData.dcdScreener &&
-      formData.room &&
-      formData.session &&
-      formData.srRoom && 
-      formData.activity
-    setIsSubmitDisabled(!allFieldsFilled);
-  }, [formData]);
+    if (mode === "register") {
+      const allFieldsFilled =
+        formData.date
+      setIsSubmitDisabled(!allFieldsFilled);
+    } else {
+      setIsSubmitDisabled(false);
+    }
+  }, [formData, mode]);
 
   return (
     <div className="w-full">
@@ -109,7 +108,7 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
 
           <div className="flex flex-1 flex-col space-y-2 schedule-dropdown-button ">
             <label className="text-xs font-medium text-form-label">
-              Session <span className="text-red-500 text-xs">*</span>
+              Session
             </label>
 
             <Dropdown
@@ -141,7 +140,7 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
         <div className="flex space-x-3 items-center mt-6">
           <div className="flex flex-col flex-1 space-y-2 schedule-dropdown-button">
             <label className="text-xs font-medium text-form-label">
-              Senior Doctor <span className="text-red-500 text-xs">*</span>
+              Senior Doctor
             </label>
 
             <Dropdown
@@ -170,7 +169,7 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
 
           <div className="flex flex-1 flex-col space-y-2 schedule-dropdown-button  ">
             <label className="text-xs font-medium text-form-label">
-              Room <span className="text-red-500 text-xs">*</span>
+              Room 
             </label>
 
             <Dropdown
@@ -200,7 +199,7 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
 
         <div className="flex flex-1 flex-col space-y-2 schedule-dropdown-button  ">
           <label className="text-xs font-medium text-form-label">
-            SR Room <span className="text-red-500 text-xs">*</span>
+            SR Room 
           </label>
 
           <Dropdown
@@ -229,7 +228,7 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
 
         <div className="flex flex-col space-y-2 w-full">
           <label className="text-xs font-medium text-form-label">
-            Activity <span className="text-red-500 text-xs">*</span>
+            Activity
           </label>
           <input
             type="text"
@@ -243,6 +242,7 @@ const ScheduleSRForm: React.FC<ScheduleSRFormProps> = ({
 
         <div className="flex justify-end items-end space-x-4">
           <button
+            type="button"
             className="bg-white border  text-black font-medium text-xs p-2 rounded-md"
             onClick={handleBack}
           >

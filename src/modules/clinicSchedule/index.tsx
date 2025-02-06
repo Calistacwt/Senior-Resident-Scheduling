@@ -63,6 +63,12 @@ const ClinicSchedule: React.FC = () => {
     useState("Run triage NC");
   const [runTriageClinicCount, setRunTriageClinicCount] = useState(20);
 
+  // admin day
+  const [adminactivity, setAdminactivity] = useState("Admin Day");
+  const [adminDayCount, setAdminDayCount] = useState(0);
+
+  const [isProcessing, setIsProcessing] = useState(false);
+
   // new case clinic observation
   const newCaseClinicObservation = async (
     availableDates: any[],
@@ -330,12 +336,12 @@ const ClinicSchedule: React.FC = () => {
     );
   };
 
-  const assignAdminD = async (
+  const assignAdminDay = async (
     availableDates: any[],
     scheduledSessions: any[],
     srData: any[]
-  ) => {
-    // Track assigned sessions from all activities
+  ): Promise<void> => {
+    // Track assigned sessions from runTriageClinics
     const assignedSessions = new Set(
       scheduledSessions.map((session) => `${session.date}-${session.session}`)
     );
@@ -343,26 +349,24 @@ const ClinicSchedule: React.FC = () => {
     // Collect all available dates
     const allAvailableDates = new Set(availableDates.map((slot) => slot.date));
 
-    // Track dates that already have at least one assignment
+    // Identify completely empty dates
     const assignedDates = new Set(
       scheduledSessions.map((session) => session.date)
     );
-
-    // Identify completely empty dates
     const emptyDates = [...allAvailableDates].filter(
       (date) => !assignedDates.has(date)
     );
 
-    // Assign Admin Day (FULLDAY) to completely empty dates
+    // Assign "Admin" to completely empty dates
     for (const [index, date] of emptyDates.entries()) {
       const newSchedule = {
-        id: index + 400, // Unique ID
+        id: index + 700,
         date,
         dcdScreener: "Admin",
-        activity: "",
+        activity: "Admin Day",
         room: "",
         srRoom: "",
-        session: "FULLDAY", // Assign for the entire day
+        session: "FULLDAY",
       };
 
       try {
@@ -386,16 +390,16 @@ const ClinicSchedule: React.FC = () => {
           ) || isPostCall(new Date(slot.date), sr.callDates, sr.leaveDates)
       );
 
-      return !isAssigned && !isUnavailable; // Keep only truly available slots
+      return !isAssigned && !isUnavailable;
     });
 
-    // Assign Admin Day to remaining unassigned sessions
+    // Assign "Admin" to remaining unassigned sessions
     for (const [index, session] of unassignedSessions.entries()) {
       const newSchedule = {
-        id: index + 500, // Unique ID
+        id: index + 800,
         date: session.date,
         dcdScreener: "Admin",
-        activity: "",
+        activity: adminactivity,
         room: "",
         srRoom: "",
         session: session.session,
@@ -410,126 +414,14 @@ const ClinicSchedule: React.FC = () => {
         console.error("Error inserting Admin Day schedule:", error);
       }
     }
-
-    // Final check: Ensure at least one Admin Day exists per day with empty sessions
-    const daysWithAssignments = new Set([...assignedDates, ...emptyDates]);
-
-    for (const date of allAvailableDates) {
-      if (!daysWithAssignments.has(date)) {
-        // Assign an Admin Day to the first available session
-        const firstAvailableSession = availableDates.find(
-          (slot) => slot.date === date
-        );
-        if (firstAvailableSession) {
-          const newSchedule = {
-            id: 600 + Math.random(), // Unique ID
-            date,
-            dcdScreener: "Admin",
-            activity: "Admin Day",
-            room: "",
-            srRoom: "",
-            session: firstAvailableSession.session,
-          };
-
-          try {
-            await createSRSchedule(newSchedule);
-            console.log(
-              `Admin Day assigned to fill missing session on ${date}`
-            );
-          } catch (error) {
-            console.error("Error inserting Admin Day schedule:", error);
-          }
-        }
-      }
-    }
   };
-
-
-  const assignAdminDay = async (
-    availableDates: any[],
-    scheduledSessions: any[],
-    srData: any[],
-  
-  ): Promise<void> => {
-    // Track assigned sessions from runTriageClinics
-    const assignedSessions = new Set(
-      scheduledSessions.map((session) => `${session.date}-${session.session}`)
-    );
-  
-    // Collect all available dates
-    const allAvailableDates = new Set(availableDates.map((slot) => slot.date));
-  
-    // Identify completely empty dates
-    const assignedDates = new Set(
-      scheduledSessions.map((session) => session.date)
-    );
-    const emptyDates = [...allAvailableDates].filter(
-      (date) => !assignedDates.has(date)
-    );
-  
-    // Assign "Admin" to completely empty dates
-    for (const [index, date] of emptyDates.entries()) {
-      const newSchedule = {
-        id: index + 700, // Unique ID
-        date,
-        dcdScreener: "Admin",
-        activity: "",
-        room: "",
-        srRoom: "",
-        session: "FULLDAY",
-      };
-  
-      try {
-        await createSRSchedule(newSchedule);
-        console.log(`Admin Day assigned for FULLDAY on ${date}`);
-      } catch (error) {
-        console.error("Error inserting Admin Day schedule:", error);
-      }
-    }
-  
-    // Filter out unavailable sessions (leave, post-call, existing assignments)
-    const unassignedSessions = availableDates.filter((slot) => {
-      const isAssigned = assignedSessions.has(`${slot.date}-${slot.session}`);
-  
-      const isUnavailable = srData.some(
-        (sr) =>
-          sr.leaveDates.some(
-            (leave: any) =>
-              leave.date === slot.date &&
-              (leave.session === "FULLDAY" || leave.session === slot.session)
-          ) || isPostCall(new Date(slot.date), sr.callDates, sr.leaveDates)
-      );
-  
-      return !isAssigned && !isUnavailable; // Keep only truly available slots
-    });
-  
-    // Assign "Admin" to remaining unassigned sessions
-    for (const [index, session] of unassignedSessions.entries()) {
-      const newSchedule = {
-        id: index + 800, // Unique ID
-        date: session.date,
-        dcdScreener: "Admin",
-        activity: "",
-        room: "",
-        srRoom: "",
-        session: session.session,
-      };
-  
-      try {
-        await createSRSchedule(newSchedule);
-        console.log(`Admin Day assigned to ${session.date} - ${session.session}`);
-      } catch (error) {
-        console.error("Error inserting Admin Day schedule:", error);
-      }
-    }
-  };
-  
 
   const handleGenerateSchedule = async () => {
     if (!importedData || importedData.length === 0) {
       alert("No clinic schedule data available. Please upload a file first.");
       return;
     }
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     setIsModalOpen(false);
     const scheduleData = importedData;
@@ -589,8 +481,6 @@ const ClinicSchedule: React.FC = () => {
 
       // Assign Admin Day as the last priority
       await assignAdminDay(availableSlots, assignedSessions, srData);
-
-     
     } catch (error) {
       console.error("Error during schedule generation:", error);
     }
@@ -602,9 +492,11 @@ const ClinicSchedule: React.FC = () => {
 
   // handle excel file upload
   const handleUploads = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsProcessing(true);
     const file = e.target.files?.[0];
     if (!file) {
       alert("Please select a file!");
+      setIsProcessing(false);
       return;
     }
 
@@ -666,6 +558,8 @@ const ClinicSchedule: React.FC = () => {
           setTimeout(() => {
             setFadeOutFailed(true);
           }, 500);
+        } finally {
+          setIsProcessing(false);
         }
       }
     };
@@ -782,8 +676,11 @@ const ClinicSchedule: React.FC = () => {
             />
             <div>
               <button
-                className="text-xs mr-2 text-black rounded p-1.5 font-semibold border-sidebar-border border flex space-x-2 justify-center items-center"
                 onClick={handleScheduleSetting}
+                className={`text-xs mr-2 text-black rounded p-1.5 font-semibold border-sidebar-border border flex space-x-2 justify-center items-center ${
+                  isProcessing ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={isProcessing}
               >
                 <img
                   src="/assets/images/button/generate.png"
@@ -791,7 +688,7 @@ const ClinicSchedule: React.FC = () => {
                   className="rounded-md cursor-pointer w-5"
                 />
                 <div>
-                  <p>Generating Schedule</p>
+                  {isProcessing ? "Processing..." : "Generate Schedule"}
                 </div>
               </button>
             </div>
@@ -953,33 +850,64 @@ const ClinicSchedule: React.FC = () => {
                 </div>
               </div>
 
-              {/* Run NC Clinic */}
-              <div className="flex-col space-y-4 mt-6">
-                <div className="flex-col space-y-2 ">
-                  <h1 className="text-base font-bold">Run NC Clinics</h1>
-                  <label className="text-xs font-medium text-form-label">
-                    Activity
-                  </label>
-                  <input
-                    type="text"
-                    value={runTriageClinicactivity}
-                    onChange={(e) => setRunTriageClinicactivity(e.target.value)}
-                    className="border border-form-label rounded-md w-full text-xs p-2 placeholder:text-2xs placeholder-form-placeholder"
-                  />
+              <div className="flex space-x-4">
+                {/* Run NC Clinic */}
+                <div className="flex-col space-y-4 mt-6">
+                  <div className="flex-col space-y-2 ">
+                    <h1 className="text-base font-bold">Run NC Clinics</h1>
+                    <label className="text-xs font-medium text-form-label">
+                      Activity
+                    </label>
+                    <input
+                      type="text"
+                      value={runTriageClinicactivity}
+                      onChange={(e) =>
+                        setRunTriageClinicactivity(e.target.value)
+                      }
+                      className="border border-form-label rounded-md w-full text-xs p-2 placeholder:text-2xs placeholder-form-placeholder"
+                    />
+                  </div>
+
+                  <div className="flex-col space-y-2 ">
+                    <label className="text-xs font-medium text-form-label">
+                      Number of Schedules
+                    </label>
+                    <input
+                      type="number"
+                      value={runTriageClinicCount}
+                      onChange={(e) =>
+                        setRunTriageClinicCount(Number(e.target.value))
+                      }
+                      className="border border-form-label rounded-md w-full text-xs p-2 placeholder:text-2xs placeholder-form-placeholder"
+                    />
+                  </div>
                 </div>
 
-                <div className="flex-col space-y-2 ">
-                  <label className="text-xs font-medium text-form-label">
-                    Number of Schedules
-                  </label>
-                  <input
-                    type="number"
-                    value={runTriageClinicCount}
-                    onChange={(e) =>
-                      setRunTriageClinicCount(Number(e.target.value))
-                    }
-                    className="border border-form-label rounded-md w-full text-xs p-2 placeholder:text-2xs placeholder-form-placeholder"
-                  />
+                <div className="flex-col space-y-4 mt-6">
+                  <div className="flex-col space-y-2 ">
+                    <h1 className="text-base font-bold">Admin Day</h1>
+                    <label className="text-xs font-medium text-form-label">
+                      Activity
+                    </label>
+                    <input
+                      type="text"
+                      value={adminactivity}
+                      onChange={(e) => setAdminactivity(e.target.value)}
+                      className="border border-form-label rounded-md w-full text-xs p-2 placeholder:text-2xs placeholder-form-placeholder"
+                    />
+                  </div>
+
+                  <div className="flex-col space-y-2 ">
+                    <label className="text-xs font-medium text-form-label">
+                      Number of Schedules
+                    </label>
+                    <input
+                      type="number"
+                      value={adminDayCount}
+                      onChange={(e) => setAdminDayCount(Number(e.target.value))}
+                      className="border border-form-label rounded-md w-full text-xs p-2 placeholder:text-2xs placeholder-form-placeholder"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
